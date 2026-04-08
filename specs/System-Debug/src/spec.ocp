@@ -1,0 +1,496 @@
+---
+title: "System Debug Specification"
+version: 0.1
+type: BASE
+project: Hardware Fault Management
+authors: [Marko Bartscherer]
+bibliography: bibliography.yaml
+...
+---
+
+\currenttemplateversion
+
+---
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+---
+
+# Acknowledgements
+
+We wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
+
+# Compliance with OCP Tenets
+
+<!---
+Please describe how this Specification complies with the OCP tenets. 
+A full explanation of the OCP core tenets can be seen [here](https://146a55aca6f00848c565-a7635525d40ac1c70300198708936b4e.ssl.cf1.rackcdn.com/images/bf648bb75091907147e76846cad590f402660d2e.pdf).
+-->
+
+## Openness
+
+This specification is open.
+
+## Efficiency
+
+This specification is efficient.
+
+## Impact
+
+This specification is impactful.
+
+## Scale
+
+This specification is scalable.
+
+## Sustainability
+
+This specification is sustainable.
+
+# Introduction
+
+# Definitions
+
+## Life cycle
+
+# CodeCurrency
+
+More often than not the root cause of a failure or problem is simply that the System has not been configured correctly, it is run either outdated FW, an incompatible combination of SW/FW components or components that have not been configured appropriately. The concept of CodeCurrency has been designed to address this issue by providing  a 1 stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. The information will be exposed by a system as a file in the Redfish profile of the System. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the File is organized using the JSON schema outlined in this file.
+
+### Node CodeCurrency Record Schema
+
+This section defines the **JSON schema** for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
+
+#### **Schema**
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node Codecurency Record",
+  "type": "object",
+  "properties": {
+    "NodeId": { "type": "string", "description": "Unique identifier for the node" },
+    "NodeType": { "type": "string", "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)" },
+    "Hostname": { "type": "string", "description": "Node hostname" },
+    "NetworkConfiguration": {
+      "type": "object",
+      "description": "Network configuration details for the node",
+      "properties": {
+        "IpAddresses": { "type": "array", "items": { "type": "string", "format": "ipv4" } },
+        "Ports": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
+        "MacAddresses": { "type": "array", "items": { "type": "string", "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" } }
+      },
+      "required": ["IpAddresses"]
+    },
+    "PhysicalLocation": {
+      "type": "object",
+      "description": "Physical location of the node in the datacenter",
+      "properties": {
+        "Rack": { "type": "string" },
+        "Row": { "type": "string" },
+        "Datacenter": { "type": "string" },
+        "Placement": {
+          "type": "object",
+          "properties": {
+            "Type": { "type": "string", "enum": ["RackSlot", "Bay"] },
+            "Slot": { "type": "integer", "description": "Rack unit position if RackSlot" },
+            "HeightInU": { "type": "integer", "description": "Height in U if RackSlot" },
+            "BayId": { "type": "string", "description": "Bay identifier if Bay" },
+            "BayPosition": { "type": "string", "description": "Position within the bay" }
+          },
+          "required": ["Type"]
+        }
+      },
+      "required": ["Rack", "Row", "Datacenter", "Placement"]
+    },
+    "Assemblies": {
+      "type": "array",
+      "description": "List of assemblies within the node (supports nested assemblies)",
+      "items": { "$ref": "#/$defs/Assembly" }
+    }
+  },
+  "required": ["NodeId", "NodeType", "Assemblies"],
+  "$defs": {
+    "Assembly": {
+      "type": "object",
+      "properties": {
+        "AssemblyName": { "type": "string" },
+        "AssemblyId": { "type": "string" },
+        "ManufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the assembly" },
+        "PhysicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this assembly is installed",
+          "properties": {
+            "Slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)" },
+            "Position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "LogicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this assembly",
+          "properties": {
+            "Links": {
+              "type": "array",
+              "description": "List of logical links consumed by this assembly",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ConnectedTo": { "type": "string" },
+                  "Protocol": { "type": "string" },
+                  "LaneCount": { "type": "integer" }
+                },
+                "required": ["ConnectedTo", "Protocol"]
+              }
+            }
+          }
+        },
+        "Components": { "type": "array", "items": { "$ref": "#/$defs/Component" } },
+        "SubAssemblies": { "type": "array", "items": { "$ref": "#/$defs/Assembly" } }
+      },
+      "required": ["AssemblyName", "AssemblyId"]
+    },
+    "Component": {
+      "type": "object",
+      "properties": {
+        "ComponentType": { "type": "string", "enum": ["CPU", "Memory", "NIC", "Storage", "GPU", "PSU", "Fan", "BIOS", "BMC", "AMC"] },
+        "ComponentId": { "type": "string" },
+        "ManufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the component" },
+        "PhysicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this component is installed",
+          "properties": {
+            "Slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)" },
+            "Position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "LogicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this component",
+          "properties": {
+            "Links": {
+              "type": "array",
+              "description": "List of logical links consumed by this component",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ConnectedTo": { "type": "string" },
+                  "Protocol": { "type": "string" },
+                  "LaneCount": { "type": "integer" }
+                },
+                "required": ["ConnectedTo", "Protocol"]
+              }
+            }
+          }
+        },
+        "Firmware": {
+          "type": "array",
+          "description": "List of firmware entries for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Version": { "type": "string", "description": "Firmware version" },
+              "LastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
+              "SecurityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
+              "MinimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
+              "ImageRole": {
+                "type": "string",
+                "enum": ["Active", "Recovery", "Standby"],
+                "description": "Indicates if this firmware is actively running or a redundant recovery image"
+              }
+            },
+            "required": ["Version"]
+          }
+        },
+        "Configuration": {
+          "type": "array",
+          "description": "Custom configuration attributes for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": { "type": "string", "description": "Configuration attribute name" },
+              "Value": { "type": "string", "description": "Configuration attribute value" },
+              "Description": { "type": "string", "description": "Optional description of the attribute" }
+            },
+            "required": ["Name", "Value"]
+          }
+        }
+      },
+      "required": ["ComponentType", "ComponentId", "Firmware"]
+    }
+  }
+}
+```
+
+
+```plantuml {caption="Codecurency relationships" #fig:schema}
+!include schemarepresentation.uml
+
+```
+
+#### **Field Explanations**
+
+##### **Node-Level**
+- **nodeId**: Unique identifier for the node.
+- **nodeType**: Type of node (e.g., AI Server, Ethernet Switch).
+- **hostname**: Hostname for network identification.
+- **networkConfiguration**:
+  - **ipAddresses**: List of IPv4 addresses.
+  - **ports**: Open or configured ports.
+  - **macAddresses**: MAC addresses for network interfaces.
+- **physicalLocation**:
+  - **rack**, **row**, **datacenter**: Physical placement identifiers.
+  - **placement**:
+    - **type**: RackSlot or Bay.
+    - **slot**: Rack unit position.
+    - **heightInU**: Height in rack units.
+    - **bayId**, **bayPosition**: Bay-specific identifiers.
+
+##### **Assemblies**
+- **assemblyName**: Name of the assembly (e.g., Baseboard).
+- **assemblyId**: Unique identifier.
+- **manufacturerSerialNumber**: Manufacturer’s serial number.
+- **physicalLocation**: Slot and position within node.
+- **logicalAssociation**:
+  - **links**: Array of logical connections (connectedTo, protocol, laneCount).
+- **components**: Array of components.
+- **subAssemblies**: Nested assemblies.
+
+##### **Components**
+- **componentType**: Type (CPU, Memory, NIC, etc.).
+- **componentId**: Unique identifier.
+- **manufacturerSerialNumber**: Manufacturer’s serial number.
+- **physicalLocation**: Slot and position.
+- **logicalAssociation**: Logical links consumed by the component.
+- **firmware**:
+  - **version**: Firmware version (required).
+  - **lastUpdated**: Timestamp of last update.
+  - **securityVersionNumber**: Current SVN.
+  - **minimumSecurityVersionNumber**: Minimum enforced SVN.
+  - **imageRole**: Active, Recovery, or Standby.
+- **configuration**:
+  - Array of custom attributes: **name**, **value**, optional **description**.
+
+#### Example
+
+Below is an example of an Hypothetical Node with :
+
+
+- **Dual-socket CPUs**
+- **Memory modules**
+- **BMC**
+- **Two NVMe drives**
+- **Two NICs on a hot-swap backplane**
+- **UBB subassembly with BMC**
+- **Two OAM subassemblies** (each with GPU and AMC)
+
+```json
+
+{
+  "NodeId": "AI-Node-001",
+  "NodeType": "AI Server",
+  "Hostname": "ai-node-001.dc.local",
+  "NetworkConfiguration": {
+    "IpAddresses": ["192.168.10.101"],
+    "Ports": [22, 443],
+    "MacAddresses": ["00:1A:2B:3C:4D:5E"]
+  },
+  "PhysicalLocation": {
+    "Rack": "R42",
+    "Row": "Row-A",
+    "Datacenter": "DC-West",
+    "Placement": {
+      "Type": "RackSlot",
+      "Slot": 12,
+      "HeightInU": 2
+    }
+  },
+  "Assemblies": [
+    {
+      "AssemblyName": "Baseboard",
+      "AssemblyId": "BB-001",
+      "ManufacturerSerialNumber": "BB-SN-12345",
+      "Components": [
+        {
+          "ComponentType": "CPU",
+          "ComponentId": "CPU-001",
+          "ManufacturerSerialNumber": "CPU-SN-11111",
+          "Firmware": [
+            {
+              "Version": "1.2.3",
+              "LastUpdated": "2025-10-01T12:00:00Z",
+              "SecurityVersionNumber": 5,
+              "MinimumSecurityVersionNumber": 3,
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentType": "CPU",
+          "ComponentId": "CPU-002",
+          "ManufacturerSerialNumber": "CPU-SN-22222",
+          "Firmware": [
+            {
+              "Version": "1.2.3",
+              "LastUpdated": "2025-10-01T12:00:00Z",
+              "SecurityVersionNumber": 5,
+              "MinimumSecurityVersionNumber": 3,
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentType": "Memory",
+          "ComponentId": "MEM-001",
+          "ManufacturerSerialNumber": "MEM-SN-33333",
+          "Firmware": [
+            { "Version": "N/A" }
+          ]
+        },
+        {
+          "ComponentType": "Memory",
+          "ComponentId": "MEM-002",
+          "ManufacturerSerialNumber": "MEM-SN-44444",
+          "Firmware": [
+            { "Version": "N/A" }
+          ]
+        },
+        {
+          "ComponentType": "BMC",
+          "ComponentId": "BMC-001",
+          "ManufacturerSerialNumber": "BMC-SN-55555",
+          "Firmware": [
+            {
+              "Version": "3.4.5",
+              "LastUpdated": "2025-09-15T08:00:00Z",
+              "SecurityVersionNumber": 2,
+              "MinimumSecurityVersionNumber": 1,
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ],
+      "SubAssemblies": [
+        {
+          "AssemblyName": "HotSwap Backplane",
+          "AssemblyId": "HSBP-001",
+          "ManufacturerSerialNumber": "HSBP-SN-66666",
+          "Components": [
+            {
+              "ComponentType": "Storage",
+              "ComponentId": "NVME-001",
+              "ManufacturerSerialNumber": "NVME-SN-77777",
+              "Firmware": [
+                { "Version": "2.1.0" }
+              ]
+            },
+            {
+              "ComponentType": "Storage",
+              "ComponentId": "NVME-002",
+              "ManufacturerSerialNumber": "NVME-SN-88888",
+              "Firmware": [
+                { "Version": "2.1.0" }
+              ]
+            },
+            {
+              "ComponentType": "NIC",
+              "ComponentId": "NIC-001",
+              "ManufacturerSerialNumber": "NIC-SN-99999",
+              "Firmware": [
+                { "Version": "1.0.0" }
+              ]
+            },
+            {
+              "ComponentType": "NIC",
+              "ComponentId": "NIC-002",
+              "ManufacturerSerialNumber": "NIC-SN-10101",
+              "Firmware": [
+                { "Version": "1.0.0" }
+              ]
+            }
+          ]
+        },
+        {
+          "AssemblyName": "UBB",
+          "AssemblyId": "UBB-001",
+          "ManufacturerSerialNumber": "UBB-SN-20202",
+          "SubAssemblies": [
+            {
+              "AssemblyName": "OAM-1",
+              "AssemblyId": "OAM-001",
+              "ManufacturerSerialNumber": "OAM-SN-30303",
+              "Components": [
+                {
+                  "ComponentType": "GPU",
+                  "ComponentId": "GPU-001",
+                  "ManufacturerSerialNumber": "GPU-SN-40404",
+                  "Firmware": [
+                    { "Version": "510.85" }
+                  ]
+                },
+                {
+                  "ComponentType": "AMC",
+                  "ComponentId": "AMC-001",
+                  "ManufacturerSerialNumber": "AMC-SN-50505",
+                  "Firmware": [
+                    { "Version": "1.0.0" }
+                  ]
+                }
+              ]
+            },
+            {
+              "AssemblyName": "OAM-2",
+              "AssemblyId": "OAM-002",
+              "ManufacturerSerialNumber": "OAM-SN-60606",
+              "Components": [
+                {
+                  "ComponentType": "GPU",
+                  "ComponentId": "GPU-002",
+                  "ManufacturerSerialNumber": "GPU-SN-70707",
+                  "Firmware": [
+                    { "Version": "510.85" }
+                  ]
+                },
+                {
+                  "ComponentType": "AMC",
+                  "ComponentId": "AMC-002",
+                  "ManufacturerSerialNumber": "AMC-SN-80808",
+                  "Firmware": [
+                    { "Version": "1.0.0" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+```plantuml {caption="Example Codecurrency" #fig:uml}
+!include examplerepresentation.uml
+
+```
+
+#### CodeCurrency Redfish schema
+
+# Status Dump
+
+# Future work
+
+\beginappendices
+
+# First appendix
+
+This is the first appendix.
+
+# Second appendix
+
+This is the second appendix.
+

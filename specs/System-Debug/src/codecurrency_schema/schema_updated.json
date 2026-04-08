@@ -1,0 +1,433 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node Codecurency Record",
+  "type": "object",
+  "properties": {
+    "NodeId": {
+      "type": "string",
+      "description": "Unique identifier for the node"
+    },
+    "NodeType": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/SystemAssemblyType"
+        }
+      ],
+      "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)"
+    },
+    "Hostname": {
+      "type": "string",
+      "description": "Node hostname"
+    },
+    "NetworkConfiguration": {
+      "type": "object",
+      "description": "Network configuration details for the node",
+      "properties": {
+        "IpAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "ipv4"
+          }
+        },
+        "Ports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        "MacAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+          }
+        }
+      },
+      "required": [
+        "IpAddresses"
+      ]
+    },
+    "PhysicalLocation": {
+      "type": "object",
+      "description": "Physical location of the node in the datacenter",
+      "properties": {
+        "Rack": {
+          "type": "string"
+        },
+        "Row": {
+          "type": "string"
+        },
+        "Datacenter": {
+          "type": "string"
+        },
+        "Placement": {
+          "type": "object",
+          "properties": {
+            "Type": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/PhysicalLocationType"
+                }
+              ],
+              "description": "Placement type"
+            },
+            "Slot": {
+              "type": "integer",
+              "description": "Rack unit position if RackSlot"
+            },
+            "HeightInU": {
+              "type": "integer",
+              "description": "Height in U if RackSlot"
+            },
+            "BayId": {
+              "type": "string",
+              "description": "Bay identifier if Bay"
+            },
+            "BayPosition": {
+              "type": "string",
+              "description": "Position within the bay"
+            }
+          },
+          "required": [
+            "Type"
+          ]
+        }
+      },
+      "required": [
+        "Rack",
+        "Row",
+        "Datacenter",
+        "Placement"
+      ]
+    },
+    "Assemblies": {
+      "type": "array",
+      "description": "List of assemblies within the node (supports nested assemblies)",
+      "items": {
+        "$ref": "#/$defs/Assembly"
+      }
+    }
+  },
+  "required": [
+    "NodeId",
+    "NodeType",
+    "Assemblies"
+  ],
+  "$defs": {
+    "Assembly": {
+      "type": "object",
+      "properties": {
+        "AssemblyName": {
+          "type": "string"
+        },
+        "AssemblyId": {
+          "type": "string"
+        },
+        "ManufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the assembly"
+        },
+        "PhysicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this assembly is installed",
+          "properties": {
+            "Slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)"
+            },
+            "Position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
+          }
+        },
+        "LogicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this assembly",
+          "properties": {
+            "Links": {
+              "type": "array",
+              "description": "List of logical links consumed by this assembly",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ConnectedTo": {
+                    "type": "string"
+                  },
+                  "Protocol": {
+                    "type": "string"
+                  },
+                  "LaneCount": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "ConnectedTo",
+                  "Protocol"
+                ]
+              }
+            }
+          }
+        },
+        "Components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Component"
+          }
+        },
+        "SubAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Assembly"
+          }
+        }
+      },
+      "required": [
+        "AssemblyName",
+        "AssemblyId"
+      ]
+    },
+    "Component": {
+      "type": "object",
+      "properties": {
+        "ComponentType": {
+          "type": "string",
+          "enum": [
+            "CPU",
+            "Memory",
+            "NIC",
+            "Storage",
+            "GPU",
+            "PSU",
+            "Fan",
+            "BIOS",
+            "BMC",
+            "AMC"
+          ],
+          "deprecated": true,
+          "description": "Deprecated: use ComponentClass instead."
+        },
+        "ComponentId": {
+          "type": "string"
+        },
+        "ManufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the component"
+        },
+        "PhysicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this component is installed",
+          "properties": {
+            "Slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)"
+            },
+            "Position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
+          }
+        },
+        "LogicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this component",
+          "properties": {
+            "Links": {
+              "type": "array",
+              "description": "List of logical links consumed by this component",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "ConnectedTo": {
+                    "type": "string"
+                  },
+                  "Protocol": {
+                    "type": "string"
+                  },
+                  "LaneCount": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "ConnectedTo",
+                  "Protocol"
+                ]
+              }
+            }
+          }
+        },
+        "Firmware": {
+          "type": "array",
+          "description": "List of firmware entries for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Version": {
+                "type": "string",
+                "description": "Firmware version"
+              },
+              "LastUpdated": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp of last firmware update"
+              },
+              "SecurityVersionNumber": {
+                "type": "integer",
+                "description": "Current Security Version Number (SVN)"
+              },
+              "MinimumSecurityVersionNumber": {
+                "type": "integer",
+                "description": "Minimum enforced Security Version Number (SVN)"
+              },
+              "ImageRole": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/FirmwareImageRole"
+                  }
+                ],
+                "description": "Indicates if this firmware is actively running or a redundant recovery image"
+              }
+            },
+            "required": [
+              "Version"
+            ]
+          }
+        },
+        "Configuration": {
+          "type": "array",
+          "description": "Custom configuration attributes for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string",
+                "description": "Configuration attribute name"
+              },
+              "Value": {
+                "type": "string",
+                "description": "Configuration attribute value"
+              },
+              "Description": {
+                "type": "string",
+                "description": "Optional description of the attribute"
+              }
+            },
+            "required": [
+              "Name",
+              "Value"
+            ]
+          }
+        },
+        "ComponentClass": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/ComponentClass"
+            }
+          ],
+          "description": "Industry-aligned component class."
+        }
+      },
+      "required": [
+        "ComponentId",
+        "Firmware"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "ComponentClass"
+          ]
+        },
+        {
+          "required": [
+            "ComponentType"
+          ]
+        }
+      ]
+    },
+    "PhysicalLocationType": {
+      "type": "string",
+      "description": "Industry-aligned physical installation location type.",
+      "enum": [
+        "RackUnit",
+        "Bay",
+        "Slot",
+        "Socket",
+        "Drawer",
+        "Shelf",
+        "Tray",
+        "Cage",
+        "Zone"
+      ]
+    },
+    "ComponentClass": {
+      "type": "string",
+      "description": "Industry-aligned component class (inventory category).",
+      "enum": [
+        "Processor",
+        "Memory",
+        "NetworkInterface",
+        "StorageDevice",
+        "Accelerator",
+        "PowerSupply",
+        "Fan",
+        "ThermalSensor",
+        "VoltageRegulator",
+        "ClockGenerator",
+        "Retimer",
+        "Bridge",
+        "SwitchASIC",
+        "Controller",
+        "BIOS",
+        "Firmware",
+        "BMC",
+        "ManagementController",
+        "SecurityModule",
+        "FPGA",
+        "CPLD"
+      ]
+    },
+    "FirmwareImageRole": {
+      "type": "string",
+      "description": "Role/purpose of a firmware image (Active, Recovery, Alternate, etc.).",
+      "enum": [
+        "Active",
+        "Recovery",
+        "Alternate",
+        "Backup",
+        "Factory",
+        "Staging",
+        "Update",
+        "Diagnostic"
+      ]
+    },
+    "SystemAssemblyType": {
+      "type": "string",
+      "description": "Industry-aligned top-level assembly type (system/chassis class).",
+      "enum": [
+        "Server",
+        "Blade",
+        "ComputeNode",
+        "EthernetSwitch",
+        "NetworkAppliance",
+        "StorageSystem",
+        "JBOD",
+        "NVMeShelf",
+        "AcceleratorSystem",
+        "GPUServer",
+        "ManagementController",
+        "RackManager",
+        "PowerDistributionUnit",
+        "PowerShelf",
+        "BatteryBackupUnit",
+        "CoolingDistributionUnit",
+        "CoolingManifold",
+        "LiquidCoolingSystem",
+        "Chassis",
+        "Enclosure"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+@startuml
+
+title Node Codecurency Record Relationships
+
+class Node {
+    + nodeId : string
+    + nodeType : string
+    + hostname : string
+    + networkConfiguration : object
+    + physicalLocation : object
+}
+
+class Assembly {
+    + assemblyName : string
+    + assemblyId : string
+    + manufacturerSerialNumber : string
+    + physicalLocation : object
+    + logicalAssociation : object
+}
+
+class Component_1 {
+    + componentType : enum [CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC]
+    + componentId : string
+    + manufacturerSerialNumber : string
+    + physicalLocation : object
+    + logicalAssociation : object
+    + firmware : array
+    + configuration : array
+}
+
+class subAssembly {
+    + assemblyName : string
+    + assemblyId : string
+    + manufacturerSerialNumber : string
+    + physicalLocation : object
+    + logicalAssociation : object
+}
+
+class Component_2 {
+    + componentType : enum [CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC]
+    + componentId : string
+    + manufacturerSerialNumber : string
+    + physicalLocation : object
+    + logicalAssociation : object
+    + firmware : array
+    + configuration : array
+}
+
+class Firmware_1 {
+    + version : string
+    + lastUpdated : date-time
+    + securityVersionNumber : int
+    + minimumSecurityVersionNumber : int
+    + imageRole : enum [Active, Recovery, Standby]
+}
+
+class Configuration_1 {
+    + name : string
+    + value : string
+    + description : string
+}
+
+class Firmware_2 {
+    + version : string
+    + lastUpdated : date-time
+    + securityVersionNumber : int
+    + minimumSecurityVersionNumber : int
+    + imageRole : enum [Active, Recovery, Standby]
+}
+
+class Configuration_2 {
+    + name : string
+    + value : string
+    + description : string
+}
+
+Node  -->  Assembly
+Assembly --> Component_1 
+Assembly --> subAssembly
+subAssembly --> Component_2 
+Component_1  --> Firmware_1 
+Component_1  --> Configuration_1 
+Component_2  --> Firmware_2 
+Component_2  --> Configuration_2 
+
+@enduml

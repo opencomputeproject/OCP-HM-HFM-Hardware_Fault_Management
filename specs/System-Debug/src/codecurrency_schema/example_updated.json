@@ -1,0 +1,231 @@
+
+{
+  "NodeId": "node-001",
+  "NodeType": "Server",
+  "Hostname": "ai-server-01",
+  "NetworkConfiguration": {
+    "IpAddresses": ["192.168.10.10"],
+    "Ports": [443, 623],
+    "MacAddresses": ["AA:BB:CC:DD:EE:01"]
+  },
+  "PhysicalLocation": {
+    "Rack": "R12",
+    "Row": "Row-A",
+    "Datacenter": "DC1",
+    "Placement": {
+      "Type": "RackUnit",
+      "Slot": 20,
+      "HeightInU": 4
+    }
+  },
+  "Assemblies": [
+    {
+      "AssemblyName": "MainBoard",
+      "AssemblyId": "mb-001",
+      "Components": [
+        {
+          "ComponentClass": "Processor",
+          "ComponentId": "cpu-0",
+          "PhysicalLocation": {
+            "Slot": "CPU0",
+            "Position": "Socket-0"
+          },
+          "Firmware": [
+            {
+              "Version": "0x010203",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "Processor",
+          "ComponentId": "cpu-1",
+          "PhysicalLocation": {
+            "Slot": "CPU1",
+            "Position": "Socket-1"
+          },
+          "Firmware": [
+            {
+              "Version": "0x010203",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "Memory",
+          "ComponentId": "dimm-0",
+          "PhysicalLocation": {
+            "Slot": "DIMM-A1",
+            "Position": "Channel-A"
+          },
+          "Firmware": []
+        },
+        {
+          "ComponentClass": "Memory",
+          "ComponentId": "dimm-1",
+          "PhysicalLocation": {
+            "Slot": "DIMM-B1",
+            "Position": "Channel-B"
+          },
+          "Firmware": []
+        },
+        {
+          "ComponentClass": "BMC",
+          "ComponentId": "bmc-0",
+          "Firmware": [
+            {
+              "Version": "3.12.0",
+              "ImageRole": "Active"
+            },
+            {
+              "Version": "3.11.1",
+              "ImageRole": "Recovery"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "AssemblyName": "NVMeBackplane",
+      "AssemblyId": "bp-nvme-01",
+      "Components": [
+        {
+          "ComponentClass": "StorageDevice",
+          "ComponentId": "nvme-0",
+          "PhysicalLocation": {
+            "Slot": "NVMe-1",
+            "Position": "Front"
+          },
+          "Firmware": [
+            {
+              "Version": "2.5.1",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "StorageDevice",
+          "ComponentId": "nvme-1",
+          "PhysicalLocation": {
+            "Slot": "NVMe-2",
+            "Position": "Front"
+          },
+          "Firmware": [
+            {
+              "Version": "2.5.1",
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "AssemblyName": "NICBackplane",
+      "AssemblyId": "bp-nic-01",
+      "Components": [
+        {
+          "ComponentClass": "NetworkInterface",
+          "ComponentId": "nic-0",
+          "PhysicalLocation": {
+            "Slot": "NIC-1",
+            "Position": "HotSwap-Bay-1"
+          },
+          "Firmware": [
+            {
+              "Version": "1.8.0",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "NetworkInterface",
+          "ComponentId": "nic-1",
+          "PhysicalLocation": {
+            "Slot": "NIC-2",
+            "Position": "HotSwap-Bay-2"
+          },
+          "Firmware": [
+            {
+              "Version": "1.8.0",
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "AssemblyName": "UBB",
+      "AssemblyId": "ubb-01",
+      "SubAssemblies": [
+        {
+          "AssemblyName": "UBB-BMC",
+          "AssemblyId": "ubb-bmc-01",
+          "Components": [
+            {
+              "ComponentClass": "ManagementController",
+              "ComponentId": "ubb-bmc",
+              "Firmware": [
+                {
+                  "Version": "4.2.0",
+                  "ImageRole": "Active"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "AssemblyName": "OAM-0",
+      "AssemblyId": "oam-0",
+      "Components": [
+        {
+          "ComponentClass": "Accelerator",
+          "ComponentId": "gpu-0",
+          "Firmware": [
+            {
+              "Version": "90.12.3",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "ManagementController",
+          "ComponentId": "amc-0",
+          "Firmware": [
+            {
+              "Version": "1.4.0",
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "AssemblyName": "OAM-1",
+      "AssemblyId": "oam-1",
+      "Components": [
+        {
+          "ComponentClass": "Accelerator",
+          "ComponentId": "gpu-1",
+          "Firmware": [
+            {
+              "Version": "90.12.3",
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentClass": "ManagementController",
+          "ComponentId": "amc-1",
+          "Firmware": [
+            {
+              "Version": "1.4.0",
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
