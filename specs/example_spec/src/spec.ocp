@@ -1,0 +1,142 @@
+---
+title: "Test Specification"
+version: 0.1
+type: BASE
+project: Test
+authors: [Jeff Andersen]
+bibliography: bibliography.yaml
+...
+---
+
+\currenttemplateversion
+
+---
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+---
+
+# Acknowledgements
+
+We wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
+
+# Compliance with OCP Tenets
+
+<!---
+Please describe how this Specification complies with the OCP tenets. 
+A full explanation of the OCP core tenets can be seen [here](https://146a55aca6f00848c565-a7635525d40ac1c70300198708936b4e.ssl.cf1.rackcdn.com/images/bf648bb75091907147e76846cad590f402660d2e.pdf).
+-->
+
+## Openness
+
+This specification is open.
+
+## Efficiency
+
+This specification is efficient.
+
+## Impact
+
+This specification is impactful.
+
+## Scale
+
+This specification is scalable.
+
+## Sustainability
+
+This specification is sustainable.
+
+# Base specification
+
+This is a dummy base specification, rendered via TCG Pandoc [@{tcg-pandoc}] tooling. @fig:example-diagram is an example diagram.
+
+![Example diagram](./diagram.drawio.svg){#fig:example-diagram}
+
+@tbl:example-table is an example table.
+
++-----------+------------+
+| First col | Second col |
++===========+============+
+| One       | Three      |
++-----------+------------+
+| Two       | Four       |
++-----------+------------+
+
+Table: Example table {#tbl:example-table}
+
+@fig:tpm-startup and @fig:flowchart are example Mermaid diagrams.
+
+```mermaid {caption="Startup Sequence" #fig:tpm-startup}
+sequenceDiagram
+Host->>TPM: TPM2_Startup
+loop Measurements
+    Host->>TPM: TPM2_PCR_Extend
+end
+Host->>TPM: TPM2_Quote
+TPM->>Host: <quoted PCRs>
+```
+
+```mermaid {caption="Flowchart" #fig:flowchart}
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+@fig:tpm-startup-uml and @fig:uml are example UML diagrams.
+
+```plantuml {caption="Startup Sequence (UML)" #fig:tpm-startup-uml}
+participant Host
+participant TPM
+
+Host -> TPM: TPM2_Startup
+loop Measurements
+    Host -> TPM: TPM2_PCR_Extend
+end
+Host -> TPM: TPM2_Quote
+TPM -> Host: <quoted PCRs>
+```
+
+```plantuml {caption="Included UML" #fig:uml}
+!include uml.inc
+
+Foo -> Foo1 : To actor
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7: To queue
+```
+
+You can use triple backticks to create blocks of code, and can specify the language, for syntax highlighting:
+
+````md
+```c
+// Comment
+int i = 8472;
+```
+````
+
+The result looks like this:
+
+```c
+// Comment
+int i = 8472;
+```
+
+\beginappendices
+
+# First appendix
+
+This is the first appendix.
+
+# Second appendix
+
+This is the second appendix.

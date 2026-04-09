@@ -1,0 +1,182 @@
+
+{
+  "NodeId": "AI-Node-001",
+  "NodeType": "AI Server",
+  "Hostname": "ai-node-001.dc.local",
+  "NetworkConfiguration": {
+    "IpAddresses": ["192.168.10.101"],
+    "Ports": [22, 443],
+    "MacAddresses": ["00:1A:2B:3C:4D:5E"]
+  },
+  "PhysicalLocation": {
+    "Rack": "R42",
+    "Row": "Row-A",
+    "Datacenter": "DC-West",
+    "Placement": {
+      "Type": "RackSlot",
+      "Slot": 12,
+      "HeightInU": 2
+    }
+  },
+  "Assemblies": [
+    {
+      "AssemblyName": "Baseboard",
+      "AssemblyId": "BB-001",
+      "ManufacturerSerialNumber": "BB-SN-12345",
+      "Components": [
+        {
+          "ComponentType": "CPU",
+          "ComponentId": "CPU-001",
+          "ManufacturerSerialNumber": "CPU-SN-11111",
+          "Firmware": [
+            {
+              "Version": "1.2.3",
+              "LastUpdated": "2025-10-01T12:00:00Z",
+              "SecurityVersionNumber": 5,
+              "MinimumSecurityVersionNumber": 3,
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentType": "CPU",
+          "ComponentId": "CPU-002",
+          "ManufacturerSerialNumber": "CPU-SN-22222",
+          "Firmware": [
+            {
+              "Version": "1.2.3",
+              "LastUpdated": "2025-10-01T12:00:00Z",
+              "SecurityVersionNumber": 5,
+              "MinimumSecurityVersionNumber": 3,
+              "ImageRole": "Active"
+            }
+          ]
+        },
+        {
+          "ComponentType": "Memory",
+          "ComponentId": "MEM-001",
+          "ManufacturerSerialNumber": "MEM-SN-33333",
+          "Firmware": [
+            { "Version": "N/A" }
+          ]
+        },
+        {
+          "ComponentType": "Memory",
+          "ComponentId": "MEM-002",
+          "ManufacturerSerialNumber": "MEM-SN-44444",
+          "Firmware": [
+            { "Version": "N/A" }
+          ]
+        },
+        {
+          "ComponentType": "BMC",
+          "ComponentId": "BMC-001",
+          "ManufacturerSerialNumber": "BMC-SN-55555",
+          "Firmware": [
+            {
+              "Version": "3.4.5",
+              "LastUpdated": "2025-09-15T08:00:00Z",
+              "SecurityVersionNumber": 2,
+              "MinimumSecurityVersionNumber": 1,
+              "ImageRole": "Active"
+            }
+          ]
+        }
+      ],
+      "SubAssemblies": [
+        {
+          "AssemblyName": "HotSwap Backplane",
+          "AssemblyId": "HSBP-001",
+          "ManufacturerSerialNumber": "HSBP-SN-66666",
+          "Components": [
+            {
+              "ComponentType": "Storage",
+              "ComponentId": "NVME-001",
+              "ManufacturerSerialNumber": "NVME-SN-77777",
+              "Firmware": [
+                { "Version": "2.1.0" }
+              ]
+            },
+            {
+              "ComponentType": "Storage",
+              "ComponentId": "NVME-002",
+              "ManufacturerSerialNumber": "NVME-SN-88888",
+              "Firmware": [
+                { "Version": "2.1.0" }
+              ]
+            },
+            {
+              "ComponentType": "NIC",
+              "ComponentId": "NIC-001",
+              "ManufacturerSerialNumber": "NIC-SN-99999",
+              "Firmware": [
+                { "Version": "1.0.0" }
+              ]
+            },
+            {
+              "ComponentType": "NIC",
+              "ComponentId": "NIC-002",
+              "ManufacturerSerialNumber": "NIC-SN-10101",
+              "Firmware": [
+                { "Version": "1.0.0" }
+              ]
+            }
+          ]
+        },
+        {
+          "AssemblyName": "UBB",
+          "AssemblyId": "UBB-001",
+          "ManufacturerSerialNumber": "UBB-SN-20202",
+          "SubAssemblies": [
+            {
+              "AssemblyName": "OAM-1",
+              "AssemblyId": "OAM-001",
+              "ManufacturerSerialNumber": "OAM-SN-30303",
+              "Components": [
+                {
+                  "ComponentType": "GPU",
+                  "ComponentId": "GPU-001",
+                  "ManufacturerSerialNumber": "GPU-SN-40404",
+                  "Firmware": [
+                    { "Version": "510.85" }
+                  ]
+                },
+                {
+                  "ComponentType": "AMC",
+                  "ComponentId": "AMC-001",
+                  "ManufacturerSerialNumber": "AMC-SN-50505",
+                  "Firmware": [
+                    { "Version": "1.0.0" }
+                  ]
+                }
+              ]
+            },
+            {
+              "AssemblyName": "OAM-2",
+              "AssemblyId": "OAM-002",
+              "ManufacturerSerialNumber": "OAM-SN-60606",
+              "Components": [
+                {
+                  "ComponentType": "GPU",
+                  "ComponentId": "GPU-002",
+                  "ManufacturerSerialNumber": "GPU-SN-70707",
+                  "Firmware": [
+                    { "Version": "510.85" }
+                  ]
+                },
+                {
+                  "ComponentType": "AMC",
+                  "ComponentId": "AMC-002",
+                  "ManufacturerSerialNumber": "AMC-SN-80808",
+                  "Firmware": [
+                    { "Version": "1.0.0" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

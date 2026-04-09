@@ -1,0 +1,205 @@
+@startuml
+
+title AI Node Example - Full Structure with Attributes
+
+' Node
+class Node {
+    nodeId : NODE-AI-001
+    nodeType : AI Server
+    hostname : ai-node-01
+    networkConfiguration : { ipAddresses[], ports[], macAddresses[] }
+    physicalLocation : { rack, row, datacenter, placement }
+}
+
+' Assemblies
+class Baseboard {
+    assemblyId : ASM-BASE-001
+    assemblyName : Baseboard
+    manufacturerSerialNumber : SN-BASE-123456
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+}
+
+class UBB {
+    assemblyId : UBB-01
+    assemblyName : UBB
+    manufacturerSerialNumber : SN-UBB-111
+    physicalLocation : { slot, Position }
+}
+
+class OAM_01 {
+    assemblyId : OAM-01
+    assemblyName : OAM-01
+    manufacturerSerialNumber : SN-OAM-111
+}
+
+class OAM_02 {
+    assemblyId : OAM-02
+    assemblyName : OAM-02
+    manufacturerSerialNumber : SN-OAM-222
+}
+
+' Components with full attributes
+class CPU_01 {
+    componentType : CPU
+    componentId : CPU-01
+    manufacturerSerialNumber : SN-CPU-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class CPU_02 {
+    componentType : CPU
+    componentId : CPU-02
+    manufacturerSerialNumber : SN-CPU-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class MEM_01 {
+    componentType : Memory
+    componentId : MEM-01
+    manufacturerSerialNumber : SN-MEM-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class MEM_02 {
+    componentType : Memory
+    componentId : MEM-02
+    manufacturerSerialNumber : SN-MEM-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class BMC_Base {
+    componentType : BMC
+    componentId : BMC-01
+    manufacturerSerialNumber : SN-BMC-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class NVME_01 {
+    componentType : Storage
+    componentId : NVME-01
+    manufacturerSerialNumber : SN-NVME-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class NVME_02 {
+    componentType : Storage
+    componentId : NVME-02
+    manufacturerSerialNumber : SN-NVME-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class NIC_01 {
+    componentType : NIC
+    componentId : NIC-01
+    manufacturerSerialNumber : SN-NIC-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class NIC_02 {
+    componentType : NIC
+    componentId : NIC-02
+    manufacturerSerialNumber : SN-NIC-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class BMC_UBB {
+    componentType : BMC
+    componentId : BMC-UBB-01
+    manufacturerSerialNumber : SN-BMC-UBB-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class GPU_01 {
+    componentType : GPU
+    componentId : GPU-01
+    manufacturerSerialNumber : SN-GPU-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class AMC_01 {
+    componentType : AMC
+    componentId : AMC-01
+    manufacturerSerialNumber : SN-AMC-111
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class GPU_02 {
+    componentType : GPU
+    componentId : GPU-02
+    manufacturerSerialNumber : SN-GPU-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+class AMC_02 {
+    componentType : AMC
+    componentId : AMC-02
+    manufacturerSerialNumber : SN-AMC-222
+    physicalLocation : { slot, Position }
+    logicalAssociation : { links[] }
+    firmware : [version, lastUpdated, SVN, minSVN, imageRole]
+    configuration : [name, value, description]
+}
+
+' Relationships
+Node --> Baseboard : contains
+Baseboard --> CPU_01
+Baseboard --> CPU_02
+Baseboard --> MEM_01
+Baseboard --> MEM_02
+Baseboard --> BMC_Base
+Baseboard --> NVME_01
+Baseboard --> NVME_02
+Baseboard --> NIC_01
+Baseboard --> NIC_02
+Baseboard --> UBB : subAssembly
+
+UBB --> BMC_UBB
+UBB --> OAM_01 : subAssembly
+UBB --> OAM_02 : subAssembly
+
+OAM_01 --> GPU_01
+OAM_01 --> AMC_01
+OAM_02 --> GPU_02
+OAM_02 --> AMC_02
+
+@enduml

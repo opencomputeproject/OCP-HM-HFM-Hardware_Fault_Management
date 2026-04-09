@@ -1,0 +1,27 @@
+\xpg@aux {}{english}
+\contentsline {section}{\numberline {1}Acknowledgements}{6}{section.1}%
+\contentsline {section}{\numberline {2}Compliance with OCP Tenets}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Openness}{7}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Efficiency}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Impact}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Scale}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Sustainability}{7}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Introduction}{8}{section.3}%
+\contentsline {section}{\numberline {4}Definitions}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Life cycle}{9}{subsection.4.1}%
+\contentsline {section}{\numberline {5}CodeCurrency}{10}{section.5}%
+\contentsline {subsubsection}{\numberline {5.0.1}Node CodeCurrency Record Schema}{10}{subsubsection.5.0.1}%
+\contentsline {paragraph}{\numberline {5.0.1.1}\textbf {Schema}}{10}{paragraph.5.0.1.1}%
+\contentsline {paragraph}{\numberline {5.0.1.2}\textbf {Field Explanations}}{14}{paragraph.5.0.1.2}%
+\contentsline {subparagraph}{\numberline {5.0.1.2.1}\textbf {Node-Level}}{14}{subparagraph.5.0.1.2.1}%
+\contentsline {subparagraph}{\numberline {5.0.1.2.2}\textbf {Assemblies}}{15}{subparagraph.5.0.1.2.2}%
+\contentsline {subparagraph}{\numberline {5.0.1.2.3}\textbf {Components}}{15}{subparagraph.5.0.1.2.3}%
+\contentsline {paragraph}{\numberline {5.0.1.3}Example}{15}{paragraph.5.0.1.3}%
+\contentsline {paragraph}{\numberline {5.0.1.4}CodeCurrency Redfish schema}{19}{paragraph.5.0.1.4}%
+\contentsline {section}{\numberline {6}Status Dump}{20}{section.6}%
+\contentsline {section}{\numberline {7}Future work}{21}{section.7}%
+\contentsline {section}{Appendices}{22}{section*.3}%
+\contentsline {section}{\numberline {A}First appendix}{22}{appendix.A}%
+\contentsline {section}{\numberline {B}Second appendix}{23}{appendix.B}%
+\contentsline {section}{References}{24}{appendix.B}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

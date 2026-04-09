@@ -1,0 +1,656 @@
+# Node Codecurency Record Specification
+
+This document defines the **JSON schema** for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
+
+---
+
+## **Schema**
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node Codecurency Record",
+  "type": "object",
+  "properties": {
+    "nodeId": { "type": "string", "description": "Unique identifier for the node" },
+    "nodeType": { "type": "string", "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)" },
+    "hostname": { "type": "string", "description": "Node hostname" },
+    "networkConfiguration": {
+      "type": "object",
+      "description": "Network configuration details for the node",
+      "properties": {
+        "ipAddresses": { "type": "array", "items": { "type": "string", "format": "ipv4" } },
+        "ports": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
+        "macAddresses": { "type": "array", "items": { "type": "string", "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" } }
+      },
+      "required": ["ipAddresses"]
+    },
+    "physicalLocation": {
+      "type": "object",
+      "description": "Physical location of the node in the datacenter",
+      "properties": {
+        "rack": { "type": "string" },
+        "row": { "type": "string" },
+        "datacenter": { "type": "string" },
+        "placement": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["RackSlot", "Bay"] },
+            "slot": { "type": "integer", "description": "Rack unit position if RackSlot" },
+            "heightInU": { "type": "integer", "description": "Height in U if RackSlot" },
+            "bayId": { "type": "string", "description": "Bay identifier if Bay" },
+            "bayPosition": { "type": "string", "description": "Position within the bay" }
+          },
+          "required": ["type"]
+        }
+      },
+      "required": ["rack", "row", "datacenter", "placement"]
+    },
+    "assemblies": {
+      "type": "array",
+      "description": "List of assemblies within the node (supports nested assemblies)",
+      "items": { "$ref": "#/$defs/assembly" }
+    }
+  },
+  "required": ["nodeId", "nodeType", "assemblies"],
+  "$defs": {
+    "assembly": {
+      "type": "object",
+      "properties": {
+        "assemblyName": { "type": "string" },
+        "assemblyId": { "type": "string" },
+        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the assembly" },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this assembly is installed",
+          "properties": {
+            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)" },
+            "Position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "logicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this assembly",
+          "properties": {
+            "links": {
+              "type": "array",
+              "description": "List of logical links consumed by this assembly",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "connectedTo": { "type": "string" },
+                  "protocol": { "type": "string" },
+                  "laneCount": { "type": "integer" }
+                },
+                "required": ["connectedTo", "protocol"]
+              }
+            }
+          }
+        },
+        "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
+        "subAssemblies": { "type": "array", "items": { "$ref": "#/$defs/assembly" } }
+      },
+      "required": ["assemblyName", "assemblyId"]
+    },
+    "component": {
+      "type": "object",
+      "properties": {
+        "componentType": { "type": "string", "enum": ["CPU", "Memory", "NIC", "Storage", "GPU", "PSU", "Fan", "BIOS", "BMC"] },
+        "componentId": { "type": "string" },
+        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the component" },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this component is installed",
+          "properties": {
+            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)" },
+            "Position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "logicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this component",
+          "properties": {
+            "links": {
+              "type": "array",
+              "description": "List of logical links consumed by this component",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "connectedTo": { "type": "string" },
+                  "protocol": { "type": "string" },
+                  "laneCount": { "type": "integer" }
+                },
+                "required": ["connectedTo", "protocol"]
+              }
+            }
+          }
+        },
+        "firmware": {
+          "type": "array",
+          "description": "List of firmware entries for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": { "type": "string", "description": "Firmware version" },
+              "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
+              "securityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
+              "minimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
+              "imageRole": {
+                "type": "string",
+                "enum": ["Active", "Recovery", "Standby"],
+                "description": "Indicates if this firmware is actively running or a redundant recovery image"
+              }
+            },
+            "required": ["version"]
+          }
+        },
+        "configuration": {
+          "type": "array",
+          "description": "Custom configuration attributes for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "description": "Configuration attribute name" },
+              "value": { "type": "string", "description": "Configuration attribute value" },
+              "description": { "type": "string", "description": "Optional description of the attribute" }
+            },
+            "required": ["name", "value"]
+          }
+        }
+      },
+      "required": ["componentType", "componentId", "firmware"]
+    }
+  }
+}
+```
+
+ ```plantuml("schemarepresentation.uml", "Rack discovery high level flow")
+ 
+```
+
+## **Field Explanations**
+
+### **Node-Level**
+- **nodeId**: Unique identifier for the node.
+- **nodeType**: Type of node (e.g., AI Server, Ethernet Switch).
+- **hostname**: Hostname for network identification.
+- **networkConfiguration**:
+  - **ipAddresses**: List of IPv4 addresses.
+  - **ports**: Open or configured ports.
+  - **macAddresses**: MAC addresses for network interfaces.
+- **physicalLocation**:
+  - **rack**, **row**, **datacenter**: Physical placement identifiers.
+  - **placement**:
+    - **type**: RackSlot or Bay.
+    - **slot**: Rack unit position.
+    - **heightInU**: Height in rack units.
+    - **bayId**, **bayPosition**: Bay-specific identifiers.
+
+---
+
+### **Assemblies**
+- **assemblyName**: Name of the assembly (e.g., Baseboard).
+- **assemblyId**: Unique identifier.
+- **manufacturerSerialNumber**: Manufacturer’s serial number.
+- **physicalLocation**: Slot and position within node.
+- **logicalAssociation**:
+  - **links**: Array of logical connections (connectedTo, protocol, laneCount).
+- **components**: Array of components.
+- **subAssemblies**: Nested assemblies.
+
+---
+
+### **Components**
+- **componentType**: Type (CPU, Memory, NIC, etc.).
+- **componentId**: Unique identifier.
+- **manufacturerSerialNumber**: Manufacturer’s serial number.
+- **physicalLocation**: Slot and position.
+- **logicalAssociation**: Logical links consumed by the component.
+- **firmware**:
+  - **version**: Firmware version (required).
+  - **lastUpdated**: Timestamp of last update.
+  - **securityVersionNumber**: Current SVN.
+  - **minimumSecurityVersionNumber**: Minimum enforced SVN.
+  - **imageRole**: Active, Recovery, or Standby.
+- **configuration**:
+  - Array of custom attributes: **name**, **value**, optional **description**.
+
+## Example
+
+Below is an example of an Hypothetical Node with :
+
+
+- **Dual-socket CPUs**
+- **Memory modules**
+- **BMC**
+- **Two NVMe drives**
+- **Two NICs on a hot-swap backplane**
+- **UBB subassembly with BMC**
+- **Two OAM subassemblies** (each with GPU and AMC)
+
+```json
+
+{
+  "nodeId": "NODE-AI-001",
+  "nodeType": "AI Server",
+  "hostname": "ai-node-01",
+  "networkConfiguration": {
+    "ipAddresses": ["10.0.0.101", "10.0.0.102"],
+    "ports": [22, 443, 8080],
+    "macAddresses": ["00:1A:2B:3C:4D:5E", "00:1A:2B:3C:4D:5F"]
+  },
+  "physicalLocation": {
+    "rack": "Rack-12",
+    "row": "Row-B",
+    "datacenter": "DC-West",
+    "placement": {
+      "type": "RackSlot",
+      "slot": 10,
+      "heightInU": 4,
+      "bayId": "Bay-01",
+      "bayPosition": "Upper"
+    }
+  },
+  "assemblies": [
+    {
+      "assemblyName": "Baseboard",
+      "assemblyId": "ASM-BASE-001",
+      "manufacturerSerialNumber": "SN-BASE-123456",
+      "physicalLocation": {
+        "slot": "MainBoard",
+        "Position": "Center"
+      },
+      "logicalAssociation": {
+        "links": [
+          { "connectedTo": "UBB-01", "protocol": "I2C", "laneCount": 1 }
+        ]
+      },
+      "components": [
+        {
+          "componentType": "CPU",
+          "componentId": "CPU-01",
+          "manufacturerSerialNumber": "SN-CPU-111",
+          "physicalLocation": { "slot": "Socket-1", "Position": "Left" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "MEM-01", "protocol": "DDR5", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "1.0.0",
+              "lastUpdated": "2025-11-14T10:00:00Z",
+              "securityVersionNumber": 5,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Active"
+            },
+            {
+              "version": "0.9.0",
+              "lastUpdated": "2025-10-01T09:00:00Z",
+              "securityVersionNumber": 4,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Recovery"
+            }
+          ],
+          "configuration": [
+            { "name": "TurboMode", "value": "Enabled", "description": "CPU turbo boost" },
+            { "name": "PowerLimit", "value": "200W", "description": "Maximum power draw" }
+          ]
+        },
+        {
+          "componentType": "CPU",
+          "componentId": "CPU-02",
+          "manufacturerSerialNumber": "SN-CPU-222",
+          "physicalLocation": { "slot": "Socket-2", "Position": "Right" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "MEM-02", "protocol": "DDR5", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "1.0.0",
+              "lastUpdated": "2025-11-14T10:00:00Z",
+              "securityVersionNumber": 5,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Active"
+            },
+            {
+              "version": "0.9.0",
+              "lastUpdated": "2025-10-01T09:00:00Z",
+              "securityVersionNumber": 4,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Recovery"
+            }
+          ],
+          "configuration": [
+            { "name": "TurboMode", "value": "Enabled", "description": "CPU turbo boost" },
+            { "name": "PowerLimit", "value": "200W", "description": "Maximum power draw" }
+          ]
+        },
+        {
+          "componentType": "Memory",
+          "componentId": "MEM-01",
+          "manufacturerSerialNumber": "SN-MEM-111",
+          "physicalLocation": { "slot": "DIMM-1", "Position": "Near CPU-01" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "CPU-01", "protocol": "DDR5", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "3.4.5",
+              "lastUpdated": "2025-09-20T08:00:00Z",
+              "securityVersionNumber": 2,
+              "minimumSecurityVersionNumber": 1,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "ECC", "value": "Enabled", "description": "Error correction" }
+          ]
+        },
+        {
+          "componentType": "Memory",
+          "componentId": "MEM-02",
+          "manufacturerSerialNumber": "SN-MEM-222",
+          "physicalLocation": { "slot": "DIMM-2", "Position": "Near CPU-02" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "CPU-02", "protocol": "DDR5", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "3.4.5",
+              "lastUpdated": "2025-09-20T08:00:00Z",
+              "securityVersionNumber": 2,
+              "minimumSecurityVersionNumber": 1,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "ECC", "value": "Enabled", "description": "Error correction" }
+          ]
+        },
+        {
+          "componentType": "BMC",
+          "componentId": "BMC-01",
+          "manufacturerSerialNumber": "SN-BMC-111",
+          "physicalLocation": { "slot": "MgmtSlot", "Position": "Rear" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "UBB-01", "protocol": "I2C", "laneCount": 1 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "2.1.0",
+              "lastUpdated": "2025-10-10T12:00:00Z",
+              "securityVersionNumber": 3,
+              "minimumSecurityVersionNumber": 2,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "Redfish", "value": "Enabled", "description": "Management API" }
+          ]
+        },
+        {
+          "componentType": "Storage",
+          "componentId": "NVME-01",
+          "manufacturerSerialNumber": "SN-NVME-111",
+          "physicalLocation": { "slot": "NVMe-Bay-1", "Position": "Front" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "UBB-01", "protocol": "PCIe", "laneCount": 4 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "1.2.0",
+              "lastUpdated": "2025-08-01T09:00:00Z",
+              "securityVersionNumber": 2,
+              "minimumSecurityVersionNumber": 1,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "Namespace", "value": "Enabled", "description": "NVMe namespace" }
+          ]
+        },
+        {
+          "componentType": "Storage",
+          "componentId": "NVME-02",
+          "manufacturerSerialNumber": "SN-NVME-222",
+          "physicalLocation": { "slot": "NVMe-Bay-2", "Position": "Front" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "UBB-01", "protocol": "PCIe", "laneCount": 4 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "1.2.0",
+              "lastUpdated": "2025-08-01T09:00:00Z",
+              "securityVersionNumber": 2,
+              "minimumSecurityVersionNumber": 1,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "Namespace", "value": "Enabled", "description": "NVMe namespace" }
+          ]
+        },
+        {
+          "componentType": "NIC",
+          "componentId": "NIC-01",
+          "manufacturerSerialNumber": "SN-NIC-111",
+          "physicalLocation": { "slot": "PCIe-Slot-1", "Position": "Rear" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "UBB-01", "protocol": "Ethernet", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "4.0.0",
+              "lastUpdated": "2025-07-15T11:00:00Z",
+              "securityVersionNumber": 3,
+              "minimumSecurityVersionNumber": 2,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "SR-IOV", "value": "Enabled", "description": "Virtualization support" }
+          ]
+        },
+        {
+          "componentType": "NIC",
+          "componentId": "NIC-02",
+          "manufacturerSerialNumber": "SN-NIC-222",
+          "physicalLocation": { "slot": "PCIe-Slot-2", "Position": "Rear" },
+          "logicalAssociation": {
+            "links": [
+              { "connectedTo": "UBB-01", "protocol": "Ethernet", "laneCount": 8 }
+            ]
+          },
+          "firmware": [
+            {
+              "version": "4.0.0",
+              "lastUpdated": "2025-07-15T11:00:00Z",
+              "securityVersionNumber": 3,
+              "minimumSecurityVersionNumber": 2,
+              "imageRole": "Active"
+            }
+          ],
+          "configuration": [
+            { "name": "SR-IOV", "value": "Enabled", "description": "Virtualization support" }
+          ]
+        }
+      ],
+      "subAssemblies": [
+        {
+          "assemblyName": "UBB",
+          "assemblyId": "UBB-01",
+          "manufacturerSerialNumber": "SN-UBB-111",
+          "physicalLocation": { "slot": "UBB-Bay", "Position": "Center" },
+          "components": [
+            {
+              "componentType": "BMC",
+              "componentId": "BMC-UBB-01",
+              "manufacturerSerialNumber": "SN-BMC-UBB-111",
+              "physicalLocation": { "slot": "UBB-Mgmt", "Position": "Top" },
+              "logicalAssociation": {
+                "links": [
+                  { "connectedTo": "Baseboard", "protocol": "I2C", "laneCount": 1 }
+                ]
+              },
+              "firmware": [
+                {
+                  "version": "2.2.0",
+                  "lastUpdated": "2025-09-01T10:00:00Z",
+                  "securityVersionNumber": 3,
+                  "minimumSecurityVersionNumber": 2,
+                  "imageRole": "Active"
+                }
+              ],
+              "configuration": [
+                { "name": "Redfish", "value": "Enabled", "description": "Management API" }
+              ]
+            }
+          ],
+          "subAssemblies": [
+            {
+              "assemblyName": "OAM-01",
+              "assemblyId": "OAM-01",
+              "manufacturerSerialNumber": "SN-OAM-111",
+              "components": [
+                {
+                  "componentType": "GPU",
+                  "componentId": "GPU-01",
+                  "manufacturerSerialNumber": "SN-GPU-111",
+                  "physicalLocation": { "slot": "OAM-GPU-1", "Position": "Left" },
+                  "logicalAssociation": {
+                    "links": [
+                      { "connectedTo": "UBB-01", "protocol": "PCIe", "laneCount": 16 }
+                    ]
+                  },
+                  "firmware": [
+                    {
+                      "version": "5.0.0",
+                      "lastUpdated": "2025-06-10T09:00:00Z",
+                      "securityVersionNumber": 4,
+                      "minimumSecurityVersionNumber": 3,
+                      "imageRole": "Active"
+                    },
+                    {
+                      "version": "4.9.0",
+                      "lastUpdated": "2025-05-01T09:00:00Z",
+                      "securityVersionNumber": 3,
+                      "minimumSecurityVersionNumber": 2,
+                      "imageRole": "Recovery"
+                    }
+                  ],
+                  "configuration": [
+                    { "name": "ComputeMode", "value": "Enabled", "description": "GPU compute mode" }
+                  ]
+                },
+                {
+                  "componentType": "AMC",
+                  "componentId": "AMC-01",
+                  "manufacturerSerialNumber": "SN-AMC-111",
+                  "physicalLocation": { "slot": "OAM-AMC-1", "Position": "Right" },
+                  "logicalAssociation": {
+                    "links": [
+                      { "connectedTo": "GPU-01", "protocol": "NVLink", "laneCount": 4 }
+                    ]
+                  },
+                  "firmware": [
+                    {
+                      "version": "1.0.0",
+                      "lastUpdated": "2025-05-01T08:00:00Z",
+                      "securityVersionNumber": 2,
+                      "minimumSecurityVersionNumber": 1,
+                      "imageRole": "Active"
+                    }
+                  ],
+                  "configuration": [
+                    { "name": "LinkSpeed", "value": "High", "description": "AMC link speed" }
+                  ]
+                }
+              ]
+            },
+            {
+              "assemblyName": "OAM-02",
+              "assemblyId": "OAM-02",
+              "manufacturerSerialNumber": "SN-OAM-222",
+              "components": [
+                {
+                  "componentType": "GPU",
+                  "componentId": "GPU-02",
+                  "manufacturerSerialNumber": "SN-GPU-222",
+                  "physicalLocation": { "slot": "OAM-GPU-2", "Position": "Left" },
+                  "logicalAssociation": {
+                    "links": [
+                      { "connectedTo": "UBB-01", "protocol": "PCIe", "laneCount": 16 }
+                    ]
+                  },
+                  "firmware": [
+                    {
+                      "version": "5.0.0",
+                      "lastUpdated": "2025-06-10T09:00:00Z",
+                      "securityVersionNumber": 4,
+                      "minimumSecurityVersionNumber": 3,
+                      "imageRole": "Active"
+                    },
+                    {
+                      "version": "4.9.0",
+                      "lastUpdated": "2025-05-01T09:00:00Z",
+                      "securityVersionNumber": 3,
+                      "minimumSecurityVersionNumber": 2,
+                      "imageRole": "Recovery"
+                    }
+                  ],
+                  "configuration": [
+                    { "name": "ComputeMode", "value": "Enabled", "description": "GPU compute mode" }
+                  ]
+                },
+                {
+                  "componentType": "AMC",
+                  "componentId": "AMC-02",
+                  "manufacturerSerialNumber": "SN-AMC-222",
+                  "physicalLocation": { "slot": "OAM-AMC-2", "Position": "Right" },
+                  "logicalAssociation": {
+                    "links": [
+                      { "connectedTo": "GPU-02", "protocol": "NVLink", "laneCount": 4 }
+                    ]
+                  },
+                  "firmware": [
+                    {
+                      "version": "1.0.0",
+                      "lastUpdated": "2025-05-01T08:00:00Z",
+                      "securityVersionNumber": 2,
+                      "minimumSecurityVersionNumber": 1,
+                      "imageRole": "Active"
+                    }
+                  ],
+                  "configuration": [
+                    { "name": "LinkSpeed", "value": "High", "description": "AMC link speed" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+```plantuml("examplerepresentation.uml", "Rack discovery high level flow")
+ 
+```
