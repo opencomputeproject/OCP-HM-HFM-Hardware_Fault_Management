@@ -3,8 +3,9 @@ title: "System Debug Specification"
 version: 0.1
 type: BASE
 project: Hardware Fault Management
-authors: [Marko Bartscherer]
+authors: [(See Acknowledgements section)]
 bibliography: bibliography.yaml
+geometry: "left=0.75in,right=0.75in"
 ...
 ---
 
@@ -20,9 +21,46 @@ bibliography: bibliography.yaml
 
 ---
 
+# License
+
+**Open Web Foundation (OWF) CLA**
+
+Contributions to this Specification are made under the terms and conditions set forth in **Modified Open Web Foundation Agreement 0.9 (OWFa 0.9)**. (As of October 16, 2024)  (“Contribution License”) by:
+
+- TODO: fill in
+
+Usage of this Specification is governed by the terms and conditions set forth in **Modified OWFa 0.9 Final Specification Agreement (FSA)** (As of October 16, 2024) **(“Specification License”)**.
+
+You can review the applicable Specification License(s) referenced above by the contributors to this Specification on the OCP website at <https://www.opencompute.org/contributions/templates-agreements>.
+
+For actual executed copies of either agreement, please contact OCP directly.
+
+NOTWITHSTANDING THE FOREGOING LICENSES, THIS SPECIFICATION IS PROVIDED BY OCP "AS IS" AND OCP EXPRESSLY DISCLAIMS ANY WARRANTIES (EXPRESS, IMPLIED, OR OTHERWISE), INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, FITNESS FOR A PARTICULAR PURPOSE, OR TITLE, RELATED TO THE SPECIFICATION. NOTICE IS HEREBY GIVEN, THAT OTHER RIGHTS NOT GRANTED AS SET FORTH ABOVE, INCLUDING WITHOUT LIMITATION, RIGHTS OF THIRD PARTIES WHO DID NOT EXECUTE THE ABOVE LICENSES, MAY BE IMPLICATED BY THE IMPLEMENTATION OF OR COMPLIANCE WITH THIS SPECIFICATION. OCP IS NOT RESPONSIBLE FOR IDENTIFYING RIGHTS FOR WHICH A LICENSE MAY BE REQUIRED IN ORDER TO IMPLEMENT THIS SPECIFICATION. THE ENTIRE RISK AS TO IMPLEMENTING OR OTHERWISE USING THE SPECIFICATION IS ASSUMED BY YOU. IN NO EVENT WILL OCP BE LIABLE TO YOU FOR ANY MONETARY DAMAGES WITH RESPECT TO ANY CLAIMS RELATED TO, OR ARISING OUT OF YOUR USE OF THIS SPECIFICATION, INCLUDING BUT NOT LIMITED TO ANY LIABILITY FOR LOST PROFITS OR ANY CONSEQUENTIAL, INCIDENTAL, INDIRECT, SPECIAL OR PUNITIVE DAMAGES OF ANY CHARACTER FROM ANY CAUSES OF ACTION OF ANY KIND WITH RESPECT TO THIS SPECIFICATION, WHETHER BASED ON BREACH OF CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, AND EVEN IF OCP HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+<!---
+THE UPDATED DEFAULT CONTRIBUTOR LICENSE AGREEMENT (CLA) IS [OWFa 0.9](https://146a55aca6f00848c565-a7635525d40ac1c70300198708936b4e.ssl.cf1.rackcdn.com/images/ed0befaf86bee2568ad720ff4a9a554d1f4260f7.pdf).
+PLEASE VERIFY THE CORRECT CLA/FSA IS USED AND EXECUTED FOR THIS CONTRIBUTION.
+-->
+
+
 # Acknowledgements
 
-We wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
+The Contributors of this Specification would like to acknowledge the following:
+
+- Marko Bartscherer (Intel)
+- Enrico Carrieri (Qualcomm Technologies, Inc.)
+
+Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
+
+# Revision History
+
+---------------------------------------------------------------------------------------------------------------------------------
+Rev.       Date             Guiding Contributor(s)          Description                                                         
+---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
+0.1        2026-04-29       Marko B., Enrico C.             Initial Release                                                     
+
+---------------------------------------------------------------------------------------------------------------------------------
+
 
 # Compliance with OCP Tenets
 
@@ -51,26 +89,149 @@ This specification is scalable.
 
 This specification is sustainable.
 
-# Introduction
 
-# Definitions
+# Introduction {#sec:introduction}
 
-## Life cycle
+With the rise of large datacenter and AI systems, nodes and components are becoming more diverse and increasing in size and complexity.  This increasing complexity requires the need to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at the different levels from components to cluster.  There was a need to develop a specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
 
-# CodeCurrency
+This specification will address debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribes an architecture to communicate various debug data in a common method and data models across the datacenter.  THe specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
 
-More often than not the root cause of a failure or problem is simply that the System has not been configured correctly, it is run either outdated FW, an incompatible combination of SW/FW components or components that have not been configured appropriately. The concept of CodeCurrency has been designed to address this issue by providing  a 1 stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. The information will be exposed by a system as a file in the Redfish profile of the System. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the File is organized using the JSON schema outlined in this file.
 
-### Node CodeCurrency Record Schema
+## Goals {#sec:goals}
+
+The main goal of this specification is to prescribe an architecture, including interfaces, protocols, APIs, and data models, that communicates debug data across the datacenter.  This will be done by:
+
+* Defining the use of common connectivity, transports, and protocols.
+  - Define a common communication “pipe” for debug data/messages.
+  - Data/message payloads stay vendor specific.
+* Using existing specifications/standards when available.
+  - Leverage existing standard transports (e.g., USB) and protocols (e.g., PLDM)
+* Allowing flexibility but provide interoperability.
+  - Flexibility in how the system is put together.
+  - Debug capabilities need to be discoverable and self describing
+  - Interoperability with both different components and different debug tooling.
+  - Data needs to be opaque to components in the middle (e.g., BMC). 
+* Providing scalability across the life cycle of development.
+  - Use starting from manufacturing through to the at-scale, in-field deployment.
+
+
+## Document Scope {#sec:scope}
+
+### In Scope {#sec:in-scope}
+
+### Out of Scope {#sec:out-of-scope}
+
+This specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.
+
+
+## Purpose {#sec:purpose}
+
+
+
+## Audience {#sec:audience}
+
+
+
+
+# Terminology
+
+## Syntax and Conventions {#sec:syntax-and-conventions}
+
+### Special Terms {#sec:special-terms}
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[BCP 14](https://tools.ietf.org/html/bcp14)] \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when they appear.
+
+
+### Number Radix {#sec:number-radix}
+
+This document may represent some numbers in non-decimal radix.  In these cases, the following radix notations are used:
+
+: {.plain}
+|                    |                                                                                       |
+|:-------------------|:--------------------------------------------------------------------------------------|
+| 4'b0001            | Binary representation of the decimal value 1 explicitly expressed in 4 bits.          |
+| 0x5A               | Hexadecimal representation of the decimal value 90.                                   |
+| 7'h5A              | Hexadecimal representation of the decimal value 90 explicitly expressed in 7 bits.    |
+
+::: NOTE
+An underscore (i.e., '_') is sometimes used in the representation to improve readability.  For example, an underscore can be used in a Hexadecimal number to separate each four digits in the example:  0x0001_2345.
+:::
+
+## Definitions {#sec:definitions}
+
+* **Hyperscalers** -  Cloud service providers of the world, who value scaling and rapid time to market of new hardware products.
+
+* **Life Cycle** - 
+
+* **Node** -  A platform designed by a supplier integrating multiple components that run an operating system. These are sometimes also called compute nodes.
+
+
+## Abbreviations {#sec:abbreviations}
+
+: {.plain}
+|          |                                                                          |
+|:---------|:-------------------------------------------------------------------------|
+| DBG      | Debug |
+
+
+## Acronyms {#sec:acronyms}
+
+: {.plain}
+|          |                                                                          |
+|:---------|:-------------------------------------------------------------------------|
+| BMC      | Baseboard Management Controller |
+| CPER     | Common Platform Error Record |
+| FW       | Firmware |
+| JSON     | JavaScript Object Notation |
+| JTAG     | Joint Test Action Group - Bare metal interface to access on-chip debug and test resources. |
+| MTTD     | Mean Time to Debug |
+| OCP      | Open Compute Project |
+| PLDM     | Platform Level Data Model |
+| RAS      | Reliability, Availability, and Serviceability |
+| SW       | Software | 
+| WDT      | Watchdog Timer |
+
+
+# Technical Overview (Informative)
+
+
+
+![Product Development Life Cycle](product_development_lifecycle.png){#fig:product-development-lifecycle width=98%}
+
+
+![Execution Flow](execution_flow.png){#fig:execution-flow width=98%}
+
+
+
+
+# Layering
+
+
+# Handling Multiple Users
+
+
+# Security and Privacy
+
+
+# Data Stacks
+
+
+
+
+
+
+## Code Currency {#sec:code-currency}
+
+More often than not the root cause of a failure or problem is simply that the system has not been configured correctly, it is run either outdated FW, an incompatible combination of SW/FW components or components that have not been configured appropriately. The concept of Code Currency has been designed to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. The information will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema outlined in this file.
+
+### Schema {#sec:code-currency-schema}
 
 This section defines the **JSON schema** for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
 
-#### **Schema**
-
-```json
+```json {.small}
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Node Codecurency Record",
+  "title": "Node Code Curency Record",
   "type": "object",
   "properties": {
     "NodeId": { "type": "string", "description": "Unique identifier for the node" },
@@ -226,69 +387,70 @@ This section defines the **JSON schema** for representing the firmware, configur
 ```
 
 
-```plantuml {caption="Codecurency relationships" #fig:schema}
+```plantuml {caption="Code Currency Relationships" #fig:schema}
 !include schemarepresentation.uml
 
 ```
 
-#### **Field Explanations**
+### Field Explanations
 
-##### **Node-Level**
-- **nodeId**: Unique identifier for the node.
-- **nodeType**: Type of node (e.g., AI Server, Ethernet Switch).
-- **hostname**: Hostname for network identification.
-- **networkConfiguration**:
-  - **ipAddresses**: List of IPv4 addresses.
-  - **ports**: Open or configured ports.
-  - **macAddresses**: MAC addresses for network interfaces.
-- **physicalLocation**:
-  - **rack**, **row**, **datacenter**: Physical placement identifiers.
-  - **placement**:
-    - **type**: RackSlot or Bay.
-    - **slot**: Rack unit position.
-    - **heightInU**: Height in rack units.
-    - **bayId**, **bayPosition**: Bay-specific identifiers.
+#### Node-Level
 
-##### **Assemblies**
-- **assemblyName**: Name of the assembly (e.g., Baseboard).
-- **assemblyId**: Unique identifier.
-- **manufacturerSerialNumber**: Manufacturer’s serial number.
-- **physicalLocation**: Slot and position within node.
-- **logicalAssociation**:
-  - **links**: Array of logical connections (connectedTo, protocol, laneCount).
-- **components**: Array of components.
-- **subAssemblies**: Nested assemblies.
+- `nodeId`: Unique identifier for the node.
+- `nodeType`: Type of node (e.g., AI Server, Ethernet Switch).
+- `hostname`: Hostname for network identification.
+- `networkConfiguration`:
+  - `ipAddresses`: List of IPv4 addresses.
+  - `ports`: Open or configured ports.
+  - `macAddresses`: MAC addresses for network interfaces.
+- `physicalLocation`:
+  - `rack`, `row`, `datacenter`: Physical placement identifiers.
+  - `placement`:
+    - `type`: RackSlot or Bay.
+    - `slot`: Rack unit position.
+    - `heightInU`: Height in rack units.
+    - `bayId`, `bayPosition`: Bay-specific identifiers.
 
-##### **Components**
-- **componentType**: Type (CPU, Memory, NIC, etc.).
-- **componentId**: Unique identifier.
-- **manufacturerSerialNumber**: Manufacturer’s serial number.
-- **physicalLocation**: Slot and position.
-- **logicalAssociation**: Logical links consumed by the component.
-- **firmware**:
-  - **version**: Firmware version (required).
-  - **lastUpdated**: Timestamp of last update.
-  - **securityVersionNumber**: Current SVN.
-  - **minimumSecurityVersionNumber**: Minimum enforced SVN.
-  - **imageRole**: Active, Recovery, or Standby.
-- **configuration**:
-  - Array of custom attributes: **name**, **value**, optional **description**.
+#### Assemblies
 
-#### Example
+- `assemblyName`: Name of the assembly (e.g., Baseboard).
+- `assemblyId`: Unique identifier.
+- `manufacturerSerialNumber`: Manufacturer’s serial number.
+- `physicalLocation`: Slot and position within node.
+- `logicalAssociation`:
+  - `links`: Array of logical connections (connectedTo, protocol, laneCount).
+- `components`: Array of components.
+- `subAssemblies`: Nested assemblies.
 
-Below is an example of an Hypothetical Node with :
+#### Components
 
+- `componentType`: Type (CPU, Memory, NIC, etc.).
+- `componentId`: Unique identifier.
+- `manufacturerSerialNumber`: Manufacturer’s serial number.
+- `physicalLocation`: Slot and position.
+- `logicalAssociation`: Logical links consumed by the component.
+- `firmware`:
+  - `version`: Firmware version (required).
+  - `lastUpdated`: Timestamp of last update.
+  - `securityVersionNumber`: Current SVN.
+  - `minimumSecurityVersionNumber`: Minimum enforced SVN.
+  - `imageRole`: Active, Recovery, or Standby.
+- `configuration`:
+  - Array of custom attributes: `name`, `value`, optional `description`.
 
-- **Dual-socket CPUs**
-- **Memory modules**
-- **BMC**
-- **Two NVMe drives**
-- **Two NICs on a hot-swap backplane**
-- **UBB subassembly with BMC**
-- **Two OAM subassemblies** (each with GPU and AMC)
+### Example
 
-```json
+Below is an example of an Hypothetical Node with:
 
+- Dual-socket CPUs
+- Memory modules
+- BMC
+- Two NVMe drives
+- Two NICs on a hot-swap backplane
+- UBB subassembly with BMC
+- Two OAM subassemblies (each with GPU and AMC)
+
+```json {.small}
 {
   "NodeId": "AI-Node-001",
   "NodeType": "AI Server",
@@ -473,16 +635,26 @@ Below is an example of an Hypothetical Node with :
 
 ```
 
-```plantuml {caption="Example Codecurrency" #fig:uml}
+```plantuml {caption="Example Code Currency" #fig:example-code-currency .landscape}
 !include examplerepresentation.uml
 
 ```
 
-#### CodeCurrency Redfish schema
+### Code Currency Redfish Schema
 
-# Status Dump
 
-# Future work
+
+## Status Dump {#sec:status-dump}
+
+
+## Console {#sec:console}
+
+
+## Interactive Debug/Run Control {#sec:interactive-debug}
+
+
+
+# Future Work {#sec:future-work}
 
 \beginappendices
 

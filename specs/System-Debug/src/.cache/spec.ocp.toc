@@ -1,27 +1,46 @@
 \xpg@aux {}{english}
-\contentsline {section}{\numberline {1}Acknowledgements}{6}{section.1}%
-\contentsline {section}{\numberline {2}Compliance with OCP Tenets}{7}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Openness}{7}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Efficiency}{7}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Impact}{7}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Scale}{7}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Sustainability}{7}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Introduction}{8}{section.3}%
-\contentsline {section}{\numberline {4}Definitions}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Life cycle}{9}{subsection.4.1}%
-\contentsline {section}{\numberline {5}CodeCurrency}{10}{section.5}%
-\contentsline {subsubsection}{\numberline {5.0.1}Node CodeCurrency Record Schema}{10}{subsubsection.5.0.1}%
-\contentsline {paragraph}{\numberline {5.0.1.1}\textbf {Schema}}{10}{paragraph.5.0.1.1}%
-\contentsline {paragraph}{\numberline {5.0.1.2}\textbf {Field Explanations}}{14}{paragraph.5.0.1.2}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.1}\textbf {Node-Level}}{14}{subparagraph.5.0.1.2.1}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.2}\textbf {Assemblies}}{15}{subparagraph.5.0.1.2.2}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.3}\textbf {Components}}{15}{subparagraph.5.0.1.2.3}%
-\contentsline {paragraph}{\numberline {5.0.1.3}Example}{15}{paragraph.5.0.1.3}%
-\contentsline {paragraph}{\numberline {5.0.1.4}CodeCurrency Redfish schema}{19}{paragraph.5.0.1.4}%
-\contentsline {section}{\numberline {6}Status Dump}{20}{section.6}%
-\contentsline {section}{\numberline {7}Future work}{21}{section.7}%
-\contentsline {section}{Appendices}{22}{section*.3}%
-\contentsline {section}{\numberline {A}First appendix}{22}{appendix.A}%
-\contentsline {section}{\numberline {B}Second appendix}{23}{appendix.B}%
-\contentsline {section}{References}{24}{appendix.B}%
+\contentsline {section}{\numberline {1}License}{6}{section.1}%
+\contentsline {section}{\numberline {2}Acknowledgements}{7}{section.2}%
+\contentsline {section}{\numberline {3}Revision History}{8}{section.3}%
+\contentsline {section}{\numberline {4}Compliance with OCP Tenets}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Openness}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Efficiency}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Impact}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Scale}{9}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Sustainability}{9}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Introduction}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Goals}{10}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Document Scope}{10}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}In Scope}{10}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Out of Scope}{10}{subsubsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.3}Purpose}{10}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Audience}{10}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Terminology}{11}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Syntax and Conventions}{11}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Special Terms}{11}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}Number Radix}{11}{subsubsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.2}Definitions}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Abbreviations}{11}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Acronyms}{11}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Technical Overview (Informative)}{13}{section.7}%
+\contentsline {section}{\numberline {8}Layering}{14}{section.8}%
+\contentsline {section}{\numberline {9}Handling Multiple Users}{15}{section.9}%
+\contentsline {section}{\numberline {10}Security and Privacy}{16}{section.10}%
+\contentsline {section}{\numberline {11}Data Stacks}{17}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Code Currency}{17}{subsection.11.1}%
+\contentsline {subsubsection}{\numberline {11.1.1}Schema}{17}{subsubsection.11.1.1}%
+\contentsline {subsubsection}{\numberline {11.1.2}Field Explanations}{20}{subsubsection.11.1.2}%
+\contentsline {paragraph}{\numberline {11.1.2.1}Node-Level}{20}{paragraph.11.1.2.1}%
+\contentsline {paragraph}{\numberline {11.1.2.2}Assemblies}{21}{paragraph.11.1.2.2}%
+\contentsline {paragraph}{\numberline {11.1.2.3}Components}{21}{paragraph.11.1.2.3}%
+\contentsline {subsubsection}{\numberline {11.1.3}Example}{21}{subsubsection.11.1.3}%
+\contentsline {subsubsection}{\numberline {11.1.4}Code Currency Redfish Schema}{26}{subsubsection.11.1.4}%
+\contentsline {subsection}{\numberline {11.2}Status Dump}{26}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Console}{26}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Interactive Debug/Run Control}{26}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Future Work}{27}{section.12}%
+\contentsline {section}{Appendices}{28}{section*.5}%
+\contentsline {section}{\numberline {A}First appendix}{28}{appendix.A}%
+\contentsline {section}{\numberline {B}Second appendix}{29}{appendix.B}%
+\contentsline {section}{References}{30}{appendix.B}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
