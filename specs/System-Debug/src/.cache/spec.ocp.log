@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  8 APR 2026 22:19
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  30 APR 2026 15:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2024,14 +2024,14 @@ Package hyperref Info: Link coloring ON on input line 665.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* h-part:(L,W,R)=(54.2025pt, 505.89pt, 54.2025pt)
 * v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=469.75502pt
+* \textwidth=505.89pt
 * \textheight=650.43001pt
-* \oddsidemargin=0.0pt
-* \evensidemargin=0.0pt
+* \oddsidemargin=-18.06749pt
+* \evensidemargin=-18.06749pt
 * \topmargin=-37.40001pt
 * \headheight=17.0pt
 * \headsep=20.40001pt
@@ -2225,6 +2225,31 @@ m/n/10 System Debug Specification
 [7
 
 ]
+Overfull \hbox (1.00769pt too wide) in alignment at lines 825--825
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 825--825
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 825--825
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 825--825
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 825--825
+ [] [] [] [] 
+ []
+
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2241,30 +2266,6 @@ m/n/10 System Debug Specification
 [9
 
 ]
-Underfull \hbox (badness 1048) in paragraph at lines 779--790
-\TU/Arial(0)/m/n/10.95 More often than not the root cause of a failure or probl
-em is simply that the System has 
- []
-
-
-Underfull \hbox (badness 1019) in paragraph at lines 779--790
-\TU/Arial(0)/m/n/10.95 not been configured correctly, it is run either outdated
- FW, an incompatible combination 
- []
-
-LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 9.00096pt on input line 810.
-LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 6.00064pt on input line 810.
-LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 810.
-LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 810.
-LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 810.
-LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 810.
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2273,61 +2274,96 @@ m/n/10 System Debug Specification
 [10
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 991--995
+[]\TU/Arial(0)/m/n/10.95 An underscore (i.e., ’_-’) is sometimes used in the re
+presentation to improve readability. For
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 991--995
+\TU/Arial(0)/m/n/10.95 example, an underscore can be used in a Hexadecimal numb
+er to separate each four digits in
+ []
+
+ignored error: Infinite glue shrinkage found in box being split
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[11]
+[11
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [12]
-File: .cache/fig:schema.d256aa9242.plantuml.svg.ac1076fe7b.convert.pdf Graphic 
-file (type pdf)
-<use .cache/fig:schema.d256aa9242.plantuml.svg.ac1076fe7b.convert.pdf>
+File: .cache/product_development_lifecycle.png.1efc1b0e50.convert.pdf Graphic f
+ile (type pdf)
+<use .cache/product_development_lifecycle.png.1efc1b0e50.convert.pdf>
+File: .cache/execution_flow.png.9cf5f56f34.convert.pdf Graphic file (type pdf)
+<use .cache/execution_flow.png.9cf5f56f34.convert.pdf>
 
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[13]
+[13
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[14]
+[14
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[15]
+[15
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[16]
+[16
+
+]
+LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
+(Font)              scaled to size 9.00096pt on input line 1134.
+LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
+(Font)              scaled to size 6.00064pt on input line 1134.
+LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
+(Font)              scaled to size 8.99904pt on input line 1134.
+LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 1134.
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[17]
+[17
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [18]
-File: .cache/fig:uml.7d283d8777.plantuml.svg.54a95227ba.convert.pdf Graphic fil
-e (type pdf)
-<use .cache/fig:uml.7d283d8777.plantuml.svg.54a95227ba.convert.pdf>
+File: .cache/fig:schema.0fa056817d.plantuml.svg.ac1076fe7b.convert.pdf Graphic 
+file (type pdf)
+<use .cache/fig:schema.0fa056817d.plantuml.svg.ac1076fe7b.convert.pdf>
 
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
@@ -2340,7 +2376,42 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[20
+[20]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[21]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[22]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[23]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[24]
+File: .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conve
+rt.pdf Graphic file (type pdf)
+<use .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conver
+t.pdf>
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[25
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2348,7 +2419,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[21
+[26
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2356,7 +2427,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[22
+[27
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2364,7 +2435,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[23
+[28
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2372,7 +2443,15 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[24
+[29
+
+]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[30
 
 ] (.cache/spec.ocp.aux)
  ***********
@@ -2381,12 +2460,12 @@ L3 programming layer <2025-11-14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 44445 strings out of 470152
- 919015 string characters out of 5477859
- 1775446 words of memory out of 5000000
- 72270 multiletter control sequences out of 15000+600000
- 634305 words of font info for 134 fonts, out of 8000000 for 9000
+ 44553 strings out of 470152
+ 922094 string characters out of 5477859
+ 1749489 words of memory out of 5000000
+ 72364 multiletter control sequences out of 15000+600000
+ 635570 words of font info for 150 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 108i,12n,112p,11227b,1026s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,12n,112p,11227b,1006s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on .cache/spec.ocp.pdf (24 pages).
+Output written on .cache/spec.ocp.pdf (30 pages).
