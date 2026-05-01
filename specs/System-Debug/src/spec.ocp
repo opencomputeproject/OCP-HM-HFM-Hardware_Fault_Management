@@ -45,10 +45,11 @@ PLEASE VERIFY THE CORRECT CLA/FSA IS USED AND EXECUTED FOR THIS CONTRIBUTION.
 
 # Acknowledgements
 
-The Contributors of this Specification would like to acknowledge the following:
+The contributors of this Specification would like to acknowledge the following:
 
 - Marko Bartscherer (Intel)
 - Enrico Carrieri (Qualcomm Technologies, Inc.)
+- James Zou (Aivres)
 
 Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
 
@@ -57,7 +58,7 @@ Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Gro
 ---------------------------------------------------------------------------------------------------------------------------------
 Rev.       Date             Guiding Contributor(s)          Description                                                         
 ---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
-0.1        2026-04-29       Marko B., Enrico C.             Initial Release                                                     
+0.1        2026-04-29       Marko B., Enrico C., James Z.   Initial Release                                                     
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -71,35 +72,41 @@ A full explanation of the OCP core tenets can be seen [here](https://146a55aca6f
 
 ## Openness
 
-This specification is open.
+This Specification is open.
 
 ## Efficiency
 
-This specification is efficient.
+This Specification is efficient.
 
 ## Impact
 
-This specification is impactful.
+This Specification is impactful.
 
 ## Scale
 
-This specification is scalable.
+This Specification is scalable.
 
 ## Sustainability
 
-This specification is sustainable.
+This Specification is sustainable.
 
 
 # Introduction {#sec:introduction}
 
-With the rise of large datacenter and AI systems, nodes and components are becoming more diverse and increasing in size and complexity.  This increasing complexity requires the need to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at the different levels from components to cluster.  There was a need to develop a specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
+With the rise of large datacenter and AI systems, nodes and components are becoming more diverse and increasing in size and complexity.  For example, training LLM models in datacenters requires orchestration of clusters consisting of a large number of server systems. The scale of such clusters is determined by factors including model size (parameters) and training dataset volume. During long-duration training, system failures are expected and can result in workload interruption, reduced efficiency, increased operational cost and delayed new AI version releasing.
 
-This specification will address debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribes an architecture to communicate various debug data in a common method and data models across the datacenter.  THe specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
+This increasing complexity requires the need to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this Specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at the different levels from components to cluster.  There was a need to develop a Specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
+
+The following challenges are commonly observed in data center debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures may occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
+
+System designs that comply with OCP Fault Management Infrastructure Requirements and OCP GPU & Accelerator RAS Requirements improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for data center operations.
+
+This Specification will address debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribe an architecture to communicate various debug data in a common method and data models across the datacenter.  The Specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter.  A system-level debugging framework is created to improve fault observability, root cause analysis (RCA), and remediation efficiency in server systems deployed in datacenters. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
 
 
 ## Goals {#sec:goals}
 
-The main goal of this specification is to prescribe an architecture, including interfaces, protocols, APIs, and data models, that communicates debug data across the datacenter.  This will be done by:
+The main goal of this Specification is to prescribe an architecture, including interfaces, protocols, APIs, and data models, that communicates debug data across the datacenter.  This will be done by:
 
 * Defining the use of common connectivity, transports, and protocols.
   - Define a common communication “pipe” for debug data/messages.
@@ -121,30 +128,50 @@ The main goal of this specification is to prescribe an architecture, including i
 
 ### Out of Scope {#sec:out-of-scope}
 
-This specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.
-
-
-## Purpose {#sec:purpose}
-
-
+This Specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.
 
 ## Audience {#sec:audience}
 
 
+## Objectives {#sec:objectives}
+
+This Specification defines requirements in the following areas: standardization of failure reporting; definition of debug levels based on system complexity; provision of security controls for debug data and support for vendor-specific diagnostic extensions. 
+
+### Standardization of Failure Reporting
+The system shall standardize: failure report items, data formats, data collection methods and reporting sequences. All debug data shall be represented using structured JSON key-value pairs to ensure consistency and machine readability. The system should support access to debug data via industry-standard interfaces such as Redfish. Each reported event shall include timestamp information sufficient to enable event ordering and cross-component correlation.
+
+### Debug Levels
+During the development of the server system, we can define which level of debugging the system will support. Low debug level provides minimal diagnostic information (e.g., error codes and basic status indicators).  High debug level provides detailed diagnostic information, including but not limited to error trigger conditions, fault location, timing information, error counters and history. The supported debug level shall be configurable based on debugging bus bandwidth, debugging device complexity and debugging device storage volume.
+
+### Security Controls
+The system shall provide mechanisms to protect sensitive debug data. Security features shall include: configurable access control for debug data, optional encoding or protection of configuration and status register contents, integration with platform-level security configuration (e.g., BIOS settings).
+Debug data collection, storage, and access mechanisms shall comply with the configured security policies.
+
+### Vendor-Specific Extensions
+The system shall support vendor-specific extensions to enable additional diagnostic capabilities. Standardized data structures shall be preserved for interoperability. Vendor-specific data fields may be included as extensions to the standard schema. The system shall support access to vendor-specific data without impacting standard debug functionality.
 
 
-# Terminology
+## Expected Outcomes {#sec:expected-outcomes}
+
+This Specification will standardize the data structure of configuration registers and status registers, and accessing method. It will help the customers of data center on rapid identification of system failures, precise locating of failing components, reducing time for root cause analysis (RCA), efficient hardware replacement and repair workflows, and support for pre-emptive maintenance based on failure risk prediction of the components. The results are expected to reduce system downtime and improve the overall efficiency of data center. This Specification will simplify the data center debugging.
+
+
+
+
+
+
+# Terminology {#sec:terminology}
 
 ## Syntax and Conventions {#sec:syntax-and-conventions}
 
 ### Special Terms {#sec:special-terms}
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[BCP 14](https://tools.ietf.org/html/bcp14)] \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when they appear.
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this Specification are to be interpreted as described in [[BCP 14](https://tools.ietf.org/html/bcp14)] \[[RFC2119](https://tools.ietf.org/html/rfc2119)\] \[[RFC8174](https://tools.ietf.org/html/rfc8174)\] when they appear.
 
 
 ### Number Radix {#sec:number-radix}
 
-This document may represent some numbers in non-decimal radix.  In these cases, the following radix notations are used:
+This Specification may represent some numbers in non-decimal radix.  In these cases, the following radix notations are used:
 
 : {.plain}
 |                    |                                                                                       |
@@ -157,7 +184,16 @@ This document may represent some numbers in non-decimal radix.  In these cases, 
 An underscore (i.e., '_') is sometimes used in the representation to improve readability.  For example, an underscore can be used in a Hexadecimal number to separate each four digits in the example:  0x0001_2345.
 :::
 
+### JSON Keys {#sec:json-keys}
+
+The JSON keys defined in this Specification will use Lower Camel Case when the key name is a concatenation of multiple words.  Lower Camel Case is where the first letter of the first word is in lowercase and the first letters of subsequent words are in uppercase.  For example, if the key name's description is "number of nodes", then the key's name will be `numberOfNodes`.
+
+In addition to this naming convention, key names written in this Specification will use the `Courier` font.
+
+
 ## Definitions {#sec:definitions}
+
+* **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
 
 * **Hyperscalers** -  Cloud service providers of the world, who value scaling and rapid time to market of new hardware products.
 
@@ -182,17 +218,24 @@ An underscore (i.e., '_') is sometimes used in the representation to improve rea
 | BMC      | Baseboard Management Controller |
 | CPER     | Common Platform Error Record |
 | FW       | Firmware |
+| IMA      | In-band Management Agent | 
 | JSON     | JavaScript Object Notation |
 | JTAG     | Joint Test Action Group - Bare metal interface to access on-chip debug and test resources. |
 | MTTD     | Mean Time to Debug |
 | OCP      | Open Compute Project |
+| OMA      | Out-of-Band Management Agent |
+| OOB      | Out-of-Band |
+| OS       | Operating System |
 | PLDM     | Platform Level Data Model |
 | RAS      | Reliability, Availability, and Serviceability |
+| RCA      | Root Cause Analysis |
+| SPDM     | Security Protocol and Data Model |
 | SW       | Software | 
 | WDT      | Watchdog Timer |
 
 
 # Technical Overview (Informative)
+
 
 
 
@@ -203,6 +246,116 @@ An underscore (i.e., '_') is sometimes used in the representation to improve rea
 
 
 
+## High-Level Debug Architecture
+
+The system debug architecture consists of in-band and out-of-band data collection paths, centralized aggregation, and analysis components.
+
+```mermaid {caption="System Debug Architecture" #fig:system-debug-architecture}
+block
+
+    columns 3
+
+    mgmtpln["Datacenter Management Plane"]:3
+
+    space:3
+
+    analysistools["Analysis Tools/Policy/RCA Engine"]:3
+
+    space:3
+
+    rf["Redfish/APIs"]
+    space
+    decoders["Vendor Decoders"]
+
+    space:3
+
+    node["Server System (Node)"]:3
+    
+    space:3
+
+    inband["Inband Path (IMA/OS)"]
+    space
+    oob["Out-of-Band Path (BMC/OMA)"]
+
+    space:3
+
+    endpt["CPU | GPU | Memory | NIC | Storage"]:3
+
+    endpt --> inband
+    endpt --> oob
+    inband --> node
+    oob --> node
+    node --> rf
+    rf --> decoders
+    rf --> analysistools
+    decoders --> analysistools
+    analysistools --> mgmtpln
+
+```
+
+Where:
+
+- In-band path: Collects error data via OS, drivers, and kernel interfaces,
+- IMA: In-band Management Agent, 
+- Out-of-band path: Collects error data independently of host software,
+- OMA: Out-of-band Management Agent,
+- Management plane: Performs analysis, correlation, and decision-making,
+- Vendor decoders: Translate raw hardware data into actionable insights. 
+
+## Configuration vs Physical Error Determination Flow
+
+The system debug shall implement the following end-to-end debug data flow.
+
+```mermaid {caption="Configuration vs Physical Error Determination Flow" #fig:configuration-vs-physical-error-determination-flow}
+block
+
+  columns 2
+
+  failure["Failure Detected"]:2
+
+  space:2
+
+  collect_stat["Collect Status Registers"]:2
+
+  space:2
+
+  collect_cfg["Collect Configuration Registers"]:2
+
+  space:2
+
+  analyze["Analyze Error Context"]:2
+
+  space:2
+
+  cfg_error["Configuration Error"]
+  phys_error["Physical Error"]
+
+  space:2
+
+  update_fw["Update Firmware"]
+  replace["Replace Hardware"]
+
+  failure --> collect_stat
+  collect_stat --> collect_cfg
+  collect_cfg --> analyze
+  analyze --> cfg_error
+  analyze --> phys_error
+  cfg_error --> update_fw
+  phys_error --> replace
+  
+```
+
+## Content Arrangement
+
+Configuration registers and status registers are primary mechanisms for device control and fault diagnosis. During system debugging, status registers shall be used to detect and localize failures. Configuration registers shall provide the settings for working operation.  Failures shall be classified into the following categories: configuration errors, which caused by incorrect configuration, typically resolved through firmware or driver updates, and physical errors, which caused by hardware faults, requiring repair or replacement of components.
+
+The system debug process shall include collecting status register data to identify failing components, collecting configuration register data to scan firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending of remediation actions.
+
+The Baseboard Management Controller (BMC) shall act as the central entity for system-level debugging. The BMC shall collect and aggregate debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
+
+In this Specification, we will define the data structure and the accessing methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapters. The data format and dumping method of the status registers of a given system will be described in Status Dump chapters.
+The combination of configuration registers and status registers shall enable accurate fault identification and root cause analysis.
+
 
 # Layering
 
@@ -210,10 +363,242 @@ An underscore (i.e., '_') is sometimes used in the representation to improve rea
 # Handling Multiple Users
 
 
-# Security and Privacy
+# Security and Privacy {#sec:security-and-privacy}
+
+Debug capabilities are foundational to the development, deployment, and operation of modern datacenter platforms. Within the OCP ecosystem, debug is a critical enabler for system validation, fleet bring-up, fault isolation, reliability improvement, and root-cause analysis across heterogeneous, large-scale deployments. At the same time, debug interfaces represent one of the most powerful and sensitive control paths into a system. If not properly secured, they can undermine isolation boundaries, expose confidential and/or private tenant data, and compromise the integrity and trustworthiness of the platform. As such, security and privacy controls for debug are a core requirement for open, scalable, and trustworthy datacenter infrastructure.
+
+Datacenter systems fundamentally differ from traditional development or enterprise environments. They are deployed at scale, operated remotely, and continuously managed through standardized management planes. Physical access to systems is limited, and debug operations are frequently performed in production, often in response to hardware faults, RAS events, or workload-impacting failures. In multi-tenant and cloud environments, debug will coexist with strong isolation guarantees between tenants, workloads, and security/privacy domains. These realities require that debug be treated not as a local or ad-hoc capability, but as a defined, policy-driven, and auditable service within the datacenter ecosystem.
+
+Within OCP-aligned systems, debug functionality spans multiple layers and components, including CPUs, accelerators, memory subsystems, interconnects, firmware, and platform controllers. Debug data may include state information, traces, logs, crash dumps, register contents, or configuration data, and may be generated automatically or on demand. This data often flows through a complex path: from on-die debug logic, through platform firmware and runtime software, across sideband or management controllers (such as BMCs), and over standardized management or transport interfaces to remote debug and analytics tooling. These paths frequently traverse shared fabrics and standardized transports (e.g., PCIe, UCIe, USB, I3C, Ethernet), reflecting the composable and modular nature of modern datacenter designs.
+
+The openness and standardization that characterize the OCP ecosystem amplify both the value and the risk of debug capabilities. Open interfaces, interoperable tooling, and vendor-agnostic management frameworks enable broad ecosystem participation and innovation, but they also require clearly defined security boundaries and consistent enforcement across vendors, components, and system architectures. Debug security and privacy mechanisms therefore need to be composable, transport-agnostic, and interoperable, while still providing strong guarantees of authentication, authorization, confidentiality, and integrity.
+
+Debug data is inherently high-value. It may expose firmware state, internal hardware behavior, implementation details of vendor IP, workload-specific data, or security-sensitive information such as keys, identifiers, or policy state. In the datacenter, uncontrolled disclosure or manipulation of such data can have fleet-wide impact, affecting availability, data confidentiality, compliance, and customer trust. As a result, debug operations must be explicitly authorized, tightly scoped, and continuously observable, with protections applied end-to-end, from the debug initiator to the target component and back to the consuming tools.
+
+Securing debug in an open datacenter environment also requires careful consideration of lifecycle state and operational context. Systems transition through development, manufacturing, provisioning, deployment, and end-of-life phases, each with different debug requirements and risk profiles (as described in <TBD>). Likewise, production debug workflows may differ significantly from lab workflows, favoring non-intrusive data collection, automation, and policy-based enablement over manual, invasive control. A robust security-for-debug architecture must accommodate these variations without relying on proprietary assumptions or physical trust.
+
+The goal is to establish principles and requirements to ensure that debug capabilities remain powerful enough to support large-scale operations while preserving platform security, protecting tenant and workload data, and maintaining trust across an open, multi-vendor ecosystem. Debug need to be first-class, secure, and an interoperable capability that scales with the needs of modern datacenters.
+
+## Debug Security Threat Model {#sec:threat-model}
+
+This section describes the threat model for debug capabilities in open datacenter systems and establishes the security assumptions, assets, adversaries, and threat classes that must be considered when defining secure debug architectures. The intent is not to prescribe a specific implementation, but to provide a common, ecosystem-aligned framework to guide requirements, design decisions, and interoperability.
+
+### Assets and Security Objectives
+
+Debug capabilities expose high-value assets that require explicit protection in datacenter environments. These assets include, but are not limited to:
+
+- **Debug Data** - Register state, memory contents, trace streams, crash dumps, logs, configuration data, and firmware or silicon state.
+- **Security-Sensitive Material** - Cryptographic keys, device identifiers, security configuration, lifecycle state, entitlement or policy state, and vendor- or tenant-specific IP.
+- **Control Capabilities** - Invasive debug operations such as run control, memory modification, register writes, and fault injection mechanisms.
+- **Platform Trust Guarantees** - Isolation boundaries between tenants, security domains, execution worlds, and privilege levels.
+
+The primary security objectives for debug in the datacenter are:
+
+- **Confidentiality** - Prevent unauthorized disclosure of debug data.
+- **Integrity** - Prevent unauthorized modification of debug data or system state.
+- **Authenticity and Authorization** - Ensure that all debug actions are initiated by authenticated and explicitly authorized entities.
+- **Availability** - Ensure debug does not undermine system availability, fleet stability, or workload isolation.
+- **Auditability** - Ensure debug operations are observable, attributable, and traceable for operational and compliance purposes.
+
+### Trust Boundaries and Assumptions
+
+Datacenter systems are composed of multiple trust domains, often owned or managed by different parties. The debug threat model assumes the following:
+
+- **No Physical Trust Assumption** - Physical access alone does not imply authorization for debug.
+- **Remote Operation by Default** - Debug is initiated and consumed remotely via management and datacenter fabrics.
+- **Shared Infrastructure** - Debug traffic may traverse shared transports, controllers, and fabrics not dedicated exclusively to debug.
+- **Lifecycle Awareness** - Systems transition through multiple lifecycle states, each with different debug expectations and risk profiles.
+
+Trust boundaries typically exist between:
+
+- Silicon components and platform firmware
+- Platform firmware and host software
+- Host software and management controllers (e.g., BMC)
+- Management controllers and external debug or fleet tooling
+- Different tenants, workloads, or execution domains within the same system
+
+A secure debug architecture explicitly needs to define how debug requests and data cross these boundaries and what policies govern each transition.
+
+### Threat Actors
+
+The following threat actor classes are considered within scope:
+
+- **External Network Attackers** - Attempting to intercept, inject, or replay debug traffic over management or data networks.
+- **Insider Threats** - Authorized personnel or tooling misusing debug capabilities beyond intended scope.
+- **Compromised Components** - A compromised BMC, host OS, or management service attempting to escalate privileges via debug paths.
+- **Supply Chain or Lifecycle Abuse** - Exploitation of debug capabilities unintentionally left enabled or misconfigured during manufacturing, provisioning, and/or decommissioning.
+- **Cross-Tenant Adversaries** - Attempts to access or infer another tenant’s data or state through debug mechanisms.
+
+### Threat Classes
+
+The following threat classes are representative and non-exhaustive:
+
+- **Unauthorized Debug Enablement** - Attackers may attempt to enable or retain debug capabilities in production systems without proper authorization, bypassing intended lifecycle or policy controls.
+- **Debug Data Exfiltration** - Debug interfaces may be leveraged to extract sensitive data, including memory contents, firmware state, or security material, either directly or indirectly via side channels.
+- **Privilege Escalation via Debug** - Invasive debug operations may allow attackers to bypass software or hardware enforcement mechanisms, crossing execution worlds or privilege domains.
+- **Tampering and Injection** - Attackers may inject malicious debug commands or alter debug data in transit, leading to corrupted diagnostics, misattribution, or system compromise.
+- **Replay and Spoofing** - Previously authorized debug sessions or messages may be replayed or spoofed to gain unauthorized access or influence system behavior.
+- **Platform-Wide Impact** - Because debug is often highly privileged, its abuse can have fleet-wide consequences, impacting availability, security posture, or compliance across many systems.
+
+### Threat Model Implications
+
+Given these threats, debug architectures need to adhere to the following principles:
+
+- **Explicit Enablement** - Debug capabilities default to disabled and require deliberate, authenticated, and policy-controlled enablement.
+- **End-to-End Protection** - Debug requests and data need to be protected across all hops, regardless of transport or intermediate components.
+- **Least Privilege and Scoping** - Debug access needs to be scoped to specific components, functions, time windows, and data sets.
+- **Transport and Implementation Independence** - Security properties do not rely on a single transport, vendor-specific mechanism, or physical assumption.
+- **Observability and Accountability** - Debug operations are logged and attributable to support operational visibility and forensic analysis.
 
 
-# Data Stacks
+## Debug Security Architecture {#sec:debug-security-architecture}
+
+This section describes a reference architectural model for securing debug in open datacenter platforms. The model is descriptive rather than prescriptive, enabling multiple implementations that meet the same security objectives.
+
+### Architectural Layers
+
+A debug security architecture typically spans the following layers:
+
+- **Target Components** - CPUs, accelerators, memory subsystems, interconnects, and other silicon blocks that generate or consume debug data.
+- **On-Device Enforcement** - Hardware and firmware mechanisms that gate debug access, enforce policies, and protect data.
+- **Platform Management** - Management controllers (e.g., BMCs) acting as aggregation points for debug control and data flow.
+- **Management and Data Fabrics** - Standardized transports and protocols used to carry debug traffic alongside other management traffic.
+- **Remote Debug and Fleet Tooling** - Authorized tools used by operators, automation systems, or analytics platforms.
+
+Security controls need to be applied coherently across all layers, with explicit trust boundary definitions between them.
+
+### Policy Flow and Enforcement
+
+The debug policy originates from an authorized management authority within the datacenter control plane and is propagated through the platform to the components that participate in debug enablement and data handling. Policy information is represented in a form suitable for automated processing and distribution across heterogeneous system components.
+
+The policy's scope is expressed declaratively, identifying the allowed debug capabilities, affected components, visibility constraints, and applicable operational context. As debug requests traverse the system, each participating layer evaluates the policy material relevant to its role and applies local enforcement consistent with its trust boundary. This distributed evaluation model avoids reliance on a single enforcement point (i.e., defense in depth) and supports scalability across large fleets.
+
+Intermediate components act as conduits for the debug policy and debug traffic rather than sources of additional authority. Policy interpretation at these layers preserves the original scope and intent defined by the policy originator. Where multiple enforcement layers are present, debug access reflects the intersection of allowed capabilities rather than an accumulation of privileges.
+
+Policy updates, revocation, and expiration are treated as first-class operations. Changes in policy state propagate through the same channels used for initial enablement, enabling timely reduction or removal of debug access in response to lifecycle transitions, operational events, or security considerations.
+
+### Interoperability Considerations
+
+Debug security mechanisms operate within a multi-vendor, open ecosystem and therefore benefit from alignment with broadly adopted datacenter management and security frameworks. Common abstractions for authentication, authorization, secure session establishment, and policy expression enable integration across components sourced from different vendors.
+
+Interoperability is supported by separating security intent from transport specifics. Debug security properties remain consistent whether debug traffic flows over sideband interfaces, in-band fabrics, or network-based transports. This separation allows platforms to evolve or compose different physical and logical topologies without redefining debug security semantics.
+
+Vendor-specific extensions appear as additive capabilities layered on top of the common security framework. Such extensions coexist with baseline mechanisms and preserve consistent behavior when interoperating with ecosystem tooling. Debug operations across mixed deployments reflect the shared security model rather than vendor-unique assumptions.
+
+From an operational perspective, interoperability also encompasses tooling and observability. Debug security state, access events, and audit information integrate naturally into platform management systems, enabling operators to reason about debug behavior across platforms using common workflows and representations.
+
+
+## Communication Protection {#sec:communication-protection}
+
+In contemporary datacenter environments, debug communication frequently extends beyond local physical access. Debug tools connect remotely through management controllers, sideband fabrics, or network-based transports, often traversing multiple intermediaries before reaching the target device. In these environments, debug traffic often traverses components that are not intrinsic to the debug function itself, including baseboard management controllers, network adapters, protocol bridges, and shared fabrics.  Therefore, the transport itself becomes part of the system’s security boundary.
+
+Protecting debug communication therefore encompasses more than controlling whether debug is enabled. It also addresses how debug data is conveyed between a debug initiator and the target. Without explicit protection, debug traffic is susceptible to interception, modification, replay, or unintended disclosure as it transits internal buses, board-level interconnects, or external networks. These risks increase in at-scale deployments where multi-tenant environments, remote access, and open ecosystem integration are common.
+
+A secured debug transport establishes confidence that debug traffic reaches only its intended destination, originates from an authenticated source, and remains intact throughout its path. This protection applies consistently across different physical interfaces and transport technologies, including traditional local debug ports, sideband management channels, and packet-based network transports. The security properties of the debug session remain independent of the underlying medium, allowing platforms to evolve connectivity options without redefining debug trust assumptions.
+
+Equally important, debug transport protection aligns with the principle of least exposure. Only debug data explicitly authorized by platform policy becomes observable over the transport, and visibility remains constrained to the scope associated with the active debug context. By binding debug data flow to authenticated identity, approved capability sets, and defined lifecycle states, transport-level protection complements on-target debug gating mechanisms.
+
+### End-to-End Trust Assumptions
+
+Protecting debug communication relies on a clear understanding of the trust relationships between the entities involved in a debug session and the infrastructure that carries debug traffic. An end-to-end trust model establishes which elements participate actively in security decisions, which elements are treated as untrusted or opaque, and how confidence in the debug exchange is derived.
+
+#### Trust Anchors and Endpoint Identity
+
+The primary trust anchors in a debug communication flow reside at the endpoints of the debug session: the debug initiator and the target system. Each endpoint maintains its own cryptographic identity and security state, forming the basis for authentication and secure session establishment. Trust in debug communication derives from the ability of these endpoints to authenticate one another and to associate the resulting session with a known device identity and security posture.
+
+Identity verification occurs directly between the communicating endpoints rather than being delegated to intermediate components. Device identity, attestation state, and cryptographic capabilities are exchanged as part of session establishment, allowing both sides to reason about the authenticity of the peer before sensitive debug data is exchanged.
+
+#### Role of Intermediate Components
+
+Between the debug initiator and target system, debug traffic can traverse one or more intermediate elements such as management controllers, protocol bridges, switches, or network infrastructure. In the end-to-end trust model, these intermediaries are treated as transport participants rather than trust decision-makers.
+
+Intermediate components forward debug traffic without possessing the cryptographic keys associated with the debug session. Visibility into debug payloads is not assumed, and the security of the debug exchange does not depend on the correctness, confidentiality, or privilege level of these components. Secure debug sessions span across interface bridges and shared transports without expanding the trusted computing base.
+
+#### Secure Session Scope and Boundaries
+
+A debug session represents a bounded trust relationship defined by authenticated endpoints, negotiated cryptographic parameters, and an agreed session lifetime. Within this boundary, debug data exchanges benefit from confidentiality and integrity protection that remains consistent regardless of the path taken through the system.
+
+The existence of a secure session does not, by itself, imply unrestricted debug access. Instead, it provides a protected channel within which debug semantics are evaluated according to platform policy and lifecycle state. Debug operations occur within the intersection of session trust and authorization scope, preserving separation between communication security and functional enablement.
+
+#### Separation of Trust and Authorization
+
+End-to-end trust assumptions distinguish between who is communicating and what that entity is permitted to do. Session establishment builds confidence in the identity and integrity of the communicating endpoints, while authorization decisions determine the visibility and control exposed through the debug interface.
+
+This separation allows the same debug transport security model to apply across multiple operational contexts, such as development, manufacturing, or controlled field diagnostics. Changes in lifecycle state or debug policy influence authorization outcomes without altering the underlying trust relationship formed during session establishment.
+
+#### Resilience to Partial Compromise
+
+The end-to-end trust model assumes that some elements along the debug communication path can be compromised, misconfigured, or shared with other tenants. By limiting trust to authenticated endpoints and protecting debug payloads cryptographically, the model confines the impact of such compromise.
+
+A compromised intermediary can observe traffic patterns, delay or drop messages, or disrupt availability, but it lacks the ability to inspect or modify debug payloads without detection. Similarly, replay or injection attempts outside the established session context fail to produce meaningful debug effects at the target endpoint.
+
+#### Alignment with Open Datacenter Deployments
+
+In open datacenter environments, platforms frequently integrate components from multiple vendors and operate under shared management infrastructure. The end-to-end trust assumptions described here enable interoperability by avoiding implicit trust in platform composition or topology.
+
+Debug communication remains anchored to endpoint identity and session context rather than vendor-specific wiring or isolation guarantees. This approach supports scalable, remote debug workflows while preserving consistent security behavior across heterogeneous platforms and evolving interconnect technologies.
+
+
+
+
+
+## Requirements {#sec:security-requirements}
+
+### Debug Enablement and Lifecycle Control
+
+- [SEC-0001] Debug capabilities shall be disabled by default in production systems.
+- [SEC-0002] Debug enablement shall be explicitly authorized and bound to a well-defined system lifecycle state (e.g., development, provisioning, deployed, decommissioned).
+- [SEC-0003] The mechanism used to enable debug shall not rely on physical access alone as an authorization signal.
+- [SEC-0004] Debug enablement shall be reversible and support explicit disablement or expiration, including automatic revocation after a defined time window or event.
+
+### Authentication and Authorization
+
+- [SEC-0005] All debug access shall require strong authentication of the requesting entity.
+- [SEC-0006] Authorization of debug requests shall be policy-driven, allowing debug operations to be scoped by:
+  - Component or functional block
+  - Debug capability class (e.g., non-invasive vs. invasive)
+  - Data type or visibility level
+  - Time and operational context
+- [SEC-0007] Debug authorization decisions shall be enforceable at the lowest practical layer, including within silicon where feasible.
+
+### Debug Data Protection
+
+- [SEC-0008] Debug data shall be protected for confidentiality and integrity end-to-end, from the point of generation to final consumption by authorized tools.
+- [SEC-0009] Cryptographic protection shall not assume trust in intermediate transports, bridges, and/or controllers.
+- [SEC-0010] Debug data stored at rest (e.g., crash dumps, logs, trace buffers) shall be protected against unauthorized access and modification.
+- [SEC-0011] Implementations should support data minimization and filtering to limit exposure of tenant or workload-specific data.
+
+### Isolation and Containment
+
+- [SEC-0012] Debug operations shall not bypass or weaken isolation guarantees between:
+  - Tenants
+  - Security domains
+  - Privilege levels
+  - Execution worlds or contexts
+- [SEC-0013] Invasive debug capabilities shall be explicitly distinguishable from non-invasive debug and subject to stricter authorization and policy controls.
+- [SEC-0014] Debug access to one component shall not implicitly grant access to other components or system functions.
+
+### Transport and Interface Independence
+
+- [SEC-0015] Debug security properties shall be preserved regardless of transport, including but not limited to PCIe, UCIe, USB, I3C, Ethernet, or sideband interfaces.
+- [SEC-0016] Security shall not depend on a single proprietary protocol or debug interface.
+- [SEC-0017] Debug capabilities/mechanisms/communication should support multiplexing over shared datacenter fabrics without exposing debug traffic to unauthorized entities.
+
+### Observability and Auditability
+
+- [SEC-0018] Debug operations shall be observable and auditable through the platform management stack.
+- [SEC-0019] Audit records shall include:
+  - Identity of the requesting entity
+  - Authorized debug scope
+  - Time and duration of access
+  - Components and data accessed
+- [SEC-0020] Audit data shall be protected against tampering and retained in accordance with datacenter operational policies.
+
+
+
+
+
+# Data Stacks {#sec:data-stacks}
 
 
 
@@ -222,11 +607,27 @@ An underscore (i.e., '_') is sometimes used in the representation to improve rea
 
 ## Code Currency {#sec:code-currency}
 
-More often than not the root cause of a failure or problem is simply that the system has not been configured correctly, it is run either outdated FW, an incompatible combination of SW/FW components or components that have not been configured appropriately. The concept of Code Currency has been designed to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. The information will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema outlined in this file.
+Code Currency is a term used to describe how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.  This codebase includes, but not limited to, the following: 
+
+- Programming languages and compiler versions
+- Libraries, frameworks, and SDKs
+- Toolchains, build systems, and CI/CD infrastructure
+- Security patches and vulnerability fixes
+
+Code Currency refers to the timeliness, consistency, and lineage awareness of code and configuration artifacts that participate in debug enablement, control, and analysis. In the context of debug architectures, maintaining accurate code currency is essential to ensure that debug capabilities operate predictably, securely, and in alignment with platform policy across the system lifecycle.
+
+Debug mechanisms inherently bridge development, manufacturing, validation, and field operation. As a result, debug flows often depend on a diverse set of artifacts—including firmware binaries, microcode, configuration tables, entitlement credentials, policy definitions, and tooling metadata—that evolve independently over time. Without explicit consideration of code currency, mismatches between these artifacts can introduce ambiguity in debug behavior, weaken security guarantees, and complicate auditability and incident response. 
+
+More often than not, the root cause of a failure or problem is simply that the system has not been configured correctly and/or it is running either outdated firmware, an incompatible combination of software/firmware components, or components that have not been configured appropriately. The concept of Code Currency in this Specification is used to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. By explicitly accounting for these forms of data covered by Code Currency, the debug architecture can reason about compatibility, enforce policy consistently, and detect invalid or unsafe combinations of code and authorization. Treating Code Currency as an architectural concern—rather than an implicit assumption—helps ensure that debug capabilities remain controlled, auditable, and resilient as the platform evolves over time.
+
+### Approach {#sec:code-currency-approach}
+
+The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema outlined in this file.
+
 
 ### Schema {#sec:code-currency-schema}
 
-This section defines the **JSON schema** for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
+This section defines the JSON schema for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
 
 ```json {.small}
 {
