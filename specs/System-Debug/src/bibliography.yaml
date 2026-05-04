@@ -3,3 +3,90 @@ references:
     title: "TCG Pandoc Containers"
     publisher: "Trusted Computing Group"
     url: "https://github.com/TrustedComputingGroup/pandoc"
+
+  - id: "ocp-fm-infra-req"
+    title: "OCP Fault Management Infrastructure Requirements"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2025
+      month: 8
+      day: 15
+    url: "https://www.opencompute.org/documents/ocp-fault-management-infrastructure-requirements-1-5-pdf"
+  - id: "ocp-gpu-ras-req"
+    title: "OCP GPU & Accelerator RAS Requirements"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2025
+      month: 10
+      day: 23
+    url: "https://www.opencompute.org/documents/ocp-gpu-and-accelerators-ras-requirements-v1-7-10-23-2025-pdf"
+  - id: "ocp-ras-api"
+    title: "OCP RAS API Specification"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2025
+      month: 12
+      day: 14
+    url: "https://www.opencompute.org/documents/2025-ocp-ras-api-v0-9-final-pdf"
+  - id: "ocp-cpu-ras-debug-req"
+    title: "OCP Hyperscale CPU Debug and RAS Requirements"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2025
+      month: 9
+      day: 15
+    url: "https://www.opencompute.org/documents/hyperscale-cpu-ras-and-debug-requirements-specification-v0-7-09-29-2025-pdf"
+  - id: "ocp-gpu-mgmt-if"
+    title: "OCP GPU & Accelerator Management Interfaces"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2026
+    url: "https://www.opencompute.org/documents/ocp-gpu-accelerator-management-interfaces-v1-1-pdf"
+  - id: "ocp-gpu-fw-update-spec"
+    title: "OCP GPU Firmware Update Specification"
+    publisher: "Open Compute Project"
+    issued:
+      year: 2025
+    url: "https://www.opencompute.org/documents/ocp-gpu-fw-update-specification-v1-1-pdf"
+
+
+  - id: "dmtf-dsp0236"
+    title: "Management Component Transport Protocol (MCTP) Base Specification"
+    publisher: "DMTF"
+    issued:
+      year: 2024
+      month: 3
+      day: 25
+    url: "https://www.dmtf.org/sites/default/files/standards/documents/DSP0236_1.3.3.pdf"
+  - id: "dmtf-dsp0240"
+    title: "Platform Level Data Model (PLDM) Base Specification"
+    publisher: "DMTF"
+    issued:
+      year: 2024
+      month: 8
+      day: 5
+    url: "https://www.dmtf.org/sites/default/files/standards/documents/DSP0240_1.2.0.pdf"
+  - id: "dmtf-dsp0241"
+    title: "Platform Level Data Model (PLDM) Over MCPT Binding Specification"
+    publisher: "DMTF"
+    issued:
+      year: 2009
+      month: 4
+      day: 23
+    url: "https://www.dmtf.org/sites/default/files/standards/documents/DSP0241_1.0.0.pdf"
+  - id: "dmtf-dsp0274"
+    title: "Security Protocol and Data Model (SPDM) Specification"
+    publisher: "DMTF"
+    issued:
+      year: 2025
+      month: 5
+      day: 25
+    url: "https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_1.4.0.pdf"
+  - id: "dmtf-dsp0266"
+    title: "Redfish Specification"
+    publisher: "DMTF"
+    issued:
+      year: 2026
+      month: 1
+      day: 16
+    url: "https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.23.1.pdf"

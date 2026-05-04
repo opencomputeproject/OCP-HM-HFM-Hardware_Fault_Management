@@ -1,27 +1,79 @@
 \xpg@aux {}{english}
-\contentsline {section}{\numberline {1}Acknowledgements}{6}{section.1}%
-\contentsline {section}{\numberline {2}Compliance with OCP Tenets}{7}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Openness}{7}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Efficiency}{7}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Impact}{7}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Scale}{7}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Sustainability}{7}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Introduction}{8}{section.3}%
-\contentsline {section}{\numberline {4}Definitions}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Life cycle}{9}{subsection.4.1}%
-\contentsline {section}{\numberline {5}CodeCurrency}{10}{section.5}%
-\contentsline {subsubsection}{\numberline {5.0.1}Node CodeCurrency Record Schema}{10}{subsubsection.5.0.1}%
-\contentsline {paragraph}{\numberline {5.0.1.1}\textbf {Schema}}{10}{paragraph.5.0.1.1}%
-\contentsline {paragraph}{\numberline {5.0.1.2}\textbf {Field Explanations}}{14}{paragraph.5.0.1.2}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.1}\textbf {Node-Level}}{14}{subparagraph.5.0.1.2.1}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.2}\textbf {Assemblies}}{15}{subparagraph.5.0.1.2.2}%
-\contentsline {subparagraph}{\numberline {5.0.1.2.3}\textbf {Components}}{15}{subparagraph.5.0.1.2.3}%
-\contentsline {paragraph}{\numberline {5.0.1.3}Example}{15}{paragraph.5.0.1.3}%
-\contentsline {paragraph}{\numberline {5.0.1.4}CodeCurrency Redfish schema}{19}{paragraph.5.0.1.4}%
-\contentsline {section}{\numberline {6}Status Dump}{20}{section.6}%
-\contentsline {section}{\numberline {7}Future work}{21}{section.7}%
-\contentsline {section}{Appendices}{22}{section*.3}%
-\contentsline {section}{\numberline {A}First appendix}{22}{appendix.A}%
-\contentsline {section}{\numberline {B}Second appendix}{23}{appendix.B}%
-\contentsline {section}{References}{24}{appendix.B}%
+\contentsline {section}{\numberline {1}License}{7}{section.1}%
+\contentsline {section}{\numberline {2}Acknowledgements}{8}{section.2}%
+\contentsline {section}{\numberline {3}Revision History}{9}{section.3}%
+\contentsline {section}{\numberline {4}Compliance with OCP Tenets}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Openness}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Efficiency}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Impact}{10}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Scale}{10}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Sustainability}{10}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Introduction}{11}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Goals}{11}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Document Scope}{12}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}In Scope}{12}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Out of Scope}{12}{subsubsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.3}Audience}{12}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Objectives}{12}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Standardization of Failure Reporting}{12}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Debug Levels}{12}{subsubsection.5.4.2}%
+\contentsline {subsubsection}{\numberline {5.4.3}Security Controls}{13}{subsubsection.5.4.3}%
+\contentsline {subsubsection}{\numberline {5.4.4}Vendor-Specific Extensions}{13}{subsubsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.5}Expected Outcomes}{13}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Terminology}{14}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Syntax and Conventions}{14}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Special Terms}{14}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}Number Radix}{14}{subsubsection.6.1.2}%
+\contentsline {subsubsection}{\numberline {6.1.3}JSON Keys}{14}{subsubsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.2}Definitions}{14}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Abbreviations}{14}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Acronyms}{15}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Technical Overview (Informative)}{16}{section.7}%
+\contentsline {subsection}{\numberline {7.1}High-Level Debug Architecture}{16}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Configuration vs Physical Error Determination Flow}{17}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Content Arrangement}{18}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Layering}{19}{section.8}%
+\contentsline {section}{\numberline {9}Handling Multiple Users}{20}{section.9}%
+\contentsline {section}{\numberline {10}Security and Privacy}{21}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Debug Security Threat Model}{22}{subsection.10.1}%
+\contentsline {subsubsection}{\numberline {10.1.1}Assets and Security Objectives}{22}{subsubsection.10.1.1}%
+\contentsline {subsubsection}{\numberline {10.1.2}Trust Boundaries and Assumptions}{22}{subsubsection.10.1.2}%
+\contentsline {subsubsection}{\numberline {10.1.3}Threat Actors}{23}{subsubsection.10.1.3}%
+\contentsline {subsubsection}{\numberline {10.1.4}Threat Classes}{23}{subsubsection.10.1.4}%
+\contentsline {subsubsection}{\numberline {10.1.5}Threat Model Implications}{23}{subsubsection.10.1.5}%
+\contentsline {subsection}{\numberline {10.2}Debug Security Architecture}{24}{subsection.10.2}%
+\contentsline {subsubsection}{\numberline {10.2.1}Architectural Layers}{24}{subsubsection.10.2.1}%
+\contentsline {subsubsection}{\numberline {10.2.2}Policy Flow and Enforcement}{24}{subsubsection.10.2.2}%
+\contentsline {subsubsection}{\numberline {10.2.3}Interoperability Considerations}{25}{subsubsection.10.2.3}%
+\contentsline {subsection}{\numberline {10.3}Communication Protection}{25}{subsection.10.3}%
+\contentsline {subsubsection}{\numberline {10.3.1}End-to-End Trust Assumptions}{26}{subsubsection.10.3.1}%
+\contentsline {paragraph}{\numberline {10.3.1.1}Trust Anchors and Endpoint Identity}{26}{paragraph.10.3.1.1}%
+\contentsline {paragraph}{\numberline {10.3.1.2}Role of Intermediate Components}{26}{paragraph.10.3.1.2}%
+\contentsline {paragraph}{\numberline {10.3.1.3}Secure Session Scope and Boundaries}{26}{paragraph.10.3.1.3}%
+\contentsline {paragraph}{\numberline {10.3.1.4}Separation of Trust and Authorization}{26}{paragraph.10.3.1.4}%
+\contentsline {paragraph}{\numberline {10.3.1.5}Resilience to Partial Compromise}{27}{paragraph.10.3.1.5}%
+\contentsline {paragraph}{\numberline {10.3.1.6}Alignment with Open Datacenter Deployments}{27}{paragraph.10.3.1.6}%
+\contentsline {subsection}{\numberline {10.4}Requirements}{27}{subsection.10.4}%
+\contentsline {subsubsection}{\numberline {10.4.1}Debug Enablement and Lifecycle Control}{27}{subsubsection.10.4.1}%
+\contentsline {subsubsection}{\numberline {10.4.2}Authentication and Authorization}{27}{subsubsection.10.4.2}%
+\contentsline {subsubsection}{\numberline {10.4.3}Debug Data Protection}{28}{subsubsection.10.4.3}%
+\contentsline {subsubsection}{\numberline {10.4.4}Isolation and Containment}{28}{subsubsection.10.4.4}%
+\contentsline {subsubsection}{\numberline {10.4.5}Transport and Interface Independence}{28}{subsubsection.10.4.5}%
+\contentsline {subsubsection}{\numberline {10.4.6}Observability and Auditability}{28}{subsubsection.10.4.6}%
+\contentsline {section}{\numberline {11}Data Stacks}{29}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Code Currency}{29}{subsection.11.1}%
+\contentsline {subsubsection}{\numberline {11.1.1}Approach}{29}{subsubsection.11.1.1}%
+\contentsline {subsubsection}{\numberline {11.1.2}Schema}{29}{subsubsection.11.1.2}%
+\contentsline {subsubsection}{\numberline {11.1.3}Field Explanations}{33}{subsubsection.11.1.3}%
+\contentsline {paragraph}{\numberline {11.1.3.1}Node-Level}{33}{paragraph.11.1.3.1}%
+\contentsline {paragraph}{\numberline {11.1.3.2}Assemblies}{34}{paragraph.11.1.3.2}%
+\contentsline {paragraph}{\numberline {11.1.3.3}Components}{34}{paragraph.11.1.3.3}%
+\contentsline {subsubsection}{\numberline {11.1.4}Code Currency Redfish Schema}{34}{subsubsection.11.1.4}%
+\contentsline {subsection}{\numberline {11.2}Status Dump}{34}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Console}{34}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Interactive Debug/Run Control}{34}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Future Work}{35}{section.12}%
+\contentsline {section}{Appendices}{36}{section*.6}%
+\contentsline {section}{\numberline {A}Code Currency Examples}{36}{appendix.A}%
+\contentsline {section}{References}{40}{figure.caption.7}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
