@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  1 MAY 2026 20:31
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  4 MAY 2026 15:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1129,6 +1129,9 @@ Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \c@nlinenum=\count389
 \TeXr@lab=\toks51
 )
+\cslhangindent=\skip102
+\csllabelwidth=\skip103
+
 (/usr/local/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count390
@@ -1207,7 +1210,7 @@ Class scrartcl Warning: Mapping of
 (scrartcl)              because the caption package is being used.
 (scrartcl)              When using the caption package, it is recommended
 (scrartcl)              to use the options of this package directly instead
-(scrartcl)              of the KOMA-Script setting on line 359.
+(scrartcl)              of the KOMA-Script setting on line 392.
 
 (/usr/local/texlive/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
@@ -1233,47 +1236,47 @@ Package zref Info: New property: abspage on input line 67.
 (/usr/local/texlive/texmf-dist/tex/latex/needspace/needspace.sty
 Package: needspace 2025/03/13 v1.3e reserve vertical space
 )
-\mdf@templength=\skip102
+\mdf@templength=\skip104
 \c@mdf@globalstyle@cnt=\count406
-\mdf@skipabove@length=\skip103
-\mdf@skipbelow@length=\skip104
-\mdf@leftmargin@length=\skip105
-\mdf@rightmargin@length=\skip106
-\mdf@innerleftmargin@length=\skip107
-\mdf@innerrightmargin@length=\skip108
-\mdf@innertopmargin@length=\skip109
-\mdf@innerbottommargin@length=\skip110
-\mdf@splittopskip@length=\skip111
-\mdf@splitbottomskip@length=\skip112
-\mdf@outermargin@length=\skip113
-\mdf@innermargin@length=\skip114
-\mdf@linewidth@length=\skip115
-\mdf@innerlinewidth@length=\skip116
-\mdf@middlelinewidth@length=\skip117
-\mdf@outerlinewidth@length=\skip118
-\mdf@roundcorner@length=\skip119
-\mdf@footenotedistance@length=\skip120
-\mdf@userdefinedwidth@length=\skip121
-\mdf@needspace@length=\skip122
-\mdf@frametitleaboveskip@length=\skip123
-\mdf@frametitlebelowskip@length=\skip124
-\mdf@frametitlerulewidth@length=\skip125
-\mdf@frametitleleftmargin@length=\skip126
-\mdf@frametitlerightmargin@length=\skip127
-\mdf@shadowsize@length=\skip128
-\mdf@extratopheight@length=\skip129
-\mdf@subtitleabovelinewidth@length=\skip130
-\mdf@subtitlebelowlinewidth@length=\skip131
-\mdf@subtitleaboveskip@length=\skip132
-\mdf@subtitlebelowskip@length=\skip133
-\mdf@subtitleinneraboveskip@length=\skip134
-\mdf@subtitleinnerbelowskip@length=\skip135
-\mdf@subsubtitleabovelinewidth@length=\skip136
-\mdf@subsubtitlebelowlinewidth@length=\skip137
-\mdf@subsubtitleaboveskip@length=\skip138
-\mdf@subsubtitlebelowskip@length=\skip139
-\mdf@subsubtitleinneraboveskip@length=\skip140
-\mdf@subsubtitleinnerbelowskip@length=\skip141
+\mdf@skipabove@length=\skip105
+\mdf@skipbelow@length=\skip106
+\mdf@leftmargin@length=\skip107
+\mdf@rightmargin@length=\skip108
+\mdf@innerleftmargin@length=\skip109
+\mdf@innerrightmargin@length=\skip110
+\mdf@innertopmargin@length=\skip111
+\mdf@innerbottommargin@length=\skip112
+\mdf@splittopskip@length=\skip113
+\mdf@splitbottomskip@length=\skip114
+\mdf@outermargin@length=\skip115
+\mdf@innermargin@length=\skip116
+\mdf@linewidth@length=\skip117
+\mdf@innerlinewidth@length=\skip118
+\mdf@middlelinewidth@length=\skip119
+\mdf@outerlinewidth@length=\skip120
+\mdf@roundcorner@length=\skip121
+\mdf@footenotedistance@length=\skip122
+\mdf@userdefinedwidth@length=\skip123
+\mdf@needspace@length=\skip124
+\mdf@frametitleaboveskip@length=\skip125
+\mdf@frametitlebelowskip@length=\skip126
+\mdf@frametitlerulewidth@length=\skip127
+\mdf@frametitleleftmargin@length=\skip128
+\mdf@frametitlerightmargin@length=\skip129
+\mdf@shadowsize@length=\skip130
+\mdf@extratopheight@length=\skip131
+\mdf@subtitleabovelinewidth@length=\skip132
+\mdf@subtitlebelowlinewidth@length=\skip133
+\mdf@subtitleaboveskip@length=\skip134
+\mdf@subtitlebelowskip@length=\skip135
+\mdf@subtitleinneraboveskip@length=\skip136
+\mdf@subtitleinnerbelowskip@length=\skip137
+\mdf@subsubtitleabovelinewidth@length=\skip138
+\mdf@subsubtitlebelowlinewidth@length=\skip139
+\mdf@subsubtitleaboveskip@length=\skip140
+\mdf@subsubtitlebelowskip@length=\skip141
+\mdf@subsubtitleinneraboveskip@length=\skip142
+\mdf@subsubtitleinnerbelowskip@length=\skip143
 
 (/usr/local/texlive/texmf-dist/tex/latex/mdframed/md-frame-0.mdf
 File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
@@ -1283,33 +1286,33 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \mdf@splitbox@one=\box113
 \mdf@splitbox@two=\box114
 \mdf@splitbox@save=\box115
-\mdfsplitboxwidth=\skip142
-\mdfsplitboxtotalwidth=\skip143
-\mdfsplitboxheight=\skip144
-\mdfsplitboxdepth=\skip145
-\mdfsplitboxtotalheight=\skip146
-\mdfframetitleboxwidth=\skip147
-\mdfframetitleboxtotalwidth=\skip148
-\mdfframetitleboxheight=\skip149
-\mdfframetitleboxdepth=\skip150
-\mdfframetitleboxtotalheight=\skip151
-\mdffootnoteboxwidth=\skip152
-\mdffootnoteboxtotalwidth=\skip153
-\mdffootnoteboxheight=\skip154
-\mdffootnoteboxdepth=\skip155
-\mdffootnoteboxtotalheight=\skip156
-\mdftotallinewidth=\skip157
-\mdfboundingboxwidth=\skip158
-\mdfboundingboxtotalwidth=\skip159
-\mdfboundingboxheight=\skip160
-\mdfboundingboxdepth=\skip161
-\mdfboundingboxtotalheight=\skip162
-\mdf@freevspace@length=\skip163
-\mdf@horizontalwidthofbox@length=\skip164
-\mdf@verticalmarginwhole@length=\skip165
-\mdf@horizontalspaceofbox=\skip166
-\mdfsubtitleheight=\skip167
-\mdfsubsubtitleheight=\skip168
+\mdfsplitboxwidth=\skip144
+\mdfsplitboxtotalwidth=\skip145
+\mdfsplitboxheight=\skip146
+\mdfsplitboxdepth=\skip147
+\mdfsplitboxtotalheight=\skip148
+\mdfframetitleboxwidth=\skip149
+\mdfframetitleboxtotalwidth=\skip150
+\mdfframetitleboxheight=\skip151
+\mdfframetitleboxdepth=\skip152
+\mdfframetitleboxtotalheight=\skip153
+\mdffootnoteboxwidth=\skip154
+\mdffootnoteboxtotalwidth=\skip155
+\mdffootnoteboxheight=\skip156
+\mdffootnoteboxdepth=\skip157
+\mdffootnoteboxtotalheight=\skip158
+\mdftotallinewidth=\skip159
+\mdfboundingboxwidth=\skip160
+\mdfboundingboxtotalwidth=\skip161
+\mdfboundingboxheight=\skip162
+\mdfboundingboxdepth=\skip163
+\mdfboundingboxtotalheight=\skip164
+\mdf@freevspace@length=\skip165
+\mdf@horizontalwidthofbox@length=\skip166
+\mdf@verticalmarginwhole@length=\skip167
+\mdf@horizontalspaceofbox=\skip168
+\mdfsubtitleheight=\skip169
+\mdfsubsubtitleheight=\skip170
 \c@mdfcountframes=\count407
 
 ****** mdframed patching \endmdf@trivlist
@@ -1743,16 +1746,16 @@ rtinus
 (fontspec)             Math/OT:script=math;language=dflt;+ssty=1;"
 
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 452.
+(Font)              `operators' in the math version `normal' on input line 485.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> TU/LibertinusMath(1)/m/n on input line 
-452.
+485.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 452.
+(Font)              `operators' in the math version `bold' on input line 485.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmr/bx/n --> TU/LibertinusMath(1)/b/n on input line
- 452.
+ 485.
 
 Package fontspec Info: 
 (fontspec)             Libertinus Math scale = 1.0001.
@@ -1806,15 +1809,15 @@ stment={\fontdimen
 (fontspec)             Math/OT:script=math;language=dflt;+ssty=1;"
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 452.
+(Font)              `symbols' in the math version `normal' on input line 485.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/cmsy/m/n --> TU/LibertinusMath(2)/m/n on input line
- 452.
+ 485.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 452.
+(Font)              `symbols' in the math version `bold' on input line 485.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/cmsy/b/n --> TU/LibertinusMath(2)/b/n on input line
- 452.
+ 485.
 
 Package fontspec Info: 
 (fontspec)             Libertinus Math scale = 0.9999.
@@ -1863,16 +1866,16 @@ stment={\fontdimen
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 4
-52.
+85.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/cmex/m/n --> TU/LibertinusMath(3)/m/n on input line
- 452.
+ 485.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 452
+(Font)              `largesymbols' in the math version `bold' on input line 485
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/cmex/m/n --> TU/LibertinusMath(3)/b/n on input line
- 452.
+ 485.
 
 Package fontspec Info: 
 (fontspec)             Font family 'LibertinusSerif(0)' created for font
@@ -1903,20 +1906,20 @@ Package fontspec Info:
 
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
 (Font)                  TU/LibertinusMath(1)/m/n --> TU/LibertinusSerif(0)/m/n 
-on input line 453.
+on input line 486.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 (Font)                  OT1/cmr/m/it --> TU/LibertinusSerif(0)/m/it on input li
-ne 453.
+ne 486.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/cmr/bx/n --> TU/LibertinusSerif(0)/b/n on input lin
-e 453.
+e 486.
 (/usr/local/texlive/texmf-dist/tex/latex/titling/titling.sty
 Package: titling 2009/09/04 v2.1d maketitle typesetting
-\thanksmarkwidth=\skip169
-\thanksmargin=\skip170
-\droptitle=\skip171
+\thanksmarkwidth=\skip171
+\thanksmargin=\skip172
+\droptitle=\skip173
 )
-\tabularparskip=\skip172
+\tabularparskip=\skip174
 
 
 Class scrartcl Warning: Usage of package `fancyhdr' together
@@ -1930,25 +1933,25 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (scrartcl)              `\addtokomafont' for the page style elements need
 (scrartcl)              explicite user intervention to work.
 (scrartcl)              Nevertheless, using requested
-(scrartcl)              package `fancyhdr' on input line 495.
+(scrartcl)              package `fancyhdr' on input line 528.
 
 (/usr/local/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 
-\f@nch@headwidth=\skip173
-\f@nch@offset@elh=\skip174
-\f@nch@offset@erh=\skip175
-\f@nch@offset@olh=\skip176
-\f@nch@offset@orh=\skip177
-\f@nch@offset@elf=\skip178
-\f@nch@offset@erf=\skip179
-\f@nch@offset@olf=\skip180
-\f@nch@offset@orf=\skip181
-\f@nch@height=\skip182
-\f@nch@footalignment=\skip183
-\f@nch@widthL=\skip184
-\f@nch@widthC=\skip185
-\f@nch@widthR=\skip186
+\f@nch@headwidth=\skip175
+\f@nch@offset@elh=\skip176
+\f@nch@offset@erh=\skip177
+\f@nch@offset@olh=\skip178
+\f@nch@offset@orh=\skip179
+\f@nch@offset@elf=\skip180
+\f@nch@offset@erf=\skip181
+\f@nch@offset@olf=\skip182
+\f@nch@offset@orf=\skip183
+\f@nch@height=\skip184
+\f@nch@footalignment=\skip185
+\f@nch@widthL=\skip186
+\f@nch@widthC=\skip187
+\f@nch@widthR=\skip188
 \@temptokenb=\toks55
 )
 (/usr/local/texlive/texmf-dist/tex/latex/appendix/appendix.sty
@@ -1969,42 +1972,42 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 (.cache/spec.ocp.aux)
 \openout1 = `spec.ocp.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 665.
-LaTeX Font Info:    ... okay on input line 665.
-Package scrbase Info: activating english \abstractname on input line 665.
-Package scrbase Info: activating english \partname on input line 665.
-Package scrbase Info: activating english \figurename on input line 665.
-Package scrbase Info: activating english \tablename on input line 665.
-Package scrbase Info: activating english \contentsname on input line 665.
-Package scrbase Info: activating english \listfigurename on input line 665.
-Package scrbase Info: activating english \listtablename on input line 665.
-Package scrbase Info: activating english \refname on input line 665.
-Package scrbase Info: activating english \indexname on input line 665.
-LaTeX Info: Redefining \microtypecontext on input line 665.
-Package microtype Info: Applying patch `item' on input line 665.
-Package microtype Info: Applying patch `toc' on input line 665.
-Package microtype Info: Applying patch `eqnum' on input line 665.
-Package microtype Info: Applying patch `footnote' on input line 665.
-Package microtype Info: Applying patch `verbatim' on input line 665.
-LaTeX Info: Redefining \microtypesetup on input line 665.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 698.
+LaTeX Font Info:    ... okay on input line 698.
+Package scrbase Info: activating english \abstractname on input line 698.
+Package scrbase Info: activating english \partname on input line 698.
+Package scrbase Info: activating english \figurename on input line 698.
+Package scrbase Info: activating english \tablename on input line 698.
+Package scrbase Info: activating english \contentsname on input line 698.
+Package scrbase Info: activating english \listfigurename on input line 698.
+Package scrbase Info: activating english \listtablename on input line 698.
+Package scrbase Info: activating english \refname on input line 698.
+Package scrbase Info: activating english \indexname on input line 698.
+LaTeX Info: Redefining \microtypecontext on input line 698.
+Package microtype Info: Applying patch `item' on input line 698.
+Package microtype Info: Applying patch `toc' on input line 698.
+Package microtype Info: Applying patch `eqnum' on input line 698.
+Package microtype Info: Applying patch `footnote' on input line 698.
+Package microtype Info: Applying patch `verbatim' on input line 698.
+LaTeX Info: Redefining \microtypesetup on input line 698.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: No adjustment of tracking.
@@ -2014,7 +2017,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `Arial' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package hyperref Info: Link coloring ON on input line 665.
+Package hyperref Info: Link coloring ON on input line 698.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -2051,9 +2054,9 @@ Package hyperref Info: Link coloring ON on input line 665.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \c@lstlisting=\count419
-Package tocbasic Info: setting babel extension for `lol' on input line 665.
-\scr@dte@lstlisting@maxnumwidth=\skip187
-Package ragged2e Info: ABD: executing \RaggedRight on input line 665.
+Package tocbasic Info: setting babel extension for `lol' on input line 698.
+\scr@dte@lstlisting@maxnumwidth=\skip189
+Package ragged2e Info: ABD: executing \RaggedRight on input line 698.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: longtable package is loaded.
@@ -2062,15 +2065,15 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 665.
+(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 698.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 665.
+(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 698.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> TU/NotoSansMono(0)/m/n on input line 6
-65.
+98.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/NotoSansMono(0)/b/n on input line 6
-65.
+98.
 
 
 Package unicode-math Warning: Using \overbracket and \underbracket from
@@ -2136,8 +2139,8 @@ m/n/10 System Debug Specification
 [2
 
 ]
-Package tocbasic Info: character protrusion at toc deactivated on input line 72
-6.
+Package tocbasic Info: character protrusion at toc deactivated on input line 75
+9.
  (.cache/spec.ocp.toc
 LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
 (Font)              scaled to size 10.95116pt on input line 2.
@@ -2185,8 +2188,8 @@ m/n/10 System Debug Specification
  []
 
 [4]
-Package tocbasic Info: character protrusion at lof deactivated on input line 72
-8.
+Package tocbasic Info: character protrusion at lof deactivated on input line 76
+1.
  (.cache/spec.ocp.lof)
 \tf@lof=\write6
 \openout6 = `spec.ocp.lof'.
@@ -2200,8 +2203,8 @@ m/n/10 System Debug Specification
 [5
 
 ]
-Package tocbasic Info: character protrusion at lot deactivated on input line 73
-0.
+Package tocbasic Info: character protrusion at lot deactivated on input line 76
+3.
  (.cache/spec.ocp.lot)
 \tf@lot=\write7
 \openout7 = `spec.ocp.lot'.
@@ -2231,27 +2234,27 @@ m/n/10 System Debug Specification
 [8
 
 ]
-Overfull \hbox (1.00769pt too wide) in alignment at lines 827--827
+Overfull \hbox (1.00769pt too wide) in alignment at lines 860--860
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.00769pt too wide) in alignment at lines 827--827
+Overfull \hbox (1.00769pt too wide) in alignment at lines 860--860
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.00769pt too wide) in alignment at lines 827--827
+Overfull \hbox (1.00769pt too wide) in alignment at lines 860--860
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.00769pt too wide) in alignment at lines 827--827
+Overfull \hbox (1.00769pt too wide) in alignment at lines 860--860
  [] [] [] [] 
  []
 
 
-Overfull \hbox (1.00769pt too wide) in alignment at lines 827--827
+Overfull \hbox (1.00769pt too wide) in alignment at lines 860--860
  [] [] [] [] 
  []
 
@@ -2272,7 +2275,13 @@ m/n/10 System Debug Specification
 [10
 
 ]
-Underfull \hbox (badness 1292) in paragraph at lines 892--904
+Underfull \hbox (badness 1221) in paragraph at lines 919--925
+\TU/Arial(0)/m/n/10.95 GPU & Accelerator RAS Requirements [][][2][][] improve o
+bservability and reliability. However, such 
+ []
+
+
+Underfull \hbox (badness 1292) in paragraph at lines 926--938
 \TU/Arial(0)/m/n/10.95 debugging framework is created to improve fault observab
 ility, root cause analysis (RCA), and 
  []
@@ -2286,7 +2295,13 @@ m/n/10 System Debug Specification
 [11
 
 ]
-Underfull \hbox (badness 1783) in paragraph at lines 980--987
+Underfull \hbox (badness 1675) in paragraph at lines 1001--1004
+[]\TU/Arial(0)/m/n/10.95 In addition, this Specification will not cover existin
+g material already covered by another OCP 
+ []
+
+
+Underfull \hbox (badness 1783) in paragraph at lines 1043--1050
 \TU/Arial(0)/m/n/10.95 The system shall standardize: failure report items, data
  formats, data collection methods and 
  []
@@ -2304,13 +2319,13 @@ m/n/10 System Debug Specification
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 1074--1078
+Underfull \hbox (badness 10000) in paragraph at lines 1137--1141
 []\TU/Arial(0)/m/n/10.95 An underscore (i.e., ’_-’) is sometimes used in the re
 presentation to improve readability. For
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1074--1078
+Underfull \hbox (badness 10000) in paragraph at lines 1137--1141
 \TU/Arial(0)/m/n/10.95 example, an underscore can be used in a Hexadecimal numb
 er to separate each four digits in
  []
@@ -2380,13 +2395,13 @@ m/n/10 System Debug Specification
 [20
 
 ]
-Underfull \hbox (badness 1226) in paragraph at lines 1287--1298
+Underfull \hbox (badness 1226) in paragraph at lines 1352--1363
 \TU/Arial(0)/m/n/10.95 Debug capabilities are foundational to the development, 
 deployment, and operation of modern 
  []
 
 
-Underfull \hbox (badness 1226) in paragraph at lines 1335--1345
+Underfull \hbox (badness 1226) in paragraph at lines 1400--1410
 []\TU/Arial(0)/m/n/10.95 Debug data is inherently high-value. It may expose fir
 mware state, internal hardware behavior, 
  []
@@ -2400,7 +2415,7 @@ m/n/10 System Debug Specification
 [21
 
 ]
-Underfull \hbox (badness 1253) in paragraph at lines 1366--1372
+Underfull \hbox (badness 1253) in paragraph at lines 1431--1437
 \TU/Arial(0)/m/n/10.95 This section describes the threat model for debug capabi
 lities in open datacenter systems and 
  []
@@ -2412,13 +2427,13 @@ m/n/10 System Debug Specification
  []
 
 [22]
-Underfull \hbox (badness 1132) in paragraph at lines 1473--1476
+Underfull \hbox (badness 1132) in paragraph at lines 1538--1541
 []\TU/Arial(0)/b/n/10.95 External Network Attackers \TU/Arial(0)/m/n/10.95 - At
 tempting to intercept, inject, or replay debug traffic over 
  []
 
 
-Underfull \hbox (badness 1087) in paragraph at lines 1535--1539
+Underfull \hbox (badness 1087) in paragraph at lines 1600--1604
 []\TU/Arial(0)/b/n/10.95 End-to-End Protection \TU/Arial(0)/m/n/10.95 - Debug r
 equests and data need to be protected across all hops, 
  []
@@ -2436,7 +2451,7 @@ m/n/10 System Debug Specification
  []
 
 [24]
-Underfull \hbox (badness 1558) in paragraph at lines 1670--1679
+Underfull \hbox (badness 1558) in paragraph at lines 1735--1744
 []\TU/Arial(0)/m/n/10.95 A secured debug transport establishes confidence that 
 debug traffic reaches only its intended 
  []
@@ -2448,13 +2463,13 @@ m/n/10 System Debug Specification
  []
 
 [25]
-Underfull \hbox (badness 1590) in paragraph at lines 1751--1756
+Underfull \hbox (badness 1590) in paragraph at lines 1816--1821
 []\TU/Arial(0)/m/n/10.95 End-to-end trust assumptions distinguish between who i
 s communicating and what that entity 
  []
 
 
-Underfull \hbox (badness 1748) in paragraph at lines 1751--1756
+Underfull \hbox (badness 1748) in paragraph at lines 1816--1821
 \TU/Arial(0)/m/n/10.95 is permitted to do. Session establishment builds confide
 nce in the identity and integrity of the 
  []
@@ -2466,13 +2481,13 @@ m/n/10 System Debug Specification
  []
 
 [26]
-Underfull \hbox (badness 1622) in paragraph at lines 1787--1792
+Underfull \hbox (badness 1622) in paragraph at lines 1852--1857
 []\TU/Arial(0)/m/n/10.95 Debug communication remains anchored to endpoint ident
 ity and session context rather than 
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 1787--1792
+Underfull \hbox (badness 1092) in paragraph at lines 1852--1857
 \TU/Arial(0)/m/n/10.95 vendor-specific wiring or isolation guarantees. This app
 roach supports scalable, remote debug 
  []
@@ -2484,7 +2499,7 @@ m/n/10 System Debug Specification
  []
 
 [27]
-Underfull \hbox (badness 2635) in paragraph at lines 1917--1920
+Underfull \hbox (badness 2635) in paragraph at lines 1982--1985
 []\TU/Arial(0)/m/n/10.95 [SEC-0018] Debug operations shall be observable and au
 ditable through the platform 
  []
@@ -2496,25 +2511,25 @@ m/n/10 System Debug Specification
  []
 
 [28]
-Underfull \hbox (badness 2368) in paragraph at lines 1961--1967
+Underfull \hbox (badness 2368) in paragraph at lines 2026--2032
 \TU/Arial(0)/m/n/10.95 artifacts that participate in debug enablement, control,
  and analysis. In the context of debug 
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 1977--1992
+Underfull \hbox (badness 1019) in paragraph at lines 2042--2057
 \TU/Arial(0)/m/n/10.95 shop style standardized machine readable method to retri
 eve all relevant information about the 
  []
 
 LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 9.00096pt on input line 2018.
+(Font)              scaled to size 9.00096pt on input line 2083.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 6.00064pt on input line 2018.
+(Font)              scaled to size 6.00064pt on input line 2083.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 2018.
+(Font)              scaled to size 8.99904pt on input line 2083.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 2018.
+(Font)              scaled to size 5.99936pt on input line 2083.
 
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
@@ -2563,32 +2578,34 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[35]
+[35
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[36]
+[36
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [37]
-File: .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conve
-rt.pdf Graphic file (type pdf)
-<use .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conver
-t.pdf>
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[38
+[38]
+File: .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conve
+rt.pdf Graphic file (type pdf)
+<use .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conver
+t.pdf>
 
-]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2604,29 +2621,6 @@ m/n/10 System Debug Specification
 
 [40
 
-]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[41
-
-]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[42
-
-]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[43
 
 ] (.cache/spec.ocp.aux)
  ***********
@@ -2635,12 +2629,12 @@ L3 programming layer <2025-11-14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 44643 strings out of 470152
- 924942 string characters out of 5477859
- 1749489 words of memory out of 5000000
- 72452 multiletter control sequences out of 15000+600000
+ 44660 strings out of 470152
+ 925280 string characters out of 5477859
+ 1750656 words of memory out of 5000000
+ 72469 multiletter control sequences out of 15000+600000
  635570 words of font info for 150 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  108i,13n,112p,11227b,1007s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on .cache/spec.ocp.pdf (43 pages).
+Output written on .cache/spec.ocp.pdf (40 pages).
