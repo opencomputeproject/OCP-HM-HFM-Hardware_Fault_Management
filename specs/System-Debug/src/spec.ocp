@@ -58,7 +58,7 @@ Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Gro
 ---------------------------------------------------------------------------------------------------------------------------------
 Rev.       Date             Guiding Contributor(s)          Description                                                         
 ---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
-0.1        2026-04-29       Marko B., Enrico C., James Z.   Initial Release                                                     
+0.1        2026-05-04       Marko B., Enrico C., James Z.   Initial Release                                                     
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -99,7 +99,7 @@ This increasing complexity requires the need to validate, diagnose, debug, and o
 
 The following challenges are commonly observed in data center debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures may occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
 
-System designs that comply with OCP Fault Management Infrastructure Requirements and OCP GPU & Accelerator RAS Requirements improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for data center operations.
+System designs that comply with OCP Fault Management Infrastructure Requirements [@{ocp-fm-infra-req}] and OCP GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for data center operations.
 
 This Specification will address debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribe an architecture to communicate various debug data in a common method and data models across the datacenter.  The Specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter.  A system-level debugging framework is created to improve fault observability, root cause analysis (RCA), and remediation efficiency in server systems deployed in datacenters. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
 
@@ -128,7 +128,16 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 ### Out of Scope {#sec:out-of-scope}
 
-This Specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.
+This Specification will not cover capabilities related to performance monitoring and telemetry.  
+
+In addition, this Specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.  This includes the following:
+
+- Error Events - covered by the RAS API Specification [@{ocp-ras-api}].
+- Bulk Dumping - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
+- Crash Dumping - covered by the RAS API Specification [@{ocp-ras-api}], Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}], and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
+- Register Dumping - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
+- Array Dumping - covered by the GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] document.
+
 
 ## Audience {#sec:audience}
 
@@ -221,6 +230,7 @@ In addition to this naming convention, key names written in this Specification w
 | IMA      | In-band Management Agent | 
 | JSON     | JavaScript Object Notation |
 | JTAG     | Joint Test Action Group - Bare metal interface to access on-chip debug and test resources. |
+| MCTP     | Management Component Transport Protocol |
 | MTTD     | Mean Time to Debug |
 | OCP      | Open Compute Project |
 | OMA      | Out-of-Band Management Agent |
@@ -839,9 +849,28 @@ This section defines the JSON schema for representing the firmware, configuratio
 - `configuration`:
   - Array of custom attributes: `name`, `value`, optional `description`.
 
-### Example
+### Code Currency Redfish Schema
 
-Below is an example of an Hypothetical Node with:
+
+
+## Status Dump {#sec:status-dump}
+
+
+## Console {#sec:console}
+
+
+## Interactive Debug/Run Control {#sec:interactive-debug}
+
+
+
+# Future Work {#sec:future-work}
+
+
+\beginappendices
+
+# Code Currency Examples {#sec:code-currency-examples}
+
+Below is a JSON example for Code Currency of a hypothetical node with:
 
 - Dual-socket CPUs
 - Memory modules
@@ -1040,30 +1069,4 @@ Below is an example of an Hypothetical Node with:
 !include examplerepresentation.uml
 
 ```
-
-### Code Currency Redfish Schema
-
-
-
-## Status Dump {#sec:status-dump}
-
-
-## Console {#sec:console}
-
-
-## Interactive Debug/Run Control {#sec:interactive-debug}
-
-
-
-# Future Work {#sec:future-work}
-
-\beginappendices
-
-# First appendix
-
-This is the first appendix.
-
-# Second appendix
-
-This is the second appendix.
 
