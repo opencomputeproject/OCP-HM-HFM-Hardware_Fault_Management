@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Node Codecurency Record",
+  "title": "Node CodeCurrency Record",
   "type": "object",
   "properties": {
     "nodeId": { "type": "string", "description": "Unique identifier for the node" },
@@ -116,40 +116,37 @@
             }
           }
         },
-        
-"firmware": {
-  "type": "array",
-  "description": "List of firmware entries for the component",
-  "items": {
-    "type": "object",
-    "properties": {
-      "version": { "type": "string", "description": "Firmware version" },
-      "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
-      "securityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
-      "minimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
-      "imageRole": {
-        "type": "string",
-        "enum": ["Active", "Recovery", "Standby"],
-        "description": "Indicates if this firmware is actively running or a redundant recovery image"
-      }
-    },
-    "required": ["version"]
-  }
-  },
-        
-"configuration": {
-      "type": "array",
-      "description": "Custom configuration attributes for the component",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string", "description": "Configuration attribute name" },
-          "value": { "type": "string", "description": "Configuration attribute value" },
-          "description": { "type": "string", "description": "Optional description of the attribute" }
-        },
-        "required": ["name", "value"]
-      }
-
+		"firmware": {
+		  "type": "array",
+		  "description": "List of firmware entries for the component",
+		  "items": {
+			"type": "object",
+			"properties": {
+			  "version": { "type": "string", "description": "Firmware version" },
+			  "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
+			  "securityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
+			  "minimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
+			  "imageRole": {
+				"type": "string",
+				"enum": ["Active", "Recovery", "Standby"],
+				"description": "Indicates if this firmware is actively running or a redundant recovery image"
+			  }
+			},
+			"required": ["version"]
+		  }
+		},
+		"configuration": {
+		  "type": "array",
+		  "description": "Custom configuration attributes for the component",
+		  "items": {
+			"type": "object",
+			"properties": {
+			  "name": { "type": "string", "description": "Configuration attribute name" },
+			  "value": { "type": "string", "description": "Configuration attribute value" },
+			  "description": { "type": "string", "description": "Optional description of the attribute" }
+			},
+			"required": ["name", "value"]
+		  }
         },
       "required": ["componentType", "componentId", "firmware"]
     }
