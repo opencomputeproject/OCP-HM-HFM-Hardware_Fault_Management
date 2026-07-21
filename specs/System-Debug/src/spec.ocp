@@ -3,7 +3,7 @@ title: "System Debug Specification"
 version: 0.1
 type: BASE
 project: Hardware Fault Management
-authors: [(See Acknowledgements section)]
+authors: [(See Acknowledgements Section)]
 bibliography: bibliography.yaml
 geometry: "left=0.75in,right=0.75in"
 ...
@@ -49,6 +49,7 @@ The contributors of this Specification would like to acknowledge the following:
 
 - Marko Bartscherer (Intel)
 - Enrico Carrieri (Qualcomm Technologies, Inc.)
+- Donald Gaither (Vertiv)
 - James Zou (Aivres)
 
 Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
@@ -58,7 +59,8 @@ Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Gro
 ---------------------------------------------------------------------------------------------------------------------------------
 Rev.       Date             Guiding Contributor(s)          Description                                                         
 ---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
-0.1        2026-05-04       Marko B., Enrico C., James Z.   Initial Release                                                     
+0.1        2026-05-04       Marko B., Enrico C., Donald G., Initial Release                                                     
+                            James Z.
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -226,6 +228,8 @@ In addition to this naming convention, key names written in this Specification w
 |:---------|:-------------------------------------------------------------------------|
 | BMC      | Baseboard Management Controller |
 | CPER     | Common Platform Error Record |
+| DVT      | Design Validation Test |
+| EVT      | Engineering Validation Test |
 | FW       | Firmware |
 | IMA      | In-band Management Agent | 
 | JSON     | JavaScript Object Notation |
@@ -233,10 +237,12 @@ In addition to this naming convention, key names written in this Specification w
 | MCTP     | Management Component Transport Protocol |
 | MTTD     | Mean Time to Debug |
 | OCP      | Open Compute Project |
+| OEM      | Original Equipment Manufacturer |
 | OMA      | Out-of-Band Management Agent |
 | OOB      | Out-of-Band |
 | OS       | Operating System |
 | PLDM     | Platform Level Data Model |
+| PVT      | Production Validation Test |
 | RAS      | Reliability, Availability, and Serviceability |
 | RCA      | Root Cause Analysis |
 | SPDM     | Security Protocol and Data Model |
@@ -247,13 +253,288 @@ In addition to this naming convention, key names written in this Specification w
 # Technical Overview (Informative)
 
 
+## Product Development Life Cycle
 
+To better understand the requirements, usages, and restrictions on the various debug capabilities, it is important to understand the different environments and stages of progression through a product's development life cycle.  Each stage of the Product Development Life Cycle represents a specific environment that has a certain set of expectations, behaviors, and limitations on what debug can be performed.  These stages form a continuous lifecycle progression.  As systems move through this progression, ownership transitions from silicon providers to OEMs and ultimately to datacenter operators and tenants, while debug access progressively transitions from unrestricted hardware-level visibility toward highly controlled management-based diagnostics and telemetry-driven operations.  The Product Development Life Cycle is illustrated in the diagram below.
 
 ![Product Development Life Cycle](product_development_lifecycle.png){#fig:product-development-lifecycle width=98%}
 
+This specification defines seven distinct debug environments that span the product lifecycle from silicon development through deployed datacenter operation. The environments differ in physical accessibility, ownership, security posture, and available debug capabilities.  These stages are described in the following subsections.
+
+It is important to note that the usual progression of the stages is from left to right in the diagram above.  However, some systems may progress back from right to left due to issues that need to be resolved.  For example, a system may be taken out of the production environments (e.g., Remotely Managed) to move left into the Quarantined or even the Production Validation Testing (PVT) environments to debug a complicated or large issue.  Once an issue is solved, the system may move again toward the right, back to the production environments again.
+
+### Engineering Validation Test (EVT)
+
+The Engineering Validation Test (EVT) stage represents the earliest platform validation phase within the silicon provider or OEM development lifecycle. During EVT, engineering teams validate initial hardware, firmware, and software functionality while developing platform bring-up procedures and identifying fundamental design issues. EVT is part of the Silicon Provider/OEM pre-production phase.
+
+The platform is typically located in a development laboratory where physical access to the system is unrestricted. Engineers can directly access the platform, open the chassis, connect physical debug tools, modify firmware, and perform invasive debug operations. Physical debug interfaces such as JTAG are available and expected to be heavily utilized during this phase.
+
+Primary objectives during this stage include:
+
+- Silicon bring-up
+- Hardware and firmware validation
+- Feature verification
+- Failure discovery and characterization
+- Architecture validation
+- Root-cause analysis of new issues
+
+This environment supports deep platform visibility including hardware trace, error injection, memory access, system tracing, and privileged debug capabilities. Closed-loop debug and rapid design iteration are expected.
+
+
+### Design Validation Test (DVT)
+
+The Design Validation Test (DVT) stage follows EVT and is used to validate that the platform design satisfies functional, reliability, performance, and interoperability requirements prior to production readiness. DVT remains within the Silicon Provider/OEM pre-production phase.
+
+Systems continue to operate in laboratory settings with extensive physical access and broad debug capabilities available. While the platform is more mature than EVT, engineering teams still require access to low-level debug mechanisms to investigate defects discovered during validation testing.
+
+Primary objectives during this stage include:
+
+- Design verification
+- Stress and reliability testing
+- Performance characterization
+- Failure reproduction
+- Validation of corrective actions identified during EVT
+
+Debug workflows focus on reproducing failures, collecting detailed traces, validating fixes, and ensuring production readiness. Physical debug interfaces continue to play a significant role in root-cause analysis activities.
+
+
+### Production Validation Testing (PVT)
+
+Production Validation Testing (PVT) stage represents the final validation stage before large-scale deployment. It is used to validate manufacturing processes, production hardware, firmware releases, and operational readiness at scale. 
+
+Systems closely resemble production configurations and are representative of customer deployments. Platform behavior is evaluated using production software, production firmware, and realistic workloads while maintaining controlled validation conditions.
+
+Primary objectives during this stage include:
+
+- Production readiness validation
+- Manufacturing verification
+- Scale testing
+- Final qualification
+- Discovery of issues that only appear under large-scale deployment conditions
+
+Debug capabilities become more restricted than EVT and DVT environments, with emphasis shifting toward production-compatible mechanisms, telemetry collection, management interfaces, and automated diagnostics.
+
+
+### Quarantined: Open Enclosure
+
+The Quarantined: Open Enclosure stage is used when a deployed platform is removed from normal service and placed into an isolated environment for detailed diagnosis and failure analysis. The chassis is physically accessible and may be opened to allow direct access to components.
+
+The system is quarantined from tenant workloads and production operations. Engineers have physical access to the hardware and can attach debug equipment while maintaining a configuration that is representative of the deployed platform.
+
+Primary objectives during this stage include:
+
+- Failure replication
+- Signal tracing
+- Live data collection
+- In-depth system analysis
+- Hardware failure characterization
+
+This environment is specifically associated with failure replication, live trace capture, and in-depth silicon and system failure analysis. This environment acts as the bridge between production systems and laboratory-level investigative debugging.
+
+
+### Quarantined: Production Enclosure
+
+The Quarantined: Production Enclosure stage is used to investigate production failures while preserving the deployed system configuration and physical enclosure. The system is removed from normal service but remains representative of its production state.
+
+Although isolated from tenant workloads, the platform continues to operate in a production-like configuration. Physical intrusion is minimized to avoid altering failure conditions and to maintain environmental fidelity.
+
+Primary objectives during this stage include:
+
+- Failure discovery
+- Failure characterization
+- Failure triage
+- Log collection
+- Root-cause investigation
+
+This environment is associated with collection and analysis of application, operating-system, BIOS, firmware, and hardware logs to discover, characterize, and triage new failures.
+
+
+### Production: Accessible Rack
+
+The Production: Accessible Rack stage represents a deployed datacenter platform where physical access to the rack remains possible while the platform continues to operate in a datacenter setting. This environment is part of the deployed lifecycle and typically hosts representative or real workloads.
+
+The rack remains physically accessible to datacenter personnel while maintaining production-like behavior. Debug operations are primarily performed through management interfaces though invasive physical interfaces can be used in this environment.
+
+Primary objectives during this stage include:
+
+- Diagnostics of deployed systems
+- Maintenance operations
+- Recovery activities
+- Failure prevention
+- Operational optimization
+
+This environment supports collection of telemetry, diagnostics, and serviceability data while enabling maintenance workflows that require limited physical interaction with deployed infrastructure. It serves as an intermediate step between quarantined analysis and fully remote operation.
+
+
+### Production: - Remotely Managed
+
+The Production: Remotely Managed stage represents the steady-state operational model for deployed datacenter systems. The platform executes tenant workloads while debug and management operations occur remotely only through standardized management interfaces.  
+
+Physical access is not assumed. Systems are managed through management networks, telemetry infrastructure, and out-of-band management mechanisms. The platform remains under strict production security controls while supporting diagnostics and recovery operations.
+
+Primary objectives during this stage include:
+
+- Platform monitoring
+- Predictive failure analysis
+- Automated diagnostics
+- Maintenance
+- Software and firmware updates
+- Failure recovery
+- Workload optimization
+
+This environment is associated with remote maintenance, automated signature analysis, telemetry collection, trigger-based log capture, system updates, patch deployment, and recovery of known application, operating-system, and component failures as key activities in this environment. The environment also supports resident applications that optimize application, operating-system, and platform performance.
+
+
+## Execution Flow with Debug
+
+It is critical that during the execution lifetime of a system, that the ability to perform progressively deeper data collection and root-cause analysis throughout the entire platform lifecycle, from boot through crash recovery, is available.  A platform begins booting where firmware, hardware, and software initialization occur. Upon successful completion of boot activities, the platform transitions to the main execution state and enters normal operation.  When executing, the platform is expected to deliver normal service and system functionality. If no issues are encountered, execution continues uninterrupted.  However, as operational anomalies begin to emerge, the platform may enter different degraded or even halt/crash states.  In degraded states, the platform remains functional but exhibits symptoms such as reduced throughput, increased latency, excessive resource consumption, or intermittent errors.  If degradation worsens or corrective actions are not successful, the platform can progress to a halted/crashed (i.e., failure) state. In this condition, one or more platform functions are no longer operating correctly, and the escalation of failures may ultimately result in a platform becoming non-functional and normal execution stops.  At each stage, debug capabilities may be invoked to collect information, determine root cause, and attempt corrective action before the issue progresses to a more severe state.
+
+The diagram below provides a generic execution flow that shows the different use cases where operational issues may occur.  Note that boxes colored in green represent normal operating states, boxes in yellow represent degraded states, boxes in orange represent halted/crashed states, and boxes in blue represent debug states.
 
 ![Execution Flow](execution_flow.png){#fig:execution-flow width=98%}
 
+To support this flow, the debug architecture needs to support the following:
+
+- Pre-failure observability during normal execution.
+- Data capture during degradation and failure conditions.
+- Post-mortem crash analysis.
+- Root-cause determination.
+- Corrective action and validation.
+- Return to normal operation while minimizing service disruption.
+
+This lifecycle-oriented approach enables debug capabilities to improve platform availability, accelerate root-cause analysis, and reduce mean time to debug (MTTD) across all operational states.  The main use cases, indicated by the numbered purple circles in the above diagram, are:
+
+1.  [Boot Crash Handling](#sec:exe-flow-boot-crash-handling)
+2.  [Preemptive Issues Handling](#sec:exe-flow-preemptive-issues-handling)
+3.  [Performance Issues Handling](#sec:exe-flow-performance-issues-handling)
+4.  [Failure Handling](#sec:exe-flow-failure-handling)
+5.  [Crash Handling](#sec:exe-flow-crash-handling)
+
+The next set of subsections describe these different use cases within this flow.
+
+### Boot Crash Handling {#sec:exe-flow-boot-crash-handling}
+
+A boot crash occurs when the platform fails to successfully transition from the Boot state to the Execution state. The failure may occur during hardware initialization, firmware execution, security validation, configuration loading, training sequences, or other boot-time activities.  This use case begins when boot execution starts and ends when the platform either enters the Execution state successfully or enters a terminal boot failure condition requiring remediation.
+
+When a boot crash is detected:
+
+1.  The platform enters the Boot Crash state.
+2.  Debug capabilities are used to collect diagnostic data.
+3.  Root-cause analysis is performed.  Verify whether the boot failure occurs consistently and determine dependency on platform configuration, software version, environmental conditions, or hardware population.
+4.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+5.  The platform is rebooted and re-enters the Boot state.
+
+It is important to note that boot-time visibility may be limited and the logging infrastructure may not yet be available.  In addition, security policies may restrict debug access during early boot.  The recovery mechanisms should preserve relevant failure context.
+
+During this use case, the following are typical debug actions taken:
+
+- Collect boot logs.
+- Capture firmware trace information.
+- Retrieve crash dumps or fault records.
+- Analyze initialization sequence failures.
+- Identify defective hardware or firmware components.
+
+### Preemptive Issues Handling {#sec:exe-flow-preemptive-issues-handling}
+
+This use case occurs while the platform is operating normally in the Execution state.  Monitoring and telemetry mechanisms detect indicators suggesting that a future failure may occur if corrective action is not taken. Rather than waiting for visible service degradation, debug operations are initiated proactively.  This use case is triggered while the platform remains functional and ends when the condition is corrected or progresses into a degradation condition.
+
+Examples of data collected to preempt issues include:
+
+- Correctable error accumulation
+- Thermal margin reduction
+- Resource exhaustion trends
+- Reliability threshold violations
+- Predictive hardware health indicators
+
+It is important to note that detection accuracy is critical.  Excessive data collection should not significantly impact workload execution.  In addition, actions need to minimize disruption to production operation.
+
+Reproducibility can be difficult because failures have not yet fully manifested.  Correlation across multiple telemetry samples may be necessary.
+
+During this use case, the following are typical debug actions taken:
+
+- Capture health telemetry.
+- Collect performance counters.
+- Analyze trends and predictive indicators.
+- Apply preventative mitigations or configuration changes.
+
+
+### Performance Issues Handling {#sec:exe-flow-performance-issues-handling}
+
+Performance degradation occurs when the platform continues to function but exhibits reduced operational effectiveness.  This use case begins when measurable performance reduction occurs and ends when normal operation is restored or the issue progresses to failure.  For this use case, there is a race between the issue progressing toward platform failure, and the debug infrastructure collecting sufficient information to diagnose the problem.
+
+Possible causes of performance issues include:
+
+- Resource contention
+- Hardware degradation
+- Firmware inefficiencies
+- Excessive error recovery activity
+- Thermal or power constraints
+
+When performance is degraded, the following steps can be taken:
+
+1.  Debug capabilities are used to collect diagnostic data.
+2.  Root-cause analysis is performed. Determine whether the degradation is continuous, intermittent, workload dependent, and/or environment dependent.
+3.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+
+It is important to note that diagnostic activities should avoid further degrading performance.  In this case, data collection may require prioritization due to resource constraints.  Timely capture is important before symptoms disappear or worsen.
+
+During this use case, the following are typical debug actions taken:
+
+- Capture performance metrics.
+- Collect traces and telemetry snapshots.
+- Analyze resource utilization.
+- Apply mitigations or corrective software and hardware changes.
+
+### Failure Handling {#sec:exe-flow-failure-handling}
+
+A failure state indicates that one or more platform functions are no longer operating correctly, although the system may still be partially operational.  This use case begins when platform functionality is lost or significantly impaired and ends when either recovery occurs or the platform crashes.  At this stage, there exists a race between the failure escalating leading to a crash and the debug capabilities capturing sufficient information for diagnosis and recovery.
+
+Examples of different failures include:
+
+- Device failures
+- Link failures
+- Memory subsystem failures
+- Firmware service failures
+- Platform service interruptions
+
+When a failure occurs, the following steps can be taken:
+
+1.  Debug capabilities are used to collect diagnostic data.
+2.  Root-cause analysis is performed. Determine whether the failure is permanent, intermittent, or environment dependent.
+3.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+
+It is important to note that the time available for diagnostics may be limited.  In some cases, some platform services may already be unavailable.  Therefore, data preservation becomes increasingly important.
+
+During this use case, the following are typical debug actions taken:
+
+- Capture failure records.
+- Collect dump data.
+- Retrieve hardware status information.
+- Analyze fault isolation information.
+- Apply workaround, reset, repair, or replacement actions.
+
+
+### Crash Handling {#sec:exe-flow-crash-handling}
+
+A crash represents a terminal platform condition where normal execution has stopped. The platform is unable to continue operation and recovery typically requires reset, restart, repair, or component replacement.  This use case begins when normal execution terminates and ends when corrective actions have been implemented and the platform can successfully reboot.
+
+Following a crash:
+
+1.  Crash information is collected.
+2.  Root-cause analysis is performed. Determine whether the crash is deterministic or sporadic.
+3.  Corrective actions are taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+4.  The platform is rebooted for validation and recovery. Validate that the corrective action eliminates the crash condition.
+
+It is important to note that the diagnostic information may be lost if not captured immediately.  Debug access may require specialized crash dump or post-mortem mechanisms.  Also, security requirements must still be enforced during crash analysis.
+
+During this use case, the following are typical debug actions taken:
+
+- Capture crash dumps.
+- Retrieve processor state.
+- Collect memory contents.
+- Capture hardware fault records.
+- Perform post-mortem analysis.
+- Identify required software, firmware, or hardware fixes.
 
 
 ## High-Level Debug Architecture
@@ -556,53 +837,53 @@ Debug communication remains anchored to endpoint identity and session context ra
 
 ### Debug Enablement and Lifecycle Control
 
-- [SEC-0001] Debug capabilities shall be disabled by default in production systems.
-- [SEC-0002] Debug enablement shall be explicitly authorized and bound to a well-defined system lifecycle state (e.g., development, provisioning, deployed, decommissioned).
-- [SEC-0003] The mechanism used to enable debug shall not rely on physical access alone as an authorization signal.
-- [SEC-0004] Debug enablement shall be reversible and support explicit disablement or expiration, including automatic revocation after a defined time window or event.
+- **[SEC-0001]** Debug capabilities shall be disabled by default in production systems.
+- **[SEC-0002]** Debug enablement shall be explicitly authorized and bound to a well-defined system lifecycle state (e.g., development, provisioning, deployed, decommissioned).
+- **[SEC-0003]** The mechanism used to enable debug shall not rely on physical access alone as an authorization signal.
+- **[SEC-0004]** Debug enablement shall be reversible and support explicit disablement or expiration, including automatic revocation after a defined time window or event.
 
 ### Authentication and Authorization
 
-- [SEC-0005] All debug access shall require strong authentication of the requesting entity.
-- [SEC-0006] Authorization of debug requests shall be policy-driven, allowing debug operations to be scoped by:
+- **[SEC-0005]** All debug access shall require strong authentication of the requesting entity.
+- **[SEC-0006]** Authorization of debug requests shall be policy-driven, allowing debug operations to be scoped by:
   - Component or functional block
   - Debug capability class (e.g., non-invasive vs. invasive)
   - Data type or visibility level
   - Time and operational context
-- [SEC-0007] Debug authorization decisions shall be enforceable at the lowest practical layer, including within silicon where feasible.
+- **[SEC-0007]** Debug authorization decisions shall be enforceable at the lowest practical layer, including within silicon where feasible.
 
 ### Debug Data Protection
 
-- [SEC-0008] Debug data shall be protected for confidentiality and integrity end-to-end, from the point of generation to final consumption by authorized tools.
-- [SEC-0009] Cryptographic protection shall not assume trust in intermediate transports, bridges, and/or controllers.
-- [SEC-0010] Debug data stored at rest (e.g., crash dumps, logs, trace buffers) shall be protected against unauthorized access and modification.
-- [SEC-0011] Implementations should support data minimization and filtering to limit exposure of tenant or workload-specific data.
+- **[SEC-0008]** Debug data shall be protected for confidentiality and integrity end-to-end, from the point of generation to final consumption by authorized tools.
+- **[SEC-0009]** Cryptographic protection shall not assume trust in intermediate transports, bridges, and/or controllers.
+- **[SEC-0010]** Debug data stored at rest (e.g., crash dumps, logs, trace buffers) shall be protected against unauthorized access and modification.
+- **[SEC-0011]** Implementations should support data minimization and filtering to limit exposure of tenant or workload-specific data.
 
 ### Isolation and Containment
 
-- [SEC-0012] Debug operations shall not bypass or weaken isolation guarantees between:
+- **[SEC-0012]** Debug operations shall not bypass or weaken isolation guarantees between:
   - Tenants
   - Security domains
   - Privilege levels
   - Execution worlds or contexts
-- [SEC-0013] Invasive debug capabilities shall be explicitly distinguishable from non-invasive debug and subject to stricter authorization and policy controls.
-- [SEC-0014] Debug access to one component shall not implicitly grant access to other components or system functions.
+- **[SEC-0013]** Invasive debug capabilities shall be explicitly distinguishable from non-invasive debug and subject to stricter authorization and policy controls.
+- **[SEC-0014]** Debug access to one component shall not implicitly grant access to other components or system functions.
 
 ### Transport and Interface Independence
 
-- [SEC-0015] Debug security properties shall be preserved regardless of transport, including but not limited to PCIe, UCIe, USB, I3C, Ethernet, or sideband interfaces.
-- [SEC-0016] Security shall not depend on a single proprietary protocol or debug interface.
-- [SEC-0017] Debug capabilities/mechanisms/communication should support multiplexing over shared datacenter fabrics without exposing debug traffic to unauthorized entities.
+- **[SEC-0015]** Debug security properties shall be preserved regardless of transport, including but not limited to PCIe, UCIe, USB, I3C, Ethernet, or sideband interfaces.
+- **[SEC-0016]** Security shall not depend on a single proprietary protocol or debug interface.
+- **[SEC-0017]** Debug capabilities/mechanisms/communication should support multiplexing over shared datacenter fabrics without exposing debug traffic to unauthorized entities.
 
 ### Observability and Auditability
 
-- [SEC-0018] Debug operations shall be observable and auditable through the platform management stack.
-- [SEC-0019] Audit records shall include:
+- **[SEC-0018]** Debug operations shall be observable and auditable through the platform management stack.
+- **[SEC-0019]** Audit records shall include:
   - Identity of the requesting entity
   - Authorized debug scope
   - Time and duration of access
   - Components and data accessed
-- [SEC-0020] Audit data shall be protected against tampering and retained in accordance with datacenter operational policies.
+- **[SEC-0020]** Audit data shall be protected against tampering and retained in accordance with datacenter operational policies.
 
 
 
@@ -630,227 +911,249 @@ Debug mechanisms inherently bridge development, manufacturing, validation, and f
 
 More often than not, the root cause of a failure or problem is simply that the system has not been configured correctly and/or it is running either outdated firmware, an incompatible combination of software/firmware components, or components that have not been configured appropriately. The concept of Code Currency in this Specification is used to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. By explicitly accounting for these forms of data covered by Code Currency, the debug architecture can reason about compatibility, enforce policy consistently, and detect invalid or unsafe combinations of code and authorization. Treating Code Currency as an architectural concern—rather than an implicit assumption—helps ensure that debug capabilities remain controlled, auditable, and resilient as the platform evolves over time.
 
-### Approach {#sec:code-currency-approach}
+### File Format and Schema
 
-The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema outlined in this file.
-
-
-### Schema {#sec:code-currency-schema}
-
-This section defines the JSON schema for representing the firmware, configuration, and physical/logical details of nodes, assemblies, and components in a datacenter environment.
-
-```json {.small}
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Node Code Curency Record",
-  "type": "object",
-  "properties": {
-    "NodeId": { "type": "string", "description": "Unique identifier for the node" },
-    "NodeType": { "type": "string", "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)" },
-    "Hostname": { "type": "string", "description": "Node hostname" },
-    "NetworkConfiguration": {
-      "type": "object",
-      "description": "Network configuration details for the node",
-      "properties": {
-        "IpAddresses": { "type": "array", "items": { "type": "string", "format": "ipv4" } },
-        "Ports": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
-        "MacAddresses": { "type": "array", "items": { "type": "string", "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" } }
-      },
-      "required": ["IpAddresses"]
-    },
-    "PhysicalLocation": {
-      "type": "object",
-      "description": "Physical location of the node in the datacenter",
-      "properties": {
-        "Rack": { "type": "string" },
-        "Row": { "type": "string" },
-        "Datacenter": { "type": "string" },
-        "Placement": {
-          "type": "object",
-          "properties": {
-            "Type": { "type": "string", "enum": ["RackSlot", "Bay"] },
-            "Slot": { "type": "integer", "description": "Rack unit position if RackSlot" },
-            "HeightInU": { "type": "integer", "description": "Height in U if RackSlot" },
-            "BayId": { "type": "string", "description": "Bay identifier if Bay" },
-            "BayPosition": { "type": "string", "description": "Position within the bay" }
-          },
-          "required": ["Type"]
-        }
-      },
-      "required": ["Rack", "Row", "Datacenter", "Placement"]
-    },
-    "Assemblies": {
-      "type": "array",
-      "description": "List of assemblies within the node (supports nested assemblies)",
-      "items": { "$ref": "#/$defs/Assembly" }
-    }
-  },
-  "required": ["NodeId", "NodeType", "Assemblies"],
-  "$defs": {
-    "Assembly": {
-      "type": "object",
-      "properties": {
-        "AssemblyName": { "type": "string" },
-        "AssemblyId": { "type": "string" },
-        "ManufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the assembly" },
-        "PhysicalLocation": {
-          "type": "object",
-          "description": "Physical slot or bay where this assembly is installed",
-          "properties": {
-            "Slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)" },
-            "Position": { "type": "string", "description": "Position within the node or assembly" }
-          }
-        },
-        "LogicalAssociation": {
-          "type": "object",
-          "description": "Logical connectivity details for this assembly",
-          "properties": {
-            "Links": {
-              "type": "array",
-              "description": "List of logical links consumed by this assembly",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ConnectedTo": { "type": "string" },
-                  "Protocol": { "type": "string" },
-                  "LaneCount": { "type": "integer" }
-                },
-                "required": ["ConnectedTo", "Protocol"]
-              }
-            }
-          }
-        },
-        "Components": { "type": "array", "items": { "$ref": "#/$defs/Component" } },
-        "SubAssemblies": { "type": "array", "items": { "$ref": "#/$defs/Assembly" } }
-      },
-      "required": ["AssemblyName", "AssemblyId"]
-    },
-    "Component": {
-      "type": "object",
-      "properties": {
-        "ComponentType": { "type": "string", "enum": ["CPU", "Memory", "NIC", "Storage", "GPU", "PSU", "Fan", "BIOS", "BMC", "AMC"] },
-        "ComponentId": { "type": "string" },
-        "ManufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the component" },
-        "PhysicalLocation": {
-          "type": "object",
-          "description": "Physical slot or bay where this component is installed",
-          "properties": {
-            "Slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)" },
-            "Position": { "type": "string", "description": "Position within the node or assembly" }
-          }
-        },
-        "LogicalAssociation": {
-          "type": "object",
-          "description": "Logical connectivity details for this component",
-          "properties": {
-            "Links": {
-              "type": "array",
-              "description": "List of logical links consumed by this component",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "ConnectedTo": { "type": "string" },
-                  "Protocol": { "type": "string" },
-                  "LaneCount": { "type": "integer" }
-                },
-                "required": ["ConnectedTo", "Protocol"]
-              }
-            }
-          }
-        },
-        "Firmware": {
-          "type": "array",
-          "description": "List of firmware entries for the component",
-          "items": {
-            "type": "object",
-            "properties": {
-              "Version": { "type": "string", "description": "Firmware version" },
-              "LastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
-              "SecurityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
-              "MinimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
-              "ImageRole": {
-                "type": "string",
-                "enum": ["Active", "Recovery", "Standby"],
-                "description": "Indicates if this firmware is actively running or a redundant recovery image"
-              }
-            },
-            "required": ["Version"]
-          }
-        },
-        "Configuration": {
-          "type": "array",
-          "description": "Custom configuration attributes for the component",
-          "items": {
-            "type": "object",
-            "properties": {
-              "Name": { "type": "string", "description": "Configuration attribute name" },
-              "Value": { "type": "string", "description": "Configuration attribute value" },
-              "Description": { "type": "string", "description": "Optional description of the attribute" }
-            },
-            "required": ["Name", "Value"]
-          }
-        }
-      },
-      "required": ["ComponentType", "ComponentId", "Firmware"]
-    }
-  }
-}
-```
-
+The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema defined by Requirement [CC-0001].  The relationship diagram below outlines this JSON schema.
 
 ```plantuml {caption="Code Currency Relationships" #fig:schema}
 !include schemarepresentation.uml
 
 ```
 
-### Field Explanations
+The table below defines the elements of the node-level for the Code Currency JSON schema.
 
-#### Node-Level
+Table: Code Currency Node-Level Elements Definition 
 
-- `nodeId`: Unique identifier for the node.
-- `nodeType`: Type of node (e.g., AI Server, Ethernet Switch).
-- `hostname`: Hostname for network identification.
-- `networkConfiguration`:
-  - `ipAddresses`: List of IPv4 addresses.
-  - `ports`: Open or configured ports.
-  - `macAddresses`: MAC addresses for network interfaces.
-- `physicalLocation`:
-  - `rack`, `row`, `datacenter`: Physical placement identifiers.
-  - `placement`:
-    - `type`: RackSlot or Bay.
-    - `slot`: Rack unit position.
-    - `heightInU`: Height in rack units.
-    - `bayId`, `bayPosition`: Bay-specific identifiers.
+| Element Name          | Description             |
+| :-------------------- | :---------------------- |
+|`hostname` | Hostname for network identification. |
+|`networkConfiguration.ipAddresses` | List of IPv4 addresses. (required) |
+|`networkConfiguration.macAddresses` | MAC addresses for network interfaces. |
+|`networkConfiguration.ports` | Open or configured ports. |
+|`nodeId` | Unique identifier for the node. (required) |
+|`nodeType` | Type of node (e.g., AI Server, Ethernet Switch). (required) |
+|`physicalLocation.datacenter` | Physical placement identifier. |
+|`physicalLocation.rack` | Physical placement identifier. |
+|`physicalLocation.row` | Physical placement identifier. |
+|`physicalLocation.placement.bayId` | Bay-specific identifier if type=Bay. |
+|`physicalLocation.placement.bayPosition` | Bay-specific position if type=Bay. |
+|`physicalLocation.placement.heightInU` | Height in rack units if type=RackSlot. |
+|`physicalLocation.placement.slot` | Rack unit position if type=RackSlot. |
+|`physicalLocation.placement.type` | RackSlot or Bay. (required) |
 
-#### Assemblies
+The table below defines the elements of the "assembly" element for the Code Currency JSON schema.
 
-- `assemblyName`: Name of the assembly (e.g., Baseboard).
-- `assemblyId`: Unique identifier.
-- `manufacturerSerialNumber`: Manufacturer’s serial number.
-- `physicalLocation`: Slot and position within node.
-- `logicalAssociation`:
-  - `links`: Array of logical connections (connectedTo, protocol, laneCount).
-- `components`: Array of components.
-- `subAssemblies`: Nested assemblies.
+Table: Code Currency "assembly" Elements Definition 
 
-#### Components
+| Element Name          | Description             |
+| :-------------------- | :---------------------- |
+|`assemblyName` | Name of the assembly (e.g., Baseboard). (required) |
+|`assemblyId` | Unique identifier. (required) |
+|`components` | Array of components. |
+|`logicalAssociation` | Array of logical connectivity details for this assembly. |
+|`logicalAssociation.links.connectedTo` | What the link is connected to. (required) |
+|`logicalAssociation.links.laneCount` | Number of lanes for the link. |
+|`logicalAssociation.links.protocol` | The protocol of the link. (required) |
+|`manufacturerSerialNumber` | Manufacturer’s serial number for the assembly. |
+|`physicalLocation.slot` | Physical slot identifier where this assembly is installed. |
+|`physicalLocation.position` | Position within the node or assembly where this assembly is installed. |
+|`subAssemblies` | Nested assemblies. |
 
-- `componentType`: Type (CPU, Memory, NIC, etc.).
-- `componentId`: Unique identifier.
-- `manufacturerSerialNumber`: Manufacturer’s serial number.
-- `physicalLocation`: Slot and position.
-- `logicalAssociation`: Logical links consumed by the component.
-- `firmware`:
-  - `version`: Firmware version (required).
-  - `lastUpdated`: Timestamp of last update.
-  - `securityVersionNumber`: Current SVN.
-  - `minimumSecurityVersionNumber`: Minimum enforced SVN.
-  - `imageRole`: Active, Recovery, or Standby.
-- `configuration`:
-  - Array of custom attributes: `name`, `value`, optional `description`.
+The table below defines the elements of the "components" element for the Code Currency JSON schema.
+
+Table: Code Currency "components" Elements Definition 
+
+| Element Name          | Description             |
+| :-------------------- | :---------------------- |
+|`componentId` | Unique identifier. (required) |
+|`componentType` | Type of component.  Permitted values: CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC, AMC. (required) |
+|`configuration` | Array of custom configuration attributes for the component. |
+|`configuration.description` | Description of the attribute. |
+|`configuration.name` | Configuration attribute name. (required) |
+|`configuration.value` | Configuration attribute value. (required) |
+|`firmware` | Array of firmware entries for the component. (required) |
+|`firmware.imageRole` | Indicates if this firmware is actively running or a redundant recovery image.  Permitted values: Active, Recovery, or Standby. |
+|`firmware.lastUpdated` | Timestamp of last update. |
+|`firmware.minimumSecurityVersionNumber` | Minimum enforced SVN. |
+|`firmware.securityVersionNumber` | Current Security Version Number (SVN). |
+|`firmware.version`| Firmware version (required). |
+|`logicalAssociation` | Array of logical connectivity details for this component. |
+|`logicalAssociation.links.connectedTo` | What the link is connected to. (required) |
+|`logicalAssociation.links.laneCount` | Number of lanes for the link. |
+|`logicalAssociation.links.protocol` | The protocol of the link. (required) |
+|`manufacturerSerialNumber` | Manufacturer’s serial number. |
+|`physicalLocation.position` | Position within the node or assembly where this component is installed. |
+|`physicalLocation.slot` | Physical slot identifier where this component is installed. |
+
+Examples of the JSON files following the given schema can be found in @sec:code-currency-examples.
+
 
 ### Code Currency Redfish Schema
 
+
+### Requirements
+
+<a href="req-cc-0001"></a>
+
+- **[CC-0001]** The Code Currency log shall be in JSON format with the following schema:
+
+```json {.small}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node Code Currency Record",
+  "type": "object",
+  "properties": {
+    "nodeId": { "type": "string", "description": "Unique identifier for the node" },
+    "nodeType": { "type": "string", "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)" },
+    "hostname": { "type": "string", "description": "Node hostname" },
+    "networkConfiguration": {
+      "type": "object",
+      "description": "Network configuration details for the node",
+      "properties": {
+        "ipAddresses": { "type": "array", "items": { "type": "string", "format": "ipv4" } },
+        "ports": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
+        "macAddresses": { "type": "array", "items": { "type": "string", "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" } }
+      },
+      "required": ["ipAddresses"]
+    },
+    "physicalLocation": {
+      "type": "object",
+      "description": "Physical location of the node in the datacenter",
+      "properties": {
+        "rack": { "type": "string" },
+        "row": { "type": "string" },
+        "datacenter": { "type": "string" },
+        "placement": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["RackSlot", "Bay"] },
+            "slot": { "type": "integer", "description": "Rack unit position if RackSlot" },
+            "heightInU": { "type": "integer", "description": "Height in U if RackSlot" },
+            "bayId": { "type": "string", "description": "Bay identifier if Bay" },
+            "bayPosition": { "type": "string", "description": "Position within the bay" }
+          },
+          "required": ["type"]
+        }
+      },
+      "required": ["rack", "row", "datacenter", "placement"]
+    },
+    "assemblies": {
+      "type": "array",
+      "description": "List of assemblies within the node (supports nested assemblies)",
+      "items": { "$ref": "#/$defs/assembly" }
+    }
+  },
+  "required": ["nodeId", "nodeType", "assemblies"],
+  "$defs": {
+    "assembly": {
+      "type": "object",
+      "properties": {
+        "assemblyName": { "type": "string" },
+        "assemblyId": { "type": "string" },
+        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the assembly" },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this assembly is installed",
+          "properties": {
+            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)" },
+            "position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "logicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this assembly",
+          "properties": {
+            "links": {
+              "type": "array",
+              "description": "List of logical links consumed by this assembly",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "connectedTo": { "type": "string" },
+                  "protocol": { "type": "string" },
+                  "laneCount": { "type": "integer" }
+                },
+                "required": ["connectedTo", "protocol"]
+              }
+            }
+          }
+        },
+        "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
+        "subAssemblies": { "type": "array", "items": { "$ref": "#/$defs/assembly" } }
+      },
+      "required": ["assemblyName", "assemblyId"]
+    },
+    "component": {
+      "type": "object",
+      "properties": {
+        "componentType": { "type": "string", "enum": ["CPU", "Memory", "NIC", "Storage", "GPU", "PSU", "Fan", "BIOS", "BMC", "AMC"] },
+        "componentId": { "type": "string" },
+        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the component" },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this component is installed",
+          "properties": {
+            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)" },
+            "position": { "type": "string", "description": "Position within the node or assembly" }
+          }
+        },
+        "logicalAssociation": {
+          "type": "object",
+          "description": "Logical connectivity details for this component",
+          "properties": {
+            "inks": {
+              "type": "array",
+              "description": "List of logical links consumed by this component",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "connectedTo": { "type": "string" },
+                  "protocol": { "type": "string" },
+                  "laneCount": { "type": "integer" }
+                },
+                "required": ["connectedTo", "protocol"]
+              }
+            }
+          }
+        },
+        "firmware": {
+          "type": "array",
+          "description": "List of firmware entries for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "version": { "type": "string", "description": "Firmware version" },
+              "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
+              "securityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
+              "minimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
+              "imageRole": {
+                "type": "string",
+                "enum": ["Active", "Recovery", "Standby"],
+                "description": "Indicates if this firmware is actively running or a redundant recovery image"
+              }
+            },
+            "required": ["version"]
+          }
+        },
+        "configuration": {
+          "type": "array",
+          "description": "Custom configuration attributes for the component",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "description": "Configuration attribute name" },
+              "value": { "type": "string", "description": "Configuration attribute value" },
+              "description": { "type": "string", "description": "Optional description of the attribute" }
+            },
+            "required": ["name", "value"]
+          }
+        }
+      },
+      "required": ["componentType", "componentId", "firmware"]
+    }
+  }
+}
+```
 
 
 ## Status Dump {#sec:status-dump}
@@ -882,176 +1185,176 @@ Below is a JSON example for Code Currency of a hypothetical node with:
 
 ```json {.small}
 {
-  "NodeId": "AI-Node-001",
-  "NodeType": "AI Server",
-  "Hostname": "ai-node-001.dc.local",
-  "NetworkConfiguration": {
-    "IpAddresses": ["192.168.10.101"],
-    "Ports": [22, 443],
-    "MacAddresses": ["00:1A:2B:3C:4D:5E"]
+  "nodeId": "AI-Node-001",
+  "nodeType": "AI Server",
+  "hostname": "ai-node-001.dc.local",
+  "networkConfiguration": {
+    "ipAddresses": ["192.168.10.101"],
+    "ports": [22, 443],
+    "macAddresses": ["00:1A:2B:3C:4D:5E"]
   },
-  "PhysicalLocation": {
-    "Rack": "R42",
-    "Row": "Row-A",
-    "Datacenter": "DC-West",
-    "Placement": {
-      "Type": "RackSlot",
-      "Slot": 12,
-      "HeightInU": 2
+  "physicalLocation": {
+    "rack": "R42",
+    "row": "Row-A",
+    "datacenter": "DC-West",
+    "placement": {
+      "type": "RackSlot",
+      "slot": 12,
+      "heightInU": 2
     }
   },
-  "Assemblies": [
+  "assemblies": [
     {
-      "AssemblyName": "Baseboard",
-      "AssemblyId": "BB-001",
-      "ManufacturerSerialNumber": "BB-SN-12345",
-      "Components": [
+      "assemblyName": "Baseboard",
+      "assemblyId": "BB-001",
+      "manufacturerSerialNumber": "BB-SN-12345",
+      "components": [
         {
-          "ComponentType": "CPU",
-          "ComponentId": "CPU-001",
-          "ManufacturerSerialNumber": "CPU-SN-11111",
-          "Firmware": [
+          "componentType": "CPU",
+          "componentId": "CPU-001",
+          "manufacturerSerialNumber": "CPU-SN-11111",
+          "firmware": [
             {
-              "Version": "1.2.3",
-              "LastUpdated": "2025-10-01T12:00:00Z",
-              "SecurityVersionNumber": 5,
-              "MinimumSecurityVersionNumber": 3,
-              "ImageRole": "Active"
+              "version": "1.2.3",
+              "lastUpdated": "2025-10-01T12:00:00Z",
+              "securityVersionNumber": 5,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Active"
             }
           ]
         },
         {
-          "ComponentType": "CPU",
-          "ComponentId": "CPU-002",
-          "ManufacturerSerialNumber": "CPU-SN-22222",
-          "Firmware": [
+          "componentType": "CPU",
+          "componentId": "CPU-002",
+          "manufacturerSerialNumber": "CPU-SN-22222",
+          "firmware": [
             {
-              "Version": "1.2.3",
-              "LastUpdated": "2025-10-01T12:00:00Z",
-              "SecurityVersionNumber": 5,
-              "MinimumSecurityVersionNumber": 3,
-              "ImageRole": "Active"
+              "version": "1.2.3",
+              "lastUpdated": "2025-10-01T12:00:00Z",
+              "securityVersionNumber": 5,
+              "minimumSecurityVersionNumber": 3,
+              "imageRole": "Active"
             }
           ]
         },
         {
-          "ComponentType": "Memory",
-          "ComponentId": "MEM-001",
-          "ManufacturerSerialNumber": "MEM-SN-33333",
-          "Firmware": [
-            { "Version": "N/A" }
+          "componentType": "Memory",
+          "componentId": "MEM-001",
+          "manufacturerSerialNumber": "MEM-SN-33333",
+          "firmware": [
+            { "version": "N/A" }
           ]
         },
         {
-          "ComponentType": "Memory",
-          "ComponentId": "MEM-002",
-          "ManufacturerSerialNumber": "MEM-SN-44444",
-          "Firmware": [
-            { "Version": "N/A" }
+          "componentType": "Memory",
+          "componentId": "MEM-002",
+          "manufacturerSerialNumber": "MEM-SN-44444",
+          "firmware": [
+            { "version": "N/A" }
           ]
         },
         {
-          "ComponentType": "BMC",
-          "ComponentId": "BMC-001",
-          "ManufacturerSerialNumber": "BMC-SN-55555",
-          "Firmware": [
+          "componentType": "BMC",
+          "componentId": "BMC-001",
+          "manufacturerSerialNumber": "BMC-SN-55555",
+          "firmware": [
             {
-              "Version": "3.4.5",
-              "LastUpdated": "2025-09-15T08:00:00Z",
-              "SecurityVersionNumber": 2,
-              "MinimumSecurityVersionNumber": 1,
-              "ImageRole": "Active"
+              "version": "3.4.5",
+              "lastUpdated": "2025-09-15T08:00:00Z",
+              "securityVersionNumber": 2,
+              "minimumSecurityVersionNumber": 1,
+              "imageRole": "Active"
             }
           ]
         }
       ],
-      "SubAssemblies": [
+      "subAssemblies": [
         {
-          "AssemblyName": "HotSwap Backplane",
-          "AssemblyId": "HSBP-001",
-          "ManufacturerSerialNumber": "HSBP-SN-66666",
-          "Components": [
+          "assemblyName": "HotSwap Backplane",
+          "assemblyId": "HSBP-001",
+          "manufacturerSerialNumber": "HSBP-SN-66666",
+          "components": [
             {
-              "ComponentType": "Storage",
-              "ComponentId": "NVME-001",
-              "ManufacturerSerialNumber": "NVME-SN-77777",
-              "Firmware": [
-                { "Version": "2.1.0" }
+              "componentType": "Storage",
+              "componentId": "NVME-001",
+              "manufacturerSerialNumber": "NVME-SN-77777",
+              "firmware": [
+                { "version": "2.1.0" }
               ]
             },
             {
-              "ComponentType": "Storage",
-              "ComponentId": "NVME-002",
-              "ManufacturerSerialNumber": "NVME-SN-88888",
-              "Firmware": [
-                { "Version": "2.1.0" }
+              "componentType": "Storage",
+              "componentId": "NVME-002",
+              "manufacturerSerialNumber": "NVME-SN-88888",
+              "firmware": [
+                { "version": "2.1.0" }
               ]
             },
             {
-              "ComponentType": "NIC",
-              "ComponentId": "NIC-001",
-              "ManufacturerSerialNumber": "NIC-SN-99999",
-              "Firmware": [
-                { "Version": "1.0.0" }
+              "componentType": "NIC",
+              "domponentId": "NIC-001",
+              "manufacturerSerialNumber": "NIC-SN-99999",
+              "firmware": [
+                { "version": "1.0.0" }
               ]
             },
             {
-              "ComponentType": "NIC",
-              "ComponentId": "NIC-002",
-              "ManufacturerSerialNumber": "NIC-SN-10101",
-              "Firmware": [
-                { "Version": "1.0.0" }
+              "componentType": "NIC",
+              "componentId": "NIC-002",
+              "manufacturerSerialNumber": "NIC-SN-10101",
+              "firmware": [
+                { "version": "1.0.0" }
               ]
             }
           ]
         },
         {
-          "AssemblyName": "UBB",
-          "AssemblyId": "UBB-001",
-          "ManufacturerSerialNumber": "UBB-SN-20202",
-          "SubAssemblies": [
+          "assemblyName": "UBB",
+          "assemblyId": "UBB-001",
+          "manufacturerSerialNumber": "UBB-SN-20202",
+          "subAssemblies": [
             {
-              "AssemblyName": "OAM-1",
-              "AssemblyId": "OAM-001",
-              "ManufacturerSerialNumber": "OAM-SN-30303",
-              "Components": [
+              "assemblyName": "OAM-1",
+              "assemblyId": "OAM-001",
+              "manufacturerSerialNumber": "OAM-SN-30303",
+              "components": [
                 {
-                  "ComponentType": "GPU",
-                  "ComponentId": "GPU-001",
-                  "ManufacturerSerialNumber": "GPU-SN-40404",
-                  "Firmware": [
-                    { "Version": "510.85" }
+                  "componentType": "GPU",
+                  "componentId": "GPU-001",
+                  "manufacturerSerialNumber": "GPU-SN-40404",
+                  "firmware": [
+                    { "version": "510.85" }
                   ]
                 },
                 {
-                  "ComponentType": "AMC",
-                  "ComponentId": "AMC-001",
-                  "ManufacturerSerialNumber": "AMC-SN-50505",
-                  "Firmware": [
-                    { "Version": "1.0.0" }
+                  "componentType": "AMC",
+                  "componentId": "AMC-001",
+                  "manufacturerSerialNumber": "AMC-SN-50505",
+                  "firmware": [
+                    { "version": "1.0.0" }
                   ]
                 }
               ]
             },
             {
-              "AssemblyName": "OAM-2",
-              "AssemblyId": "OAM-002",
-              "ManufacturerSerialNumber": "OAM-SN-60606",
-              "Components": [
+              "assemblyName": "OAM-2",
+              "assemblyId": "OAM-002",
+              "manufacturerSerialNumber": "OAM-SN-60606",
+              "components": [
                 {
-                  "ComponentType": "GPU",
-                  "ComponentId": "GPU-002",
-                  "ManufacturerSerialNumber": "GPU-SN-70707",
-                  "Firmware": [
-                    { "Version": "510.85" }
+                  "componentType": "GPU",
+                  "componentId": "GPU-002",
+                  "manufacturerSerialNumber": "GPU-SN-70707",
+                  "firmware": [
+                    { "version": "510.85" }
                   ]
                 },
                 {
-                  "ComponentType": "AMC",
-                  "ComponentId": "AMC-002",
-                  "ManufacturerSerialNumber": "AMC-SN-80808",
-                  "Firmware": [
-                    { "Version": "1.0.0" }
+                  "componentType": "AMC",
+                  "componentId": "AMC-002",
+                  "manufacturerSerialNumber": "AMC-SN-80808",
+                  "firmware": [
+                    { "version": "1.0.0" }
                   ]
                 }
               ]
@@ -1069,4 +1372,6 @@ Below is a JSON example for Code Currency of a hypothetical node with:
 !include examplerepresentation.uml
 
 ```
+
+# Status Dump Examples {#sec:status-dump-examples}
 
