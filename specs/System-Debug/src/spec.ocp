@@ -1375,3 +1375,671 @@ Below is a JSON example for Code Currency of a hypothetical node with:
 
 # Status Dump Examples {#sec:status-dump-examples}
 
+
+Below is a JSON example for Status Dump of a hypothetical node with:
+
+- Dual-socket CPUs
+- Memory modules
+- BMC
+- Two NVMe drives
+- Two NICs on a hot-swap backplane
+- UBB subassembly with BMC
+- Two OAM subassemblies (each with GPU and AMC)
+
+```json {.small}
+
+{
+    "NodeId": "node-001",
+    "NodeType": "Server",
+    "Hostname": "ai-server-01",
+    "VID": "OCP",
+    "PID": "ExampleSystem",
+    "health": "Critical",
+    "mode": "Awake",
+    "status": "Crash",
+    "lastError": "1D10T",
+    "errorLog": [
+        "1D10T: System Halt",
+        "PEBKAC: OverVoltage"
+    ],
+    "lifecycle": "production",
+    "power": {
+        "voltage": "220",
+        "voltageValue": "Volts",
+        "current": "100",
+        "currentValue": "Amps"
+    },
+    "temperature": "125",
+    "temperatureValue": "Degrees C",
+    "PhysicalLocation": {
+        "Rack": "R12",
+        "Row": "Row-A",
+        "Datacenter": "DC1",
+        "Placement": {
+            "Type": "RackUnit",
+            "Slot": 20,
+            "HeightInU": 4
+        }
+    },
+    "Assemblies": [
+        {
+            "AssemblyName": "MainBoard",
+            "AssemblyId": "mb-001",
+            "VID": "OCP",
+            "PID": "ExampleMainBoard",
+            "health": "Critical",
+            "mode": "Awake",
+            "status": "Crash",
+            "lastError": "1D10T",
+            "errorLog": [
+                "1D10T: System Halt",
+                "PEBKAC: OverVoltage",
+                "501: Server Error"
+            ],
+            "lifecycle": "production",
+            "power": {
+                "voltage": "60",
+                "voltageValue": "Volts",
+                "current": "50",
+                "currentValue": "Amps"
+            },
+            "temperature": "125",
+            "temperatureValue": "Degrees C",
+            "utilization": {
+                "CPU0": "100",
+                "CPU1": "30",
+                "DIMM-A1": "70",
+                "DIMM-B1": "10"
+            },
+            "Components": [
+                {
+                    "ComponentClass": "Processor",
+                    "ComponentId": "cpu-0",
+                    "VID": "Intel",
+                    "PID": "XeonGen48",
+                    "PhysicalLocation": {
+                        "Slot": "CPU0",
+                        "Position": "Socket-0"
+                    },
+                    "health": "Critical",
+                    "mode": "Awake",
+                    "status": "Crash",
+                    "lastError": "1D10T",
+                    "errorLog": [
+                        "1D10T: System Halt",
+                        "PEBKAC: OverVoltage",
+                        "501: Server Error"
+                    ],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "50",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "125",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CPU": "100",
+                        "PCIe": "80",
+                        "UPI": "10"
+                    },
+                    "interface": "Northbridge",
+                    "communication": "JEDEC DDR",
+                    "dataRate": "6400",
+                    "dataRateValue": "MT/s",
+                    "performance": {
+                        "Packet Loss/Resend": "13",
+                        "Thermal Throttling": "15",
+                        "ECC": "0"
+                    },
+                    "latency": "0",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "Processor",
+                    "ComponentId": "cpu-1",
+                    "VID": "Intel",
+                    "PID": "XeonGen48",
+                    "PhysicalLocation": {
+                        "Slot": "CPU1",
+                        "Position": "Socket-1"
+                    },
+                    "health": "Critical",
+                    "mode": "Awake",
+                    "status": "Crash",
+                    "lastError": "1D10T",
+                    "errorLog": [
+                        "1D10T: System Halt"
+                    ],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "50",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "75",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CPU": "30",
+                        "PCIe": "10",
+                        "UPI": "10"
+                    },
+                    "interface": "Northbridge",
+                    "communication": "JEDEC DDR",
+                    "dataRate": "6400",
+                    "dataRateValue": "MT/s",
+                    "performance": {
+                        "Packet Loss/Resend": "13",
+                        "Thermal Throttling": "15",
+                        "ECC": "0"
+                    },
+                    "latency": "0",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "Memory",
+                    "ComponentId": "dimm-0",
+                    "VID": "Hynix",
+                    "PID": "64GBDDR5",
+                    "PhysicalLocation": {
+                        "Slot": "DIMM-A1",
+                        "Position": "Channel-A"
+                    },
+                    "health": "Critical",
+                    "mode": "Awake",
+                    "status": "Crash",
+                    "lastError": "UCB10",
+                    "errorLog": [
+                        "UCB10: Uncorrectable Error Bank 10",
+                        "UCB09: Uncorrectable Error Bank 9",
+                        "UCB08: Uncorrectable Error Bank 8",
+                        "UCB07: Uncorrectable Error Bank 7"
+                    ],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "2",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "75",
+                    "temperatureValue": "Degrees C"
+                },
+                {
+                    "ComponentClass": "Memory",
+                    "ComponentId": "dimm-1",
+                    "VID": "Hynix",
+                    "PID": "64GBDDR5",
+                    "PhysicalLocation": {
+                        "Slot": "DIMM-B1",
+                        "Position": "Channel-B"
+                    },
+                    "health": "Healthy",
+                    "mode": "Awake",
+                    "status": "Healthy",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "2",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "75",
+                    "temperatureValue": "Degrees C"
+                },
+                {
+                    "ComponentClass": "BMC",
+                    "ComponentId": "bmc-0",
+                    "VID": "ASPEED",
+                    "PID": "AST2600",
+                    "PhysicalLocation": {
+                        "Slot": "BMC-0",
+                        "Position": "MainBoard"
+                    },
+                    "health": "Healthy",
+                    "mode": "Awake",
+                    "status": "Healthy",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "1",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "52",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CPU": "15",
+                        "Memory": "40",
+                        "Network": "10"
+                    },
+                    "interface": "RMII",
+                    "communication": "NC-SI",
+                    "dataRate": "1000",
+                    "dataRateValue": "Mbps",
+                    "latency": "1",
+                    "errorRate": "0"
+                }
+            ]
+        },
+        {
+            "AssemblyName": "NVMeBackplane",
+            "AssemblyId": "bp-nvme-01",
+            "VID": "OCP",
+            "PID": "ExampleNVMeBackplane",
+            "health": "Healthy",
+            "mode": "Awake",
+            "status": "Healthy",
+            "lastError": "",
+            "errorLog": [
+            ],
+            "lifecycle": "production",
+            "power": {
+                "voltage": "12",
+                "voltageValue": "Volts",
+                "current": "5",
+                "currentValue": "Amps"
+            },
+            "temperature": "85",
+            "temperatureValue": "Degrees C",
+            "Components": [
+                {
+                    "ComponentClass": "StorageDevice",
+                    "ComponentId": "nvme-0",
+                    "VID": "Samsung",
+                    "PID": "PM9A3-3.84TB",
+                    "PhysicalLocation": {
+                        "Slot": "NVMe-1",
+                        "Position": "Front"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "Healthy",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "12",
+                        "voltageValue": "Volts",
+                        "current": "0.8",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "45",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CapacityUsed": "72",
+                        "ReadBandwidth": "40",
+                        "WriteBandwidth": "15"
+                    },
+                    "interface": "PCIe Gen4 x4",
+                    "communication": "NVMe",
+                    "dataRate": "64",
+                    "dataRateValue": "GT/s",
+                    "latency": "80",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "StorageDevice",
+                    "ComponentId": "nvme-1",
+                    "VID": "Samsung",
+                    "PID": "PM9A3-3.84TB",
+                    "PhysicalLocation": {
+                        "Slot": "NVMe-2",
+                        "Position": "Front"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "Healthy",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "12",
+                        "voltageValue": "Volts",
+                        "current": "0.7",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "43",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CapacityUsed": "65",
+                        "ReadBandwidth": "20",
+                        "WriteBandwidth": "10"
+                    },
+                    "interface": "PCIe Gen4 x4",
+                    "communication": "NVMe",
+                    "dataRate": "64",
+                    "dataRateValue": "GT/s",
+                    "latency": "75",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                }
+            ]
+        },
+        {
+            "AssemblyName": "NICBackplane",
+            "AssemblyId": "bp-nic-01",
+            "VID": "OCP",
+            "PID": "ExampleNICBackplane",
+            "health": "Healthy",
+            "mode": "Awake",
+            "status": "Healthy",
+            "lastError": "",
+            "errorLog": [
+            ],
+            "lifecycle": "production",
+            "power": {
+                "voltage": "12",
+                "voltageValue": "Volts",
+                "current": "5",
+                "currentValue": "Amps"
+            },
+            "temperature": "85",
+            "temperatureValue": "Degrees C",
+            "Components": [
+                {
+                    "ComponentClass": "NetworkInterface",
+                    "ComponentId": "nic-0",
+                    "VID": "Intel",
+                    "PID": "E810-XXVDA4",
+                    "PhysicalLocation": {
+                        "Slot": "NIC-1",
+                        "Position": "HotSwap-Bay-1"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "LinkUp",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "12",
+                        "voltageValue": "Volts",
+                        "current": "1.5",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "58",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "TxBandwidth": "40",
+                        "RxBandwidth": "35",
+                        "LinkUtilization": "38"
+                    },
+                    "interface": "PCIe Gen5 x16",
+                    "communication": "Ethernet",
+                    "dataRate": "100",
+                    "dataRateValue": "Gbps",
+                    "latency": "2",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "NetworkInterface",
+                    "ComponentId": "nic-1",
+                    "VID": "Intel",
+                    "PID": "E810-XXVDA4",
+                    "PhysicalLocation": {
+                        "Slot": "NIC-2",
+                        "Position": "HotSwap-Bay-2"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "LinkUp",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "12",
+                        "voltageValue": "Volts",
+                        "current": "1.3",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "56",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "TxBandwidth": "15",
+                        "RxBandwidth": "12",
+                        "LinkUtilization": "14"
+                    },
+                    "interface": "PCIe Gen5 x16",
+                    "communication": "Ethernet",
+                    "dataRate": "100",
+                    "dataRateValue": "Gbps",
+                    "latency": "2",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                }
+            ]
+        },
+        {
+            "AssemblyName": "UBB",
+            "AssemblyId": "ubb-01",
+            "VID": "OCP",
+            "PID": "ExampleUBB",
+            "health": "Healthy",
+            "mode": "Awake",
+            "status": "Healthy",
+            "lastError": "",
+            "errorLog": [
+            ],
+            "lifecycle": "production",
+            "power": {
+                "voltage": "60",
+                "voltageValue": "Volts",
+                "current": "50",
+                "currentValue": "Amps"
+            },
+            "temperature": "85",
+            "temperatureValue": "Degrees C",
+            "SubAssemblies": [
+                {
+                    "AssemblyName": "UBB-BMC",
+                    "AssemblyId": "ubb-bmc-01",
+                    "Components": [
+                        {
+                            "ComponentClass": "ManagementController",
+                            "ComponentId": "ubb-bmc",
+                            "VID": "ASPEED",
+                            "PID": "AST2600",
+                            "PhysicalLocation": {
+                                "Slot": "UBB-BMC-0",
+                                "Position": "UBB"
+                            },
+                            "health": "Healthy",
+                            "mode": "Awake",
+                            "status": "Healthy",
+                            "lastError": "",
+                            "errorLog": [],
+                            "lifecycle": "production",
+                            "power": {
+                                "voltage": "3.3",
+                                "voltageValue": "Volts",
+                                "current": "1",
+                                "currentValue": "Amps"
+                            },
+                            "temperature": "48",
+                            "temperatureValue": "Degrees C",
+                            "utilization": {
+                                "CPU": "12",
+                                "Memory": "35",
+                                "Network": "8"
+                            },
+                            "interface": "USB",
+                            "communication": "redfish",
+                            "dataRate": "480",
+                            "dataRateValue": "Mbps",
+                            "latency": "1",
+                            "errorRate": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "AssemblyName": "OAM-0",
+            "AssemblyId": "oam-0",
+            "Components": [
+                {
+                    "ComponentClass": "Accelerator",
+                    "ComponentId": "gpu-0",
+                    "VID": "Intel",
+                    "PID": "Gaudi3",
+                    "PhysicalLocation": {
+                        "Slot": "OAM-0",
+                        "Position": "UBB-Slot-0"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "Healthy",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "48",
+                        "voltageValue": "Volts",
+                        "current": "20",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "72",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "Compute": "85",
+                        "Memory": "78",
+                        "Fabric": "65"
+                    },
+                    "interface": "PCIe Gen5 x16",
+                    "communication": "PCIe",
+                    "dataRate": "800",
+                    "dataRateValue": "Gbps",
+                    "latency": "1",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "ManagementController",
+                    "ComponentId": "amc-0",
+                    "VID": "Nuvoton",
+                    "PID": "AMC1000",
+                    "PhysicalLocation": {
+                        "Slot": "AMC-0",
+                        "Position": "OAM-0"
+                    },
+                    "health": "Healthy",
+                    "mode": "Awake",
+                    "status": "Enabled",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "0.5",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "45",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CPU": "10",
+                        "Memory": "25",
+                        "FabricManagement": "20"
+                    },
+                    "interface": "I2C",
+                    "communication": "PLDM over MCTP",
+                    "dataRate": "1",
+                    "dataRateValue": "Mbps",
+                    "latency": "5",
+                    "latencyValue": "ms",
+                    "errorRate": "0"
+                }
+            ]
+        },
+        {
+            "AssemblyName": "OAM-1",
+            "AssemblyId": "oam-1",
+            "Components": [
+                {
+                    "ComponentClass": "Accelerator",
+                    "ComponentId": "gpu-1",
+                    "VID": "Intel",
+                    "PID": "Gaudi3",
+                    "PhysicalLocation": {
+                        "Slot": "OAM-1",
+                        "Position": "UBB-Slot-1"
+                    },
+                    "health": "Healthy",
+                    "mode": "Active",
+                    "status": "Enabled",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "48",
+                        "voltageValue": "Volts",
+                        "current": "20",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "69",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "Compute": "62",
+                        "Memory": "55",
+                        "Fabric": "48"
+                    },
+                    "interface": "PCIe Gen5 x16",
+                    "communication": "PCIe",
+                    "dataRate": "800",
+                    "dataRateValue": "Gbps",
+                    "latency": "1",
+                    "latencyValue": "us",
+                    "errorRate": "0"
+                },
+                {
+                    "ComponentClass": "ManagementController",
+                    "ComponentId": "amc-1",
+                    "VID": "Nuvoton",
+                    "PID": "AMC1000",
+                    "PhysicalLocation": {
+                        "Slot": "AMC-1",
+                        "Position": "OAM-1"
+                    },
+                    "health": "Healthy",
+                    "mode": "Awake",
+                    "status": "Enabled",
+                    "lastError": "",
+                    "errorLog": [],
+                    "lifecycle": "production",
+                    "power": {
+                        "voltage": "3.3",
+                        "voltageValue": "Volts",
+                        "current": "0.5",
+                        "currentValue": "Amps"
+                    },
+                    "temperature": "44",
+                    "temperatureValue": "Degrees C",
+                    "utilization": {
+                        "CPU": "9",
+                        "Memory": "22",
+                        "FabricManagement": "18"
+                    },
+                    "interface": "I2C",
+                    "communication": "PLDM over MCTP",
+                    "dataRate": "1",
+                    "dataRateValue": "Mbps",
+                    "latency": "5",
+                    "latencyValue": "ms",
+                    "errorRate": "0"
+                }
+            ]
+        }
+    ]
+}
+
+
+```

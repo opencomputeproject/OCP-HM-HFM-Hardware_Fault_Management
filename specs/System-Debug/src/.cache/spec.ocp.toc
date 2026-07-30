@@ -86,5 +86,5 @@
 \contentsline {section}{Appendices}{44}{section*.6}%
 \contentsline {section}{\numberline {A}Code Currency Examples}{44}{appendix.A}%
 \contentsline {section}{\numberline {B}Status Dump Examples}{48}{appendix.B}%
-\contentsline {section}{References}{49}{appendix.B}%
+\contentsline {section}{References}{58}{appendix.B}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
