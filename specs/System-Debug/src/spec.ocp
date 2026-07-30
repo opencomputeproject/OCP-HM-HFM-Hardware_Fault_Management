@@ -1312,6 +1312,18 @@ Below is a JSON example for Code Currency of a hypothetical node with:
           "assemblyName": "UBB",
           "assemblyId": "UBB-001",
           "manufacturerSerialNumber": "UBB-SN-20202",
+          "Components": [
+            {
+              "ComponentClass": "ManagementController",
+              "ComponentId": "ubb-bmc",
+              "Firmware": [
+                {
+                  "Version": "4.2.0",
+                  "ImageRole": "Active"
+                }
+              ]
+            }
+          ],
           "subAssemblies": [
             {
               "assemblyName": "OAM-1",
@@ -1629,7 +1641,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
             ]
         },
         {
-            "AssemblyName": "NVMeBackplane",
+            "AssemblyName": "HotSwapBackplane",
             "AssemblyId": "bp-nvme-01",
             "VID": "OCP",
             "PID": "ExampleNVMeBackplane",
@@ -1720,31 +1732,9 @@ Below is a JSON example for Status Dump of a hypothetical node with:
                     "latency": "75",
                     "latencyValue": "us",
                     "errorRate": "0"
-                }
-            ]
-        },
-        {
-            "AssemblyName": "NICBackplane",
-            "AssemblyId": "bp-nic-01",
-            "VID": "OCP",
-            "PID": "ExampleNICBackplane",
-            "health": "Healthy",
-            "mode": "Awake",
-            "status": "Healthy",
-            "lastError": "",
-            "errorLog": [
-            ],
-            "lifecycle": "production",
-            "power": {
-                "voltage": "12",
-                "voltageValue": "Volts",
-                "current": "5",
-                "currentValue": "Amps"
-            },
-            "temperature": "85",
-            "temperatureValue": "Degrees C",
-            "Components": [
+                },
                 {
+            
                     "ComponentClass": "NetworkInterface",
                     "ComponentId": "nic-0",
                     "VID": "Intel",
@@ -1838,208 +1828,204 @@ Below is a JSON example for Status Dump of a hypothetical node with:
             },
             "temperature": "85",
             "temperatureValue": "Degrees C",
+            "Components": [
+              {
+                  "ComponentClass": "ManagementController",
+                  "ComponentId": "ubb-bmc",
+                  "VID": "ASPEED",
+                  "PID": "AST2600",
+                  "PhysicalLocation": {
+                      "Slot": "UBB-BMC-0",
+                      "Position": "UBB"
+                  },
+                  "health": "Healthy",
+                  "mode": "Awake",
+                  "status": "Healthy",
+                  "lastError": "",
+                  "errorLog": [],
+                  "lifecycle": "production",
+                  "power": {
+                      "voltage": "3.3",
+                      "voltageValue": "Volts",
+                      "current": "1",
+                      "currentValue": "Amps"
+                  },
+                  "temperature": "48",
+                  "temperatureValue": "Degrees C",
+                  "utilization": {
+                      "CPU": "12",
+                      "Memory": "35",
+                      "Network": "8"
+                  },
+                  "interface": "USB",
+                  "communication": "redfish",
+                  "dataRate": "480",
+                  "dataRateValue": "Mbps",
+                  "latency": "1",
+                  "errorRate": "0"
+              }
+            ],
             "SubAssemblies": [
                 {
-                    "AssemblyName": "UBB-BMC",
-                    "AssemblyId": "ubb-bmc-01",
+                    "AssemblyName": "OAM-0",
+                    "AssemblyId": "oam-0",
                     "Components": [
                         {
-                            "ComponentClass": "ManagementController",
-                            "ComponentId": "ubb-bmc",
-                            "VID": "ASPEED",
-                            "PID": "AST2600",
+                            "ComponentClass": "Accelerator",
+                            "ComponentId": "gpu-0",
+                            "VID": "Intel",
+                            "PID": "Gaudi3",
                             "PhysicalLocation": {
-                                "Slot": "UBB-BMC-0",
-                                "Position": "UBB"
+                                "Slot": "OAM-0",
+                                "Position": "UBB-Slot-0"
+                            },
+                            "health": "Healthy",
+                            "mode": "Active",
+                            "status": "Healthy",
+                            "lastError": "",
+                            "errorLog": [],
+                            "lifecycle": "production",
+                            "power": {
+                                "voltage": "48",
+                                "voltageValue": "Volts",
+                                "current": "20",
+                                "currentValue": "Amps"
+                            },
+                            "temperature": "72",
+                            "temperatureValue": "Degrees C",
+                            "utilization": {
+                                "Compute": "85",
+                                "Memory": "78",
+                                "Fabric": "65"
+                            },
+                            "interface": "PCIe Gen5 x16",
+                            "communication": "PCIe",
+                            "dataRate": "800",
+                            "dataRateValue": "Gbps",
+                            "latency": "1",
+                            "latencyValue": "us",
+                            "errorRate": "0"
+                        },
+                        {
+                            "ComponentClass": "ManagementController",
+                            "ComponentId": "amc-0",
+                            "VID": "Nuvoton",
+                            "PID": "AMC1000",
+                            "PhysicalLocation": {
+                                "Slot": "AMC-0",
+                                "Position": "OAM-0"
                             },
                             "health": "Healthy",
                             "mode": "Awake",
-                            "status": "Healthy",
+                            "status": "Enabled",
                             "lastError": "",
                             "errorLog": [],
                             "lifecycle": "production",
                             "power": {
                                 "voltage": "3.3",
                                 "voltageValue": "Volts",
-                                "current": "1",
+                                "current": "0.5",
                                 "currentValue": "Amps"
                             },
-                            "temperature": "48",
+                            "temperature": "45",
                             "temperatureValue": "Degrees C",
                             "utilization": {
-                                "CPU": "12",
-                                "Memory": "35",
-                                "Network": "8"
+                                "CPU": "10",
+                                "Memory": "25",
+                                "FabricManagement": "20"
                             },
-                            "interface": "USB",
-                            "communication": "redfish",
-                            "dataRate": "480",
+                            "interface": "I2C",
+                            "communication": "PLDM over MCTP",
+                            "dataRate": "1",
                             "dataRateValue": "Mbps",
-                            "latency": "1",
+                            "latency": "5",
+                            "latencyValue": "ms",
                             "errorRate": "0"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "AssemblyName": "OAM-0",
-            "AssemblyId": "oam-0",
-            "Components": [
-                {
-                    "ComponentClass": "Accelerator",
-                    "ComponentId": "gpu-0",
-                    "VID": "Intel",
-                    "PID": "Gaudi3",
-                    "PhysicalLocation": {
-                        "Slot": "OAM-0",
-                        "Position": "UBB-Slot-0"
-                    },
-                    "health": "Healthy",
-                    "mode": "Active",
-                    "status": "Healthy",
-                    "lastError": "",
-                    "errorLog": [],
-                    "lifecycle": "production",
-                    "power": {
-                        "voltage": "48",
-                        "voltageValue": "Volts",
-                        "current": "20",
-                        "currentValue": "Amps"
-                    },
-                    "temperature": "72",
-                    "temperatureValue": "Degrees C",
-                    "utilization": {
-                        "Compute": "85",
-                        "Memory": "78",
-                        "Fabric": "65"
-                    },
-                    "interface": "PCIe Gen5 x16",
-                    "communication": "PCIe",
-                    "dataRate": "800",
-                    "dataRateValue": "Gbps",
-                    "latency": "1",
-                    "latencyValue": "us",
-                    "errorRate": "0"
                 },
                 {
-                    "ComponentClass": "ManagementController",
-                    "ComponentId": "amc-0",
-                    "VID": "Nuvoton",
-                    "PID": "AMC1000",
-                    "PhysicalLocation": {
-                        "Slot": "AMC-0",
-                        "Position": "OAM-0"
-                    },
-                    "health": "Healthy",
-                    "mode": "Awake",
-                    "status": "Enabled",
-                    "lastError": "",
-                    "errorLog": [],
-                    "lifecycle": "production",
-                    "power": {
-                        "voltage": "3.3",
-                        "voltageValue": "Volts",
-                        "current": "0.5",
-                        "currentValue": "Amps"
-                    },
-                    "temperature": "45",
-                    "temperatureValue": "Degrees C",
-                    "utilization": {
-                        "CPU": "10",
-                        "Memory": "25",
-                        "FabricManagement": "20"
-                    },
-                    "interface": "I2C",
-                    "communication": "PLDM over MCTP",
-                    "dataRate": "1",
-                    "dataRateValue": "Mbps",
-                    "latency": "5",
-                    "latencyValue": "ms",
-                    "errorRate": "0"
-                }
-            ]
-        },
-        {
-            "AssemblyName": "OAM-1",
-            "AssemblyId": "oam-1",
-            "Components": [
-                {
-                    "ComponentClass": "Accelerator",
-                    "ComponentId": "gpu-1",
-                    "VID": "Intel",
-                    "PID": "Gaudi3",
-                    "PhysicalLocation": {
-                        "Slot": "OAM-1",
-                        "Position": "UBB-Slot-1"
-                    },
-                    "health": "Healthy",
-                    "mode": "Active",
-                    "status": "Enabled",
-                    "lastError": "",
-                    "errorLog": [],
-                    "lifecycle": "production",
-                    "power": {
-                        "voltage": "48",
-                        "voltageValue": "Volts",
-                        "current": "20",
-                        "currentValue": "Amps"
-                    },
-                    "temperature": "69",
-                    "temperatureValue": "Degrees C",
-                    "utilization": {
-                        "Compute": "62",
-                        "Memory": "55",
-                        "Fabric": "48"
-                    },
-                    "interface": "PCIe Gen5 x16",
-                    "communication": "PCIe",
-                    "dataRate": "800",
-                    "dataRateValue": "Gbps",
-                    "latency": "1",
-                    "latencyValue": "us",
-                    "errorRate": "0"
-                },
-                {
-                    "ComponentClass": "ManagementController",
-                    "ComponentId": "amc-1",
-                    "VID": "Nuvoton",
-                    "PID": "AMC1000",
-                    "PhysicalLocation": {
-                        "Slot": "AMC-1",
-                        "Position": "OAM-1"
-                    },
-                    "health": "Healthy",
-                    "mode": "Awake",
-                    "status": "Enabled",
-                    "lastError": "",
-                    "errorLog": [],
-                    "lifecycle": "production",
-                    "power": {
-                        "voltage": "3.3",
-                        "voltageValue": "Volts",
-                        "current": "0.5",
-                        "currentValue": "Amps"
-                    },
-                    "temperature": "44",
-                    "temperatureValue": "Degrees C",
-                    "utilization": {
-                        "CPU": "9",
-                        "Memory": "22",
-                        "FabricManagement": "18"
-                    },
-                    "interface": "I2C",
-                    "communication": "PLDM over MCTP",
-                    "dataRate": "1",
-                    "dataRateValue": "Mbps",
-                    "latency": "5",
-                    "latencyValue": "ms",
-                    "errorRate": "0"
-                }
+                    "AssemblyName": "OAM-1",
+                    "AssemblyId": "oam-1",
+                    "Components": [
+                        {
+                            "ComponentClass": "Accelerator",
+                            "ComponentId": "gpu-1",
+                            "VID": "Intel",
+                            "PID": "Gaudi3",
+                            "PhysicalLocation": {
+                                "Slot": "OAM-1",
+                                "Position": "UBB-Slot-1"
+                            },
+                            "health": "Healthy",
+                            "mode": "Active",
+                            "status": "Enabled",
+                            "lastError": "",
+                            "errorLog": [],
+                            "lifecycle": "production",
+                            "power": {
+                                "voltage": "48",
+                                "voltageValue": "Volts",
+                                "current": "20",
+                                "currentValue": "Amps"
+                            },
+                            "temperature": "69",
+                            "temperatureValue": "Degrees C",
+                            "utilization": {
+                                "Compute": "62",
+                                "Memory": "55",
+                                "Fabric": "48"
+                            },
+                            "interface": "PCIe Gen5 x16",
+                            "communication": "PCIe",
+                            "dataRate": "800",
+                            "dataRateValue": "Gbps",
+                            "latency": "1",
+                            "latencyValue": "us",
+                            "errorRate": "0"
+                        },
+                        {
+                            "ComponentClass": "ManagementController",
+                            "ComponentId": "amc-1",
+                            "VID": "Nuvoton",
+                            "PID": "AMC1000",
+                            "PhysicalLocation": {
+                                "Slot": "AMC-1",
+                                "Position": "OAM-1"
+                            },
+                            "health": "Healthy",
+                            "mode": "Awake",
+                            "status": "Enabled",
+                            "lastError": "",
+                            "errorLog": [],
+                            "lifecycle": "production",
+                            "power": {
+                                "voltage": "3.3",
+                                "voltageValue": "Volts",
+                                "current": "0.5",
+                                "currentValue": "Amps"
+                            },
+                            "temperature": "44",
+                            "temperatureValue": "Degrees C",
+                            "utilization": {
+                                "CPU": "9",
+                                "Memory": "22",
+                                "FabricManagement": "18"
+                            },
+                            "interface": "I2C",
+                            "communication": "PLDM over MCTP",
+                            "dataRate": "1",
+                            "dataRateValue": "Mbps",
+                            "latency": "5",
+                            "latencyValue": "ms",
+                            "errorRate": "0"
+                        }
+                    ]
+                }   
             ]
         }
+        
     ]
 }
-
 
 ```
