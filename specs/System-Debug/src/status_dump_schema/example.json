@@ -1,0 +1,711 @@
+{
+  "nodeId": "node-001",
+  "nodeType": "server",
+  "hostName": "ai-server-01",
+  "vid": "0CC0",
+  "pid": "0001",
+  "healthy": false,
+  "mode": "Awake",
+  "status": "Crash",
+  "lastError": "1D10T",
+  "errorLog": [
+    "1D10T: System Halt",
+    "PEBKAC: OverVoltage"
+  ],
+  "lifecycle": "production",
+  "power": {
+    "power": 22000,
+    "powerUnit": "Watt",
+    "voltage": 220,
+    "voltageUnit": "Volt",
+    "current": 100,
+    "currentUnit": "Amps"
+  },
+  "temperature": {
+    "temperature": 125,
+    "temperatureUnit": "Degrees C"
+  },
+  "physicalLocation": {
+    "rack": "R12",
+    "row": "Row-A",
+    "datacenter": "DC1",
+    "placement": {
+      "type": "rackUnit",
+      "slot": 20,
+      "heightInU": 4
+    }
+  },
+  "assemblies": [
+    {
+      "assemblyName": "MainBoard",
+      "assemblyId": "mb-001",
+      "vid": "0CC0",
+      "pid": "0002",
+      "healthy": false,
+      "mode": "Awake",
+      "status": "Crash",
+      "lastError": "1D10T",
+      "errorLog": [
+        "1D10T: System Halt",
+        "PEBKAC: OverVoltage",
+        "501: Server Error"
+      ],
+      "lifecycle": "production",
+      "power": {
+        "power": 3000,
+        "powerUnit": "Watt",
+        "voltage": 60,
+        "voltageUnit": "Volt",
+        "current": 50,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 125,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "processor",
+          "componentId": "cpu-0",
+          "vid": "8086",
+          "pid": "1000",
+          "physicalLocation": {
+            "slot": "CPU0",
+            "position": "Socket-0"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "1D10T",
+          "errorLog": [
+            "1D10T: System Halt",
+            "PEBKAC: OverVoltage",
+            "501: Server Error"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 165,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 50,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 125,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 100,
+            "PCIe": 80,
+            "UPI": 10
+          },
+          "interface": "Northbridge",
+          "communication": "JEDEC DDR",
+          "dataRate": 6400,
+          "dataRateValue": "MT/s",
+          "performance": {
+            "Packet Loss/Resend": 13,
+            "Thermal Throttling": 15,
+            "ECC": 0
+          },
+          "latency": 0,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "processor",
+          "componentId": "cpu-1",
+          "vid": "8086",
+          "pid": "1001",
+          "physicalLocation": {
+            "slot": "CPU1",
+            "position": "Socket-1"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "1D10T",
+          "errorLog": [
+            "1D10T: System Halt"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 165,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 50,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 30,
+            "PCIe": 10,
+            "UPI": 10
+          },
+          "interface": "Northbridge",
+          "communication": "JEDEC DDR",
+          "dataRate": 6400,
+          "dataRateValue": "MT/s",
+          "performance": {
+            "Packet Loss/Resend": 13,
+            "Thermal Throttling": 15,
+            "ECC": 0
+          },
+          "latency": 0,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "memory",
+          "componentId": "dimm-0",
+          "vid": "1AD9",
+          "pid": "6405",
+          "physicalLocation": {
+            "slot": "DIMM-A1",
+            "position": "Channel-A"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "UCB10",
+          "errorLog": [
+            "UCB10: Uncorrectable Error Bank 10",
+            "UCB09: Uncorrectable Error Bank 9",
+            "UCB08: Uncorrectable Error Bank 8",
+            "UCB07: Uncorrectable Error Bank 7"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 6.6,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 2,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          }
+        },
+        {
+          "componentClass": "memory",
+          "componentId": "dimm-1",
+          "vid": "1AD9",
+          "pid": "6405",
+          "physicalLocation": {
+            "slot": "DIMM-B1",
+            "position": "Channel-B"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 6.6,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 2,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          }
+        },
+        {
+          "componentClass": "bmc",
+          "componentId": "bmc-0",
+          "vid": "1A03",
+          "pid": "2600",
+          "physicalLocation": {
+            "slot": "BMC-0",
+            "position": "MainBoard"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 3.3,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 1,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 52,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 15,
+            "Memory": 40,
+            "Network": 10
+          },
+          "interface": "RMII",
+          "communication": "NC-SI",
+          "dataRate": 1000,
+          "dataRateValue": "Mbps",
+          "latency": 1,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ]
+    },
+    {
+      "assemblyName": "HotSwapBackplane",
+      "assemblyId": "bp-nvme-01",
+      "vid": "0CC0",
+      "pid": "0003",
+      "healthy": true,
+      "mode": "Awake",
+      "status": "Healthy",
+      "lastError": "",
+      "errorLog": [],
+      "lifecycle": "production",
+      "power": {
+        "power": 60,
+        "powerUnit": "Watt",
+        "voltage": 12,
+        "voltageUnit": "Volt",
+        "current": 5,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 85,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "storageDevice",
+          "componentId": "nvme-0",
+          "vid": "144D",
+          "pid": "A384",
+          "physicalLocation": {
+            "slot": "NVMe-1",
+            "position": "Front"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 9.6,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 0.8,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 45,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CapacityUsed": 72,
+            "ReadBandwidth": 40,
+            "WriteBandwidth": 15
+          },
+          "interface": "PCIe Gen4 x4",
+          "communication": "NVMe",
+          "dataRate": 64,
+          "dataRateValue": "GT/s",
+          "latency": 80,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "storageDevice",
+          "componentId": "nvme-1",
+          "vid": "144D",
+          "pid": "A385",
+          "physicalLocation": {
+            "slot": "NVMe-2",
+            "position": "Front"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 8.4,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 0.7,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 43,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CapacityUsed": 65,
+            "ReadBandwidth": 20,
+            "WriteBandwidth": 10
+          },
+          "interface": "PCIe Gen4 x4",
+          "communication": "NVMe",
+          "dataRate": 64,
+          "dataRateValue": "GT/s",
+          "latency": 75,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "networkInterface",
+          "componentId": "nic-0",
+          "vid": "8086",
+          "pid": "1592",
+          "physicalLocation": {
+            "slot": "NIC-1",
+            "position": "HotSwap-Bay-1"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "LinkUp",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 18,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 1.5,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 58,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "TxBandwidth": 40,
+            "RxBandwidth": 35,
+            "LinkUtilization": 38
+          },
+          "interface": "PCIe Gen5 x16",
+          "communication": "Ethernet",
+          "dataRate": 100,
+          "dataRateValue": "Gbps",
+          "latency": 2,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "networkInterface",
+          "componentId": "nic-1",
+          "vid": "8086",
+          "pid": "1593",
+          "physicalLocation": {
+            "slot": "NIC-2",
+            "position": "HotSwap-Bay-2"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "LinkUp",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 15.6,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 1.3,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 56,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "TxBandwidth": 15,
+            "RxBandwidth": 12,
+            "LinkUtilization": 14
+          },
+          "interface": "PCIe Gen5 x16",
+          "communication": "Ethernet",
+          "dataRate": 100,
+          "dataRateValue": "Gbps",
+          "latency": 2,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ]
+    },
+    {
+      "assemblyName": "UBB",
+      "assemblyId": "ubb-01",
+      "vid": "0CC0",
+      "pid": "0004",
+      "healthy": true,
+      "mode": "Awake",
+      "status": "Healthy",
+      "lastError": "",
+      "errorLog": [],
+      "lifecycle": "production",
+      "power": {
+        "power": 3000,
+        "powerUnit": "Watt",
+        "voltage": 60,
+        "voltageUnit": "Volt",
+        "current": 50,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 85,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "managementController",
+          "componentId": "ubb-bmc",
+          "vid": "1A03",
+          "pid": "2600",
+          "physicalLocation": {
+            "slot": "UBB-BMC-0",
+            "position": "UBB"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 3.3,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 1,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 48,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 12,
+            "Memory": 35,
+            "Network": 8
+          },
+          "interface": "USB",
+          "communication": "redfish",
+          "dataRate": 480,
+          "dataRateValue": "Mbps",
+          "latency": 1,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ],
+      "subAssemblies": [
+        {
+          "assemblyName": "OAM-0",
+          "assemblyId": "oam-0",
+          "vid": "0CC0",
+          "pid": "0100",
+          "healthy": true,
+          "components": [
+            {
+              "componentClass": "accelerator",
+              "componentId": "gpu-0",
+              "vid": "8086",
+              "pid": "1020",
+              "physicalLocation": {
+                "slot": "OAM-0",
+                "position": "UBB-Slot-0"
+              },
+              "healthy": true,
+              "mode": "Active",
+              "status": "Healthy",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 960,
+                "powerUnit": "Watt",
+                "voltage": 48,
+                "voltageUnit": "Volt",
+                "current": 20,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 72,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "Compute": 85,
+                "Memory": 78,
+                "Fabric": 65
+              },
+              "interface": "PCIe Gen5 x16",
+              "communication": "PCIe",
+              "dataRate": 800,
+              "dataRateValue": "Gbps",
+              "latency": 1,
+              "latencyUnit": "us",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            },
+            {
+              "componentClass": "managementController",
+              "componentId": "amc-0",
+              "vid": "1050",
+              "pid": "1000",
+              "physicalLocation": {
+                "slot": "AMC-0",
+                "position": "OAM-0"
+              },
+              "healthy": true,
+              "mode": "Awake",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 1.65,
+                "powerUnit": "Watt",
+                "voltage": 3.3,
+                "voltageUnit": "Volt",
+                "current": 0.5,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 45,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "CPU": 10,
+                "Memory": 25,
+                "FabricManagement": 20
+              },
+              "interface": "I2C",
+              "communication": "PLDM over MCTP",
+              "dataRate": 1,
+              "dataRateValue": "Mbps",
+              "latency": 5,
+              "latencyUnit": "ms",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            }
+          ]
+        },
+        {
+          "assemblyName": "OAM-1",
+          "assemblyId": "oam-1",
+          "vid": "0CC0",
+          "pid": "0101",
+          "healthy": true,
+          "components": [
+            {
+              "componentClass": "accelerator",
+              "componentId": "gpu-1",
+              "vid": "8086",
+              "pid": "1021",
+              "physicalLocation": {
+                "slot": "OAM-1",
+                "position": "UBB-Slot-1"
+              },
+              "healthy": true,
+              "mode": "Active",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 960,
+                "powerUnit": "Watt",
+                "voltage": 48,
+                "voltageUnit": "Volt",
+                "current": 20,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 69,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "Compute": 62,
+                "Memory": 55,
+                "Fabric": 48
+              },
+              "interface": "PCIe Gen5 x16",
+              "communication": "PCIe",
+              "dataRate": 800,
+              "dataRateValue": "Gbps",
+              "latency": 1,
+              "latencyUnit": "us",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            },
+            {
+              "componentClass": "managementController",
+              "componentId": "amc-1",
+              "vid": "1050",
+              "pid": "1001",
+              "physicalLocation": {
+                "slot": "AMC-1",
+                "position": "OAM-1"
+              },
+              "healthy": true,
+              "mode": "Awake",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 1.65,
+                "powerUnit": "Watt",
+                "voltage": 3.3,
+                "voltageUnit": "Volt",
+                "current": 0.5,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 44,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "CPU": 9,
+                "Memory": 22,
+                "FabricManagement": 18
+              },
+              "interface": "I2C",
+              "communication": "PLDM over MCTP",
+              "dataRate": 1,
+              "dataRateValue": "Mbps",
+              "latency": 5,
+              "latencyUnit": "ms",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

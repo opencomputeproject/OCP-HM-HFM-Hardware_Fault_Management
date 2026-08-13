@@ -704,73 +704,74 @@ The information for Code Currency will be exposed by a system as a file in the R
 
 The table below defines the elements of the node-level for the Code Currency JSON schema.
 
-Table: Code Currency Node-Level Elements Definition 
+Table: Code Currency Node-Level Elements Definition
 
-| Element Name          | Description             |
-| :-------------------- | :---------------------- |
-|`hostname` | Hostname for network identification. |
-|`networkConfiguration.ipAddresses` | List of IPv4 addresses. (required) |
-|`networkConfiguration.macAddresses` | MAC addresses for network interfaces. |
-|`networkConfiguration.ports` | Open or configured ports. |
-|`nodeId` | Unique identifier for the node. (required) |
-|`nodeType` | Type of node (e.g., AI Server, Ethernet Switch). (required) |
-|`physicalLocation.datacenter` | Physical placement identifier. |
-|`physicalLocation.rack` | Physical placement identifier. |
-|`physicalLocation.row` | Physical placement identifier. |
-|`physicalLocation.placement.bayId` | Bay-specific identifier if type=Bay. |
-|`physicalLocation.placement.bayPosition` | Bay-specific position if type=Bay. |
-|`physicalLocation.placement.heightInU` | Height in rack units if type=RackSlot. |
-|`physicalLocation.placement.slot` | Rack unit position if type=RackSlot. |
-|`physicalLocation.placement.type` | RackSlot or Bay. (required) |
+| Element Name | Description |
+|:-------------|:------------|
+| `hostName` | Hostname for network identification. |
+| `networkConfiguration.ipAddresses` | List of IPv4 addresses. (required) |
+| `networkConfiguration.macAddresses` | MAC addresses for network interfaces. |
+| `networkConfiguration.ports` | Open or configured ports. |
+| `nodeId` | Unique identifier for the node. (required) |
+| `nodeType` | Type of node. Permitted values: `server`, `blade`, `computeNode`, `ethernetSwitch`, `networkAppliance`, `storageSystem`, `jbod`, `nvmeShelf`, `acceleratorSystem`, `gpuServer`, `managementController`, `rackManager`, `powerDistributionUnit`, `powerShelf`, `batteryBackupUnit`, `coolingDistributionUnit`, `coolingManifold`, `liquidCoolingSystem`, `chassis`, `enclosure`. (required) |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `physicalLocation.datacenter` | Datacenter identifier. |
+| `physicalLocation.rack` | Rack identifier. |
+| `physicalLocation.row` | Row identifier. |
+| `physicalLocation.placement.bayId` | Bay identifier if `physicalLocation.placement.type = bay`. |
+| `physicalLocation.placement.bayPosition` | Position within the bay if `physicalLocation.placement.type = bay`. |
+| `physicalLocation.placement.heightInU` | Height in rack units if `physicalLocation.placement.type = rackUnit`. |
+| `physicalLocation.placement.slot` | Rack unit position if `physicalLocation.placement.type = rackUnit`. |
+| `physicalLocation.placement.type` | Physical installation location type. Permitted values: `rackUnit`, `bay`, `slot`, `socket`, `drawer`, `shelf`, `tray`, `cage`, `zone`. (required) |
+| `assemblies` | Array of assemblies within the node. (required) |
 
-The table below defines the elements of the "assembly" element for the Code Currency JSON schema.
+Table: Code Currency `assembly` Elements Definition
 
-Table: Code Currency "assembly" Elements Definition 
+| Element Name | Description |
+|:-------------|:------------|
+| `assemblyName` | Name of the assembly, for example `Baseboard`. (required) |
+| `assemblyId` | Unique identifier for the assembly. (required) |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `components` | Array of components contained within this assembly. |
+| `logicalAssociation` | Logical connectivity information for the assembly. |
+| `logicalAssociation.links` | Array of logical links associated with the assembly. |
+| `logicalAssociation.links.connectedTo` | Identifier of the object connected to this link. (required) |
+| `logicalAssociation.links.laneCount` | Number of lanes associated with the link. |
+| `logicalAssociation.links.protocol` | Protocol used on the link. (required) |
+| `manufacturerSerialNumber` | Manufacturer serial number for the assembly. |
+| `physicalLocation.position` | Position of the assembly within the node or parent assembly. |
+| `physicalLocation.slot` | Physical slot identifier where the assembly is installed. |
+| `subAssemblies` | Array of nested assemblies contained within this assembly. |
 
-| Element Name          | Description             |
-| :-------------------- | :---------------------- |
-|`assemblyName` | Name of the assembly (e.g., Baseboard). (required) |
-|`assemblyId` | Unique identifier. (required) |
-|`components` | Array of components. |
-|`logicalAssociation` | Array of logical connectivity details for this assembly. |
-|`logicalAssociation.links.connectedTo` | What the link is connected to. (required) |
-|`logicalAssociation.links.laneCount` | Number of lanes for the link. |
-|`logicalAssociation.links.protocol` | The protocol of the link. (required) |
-|`manufacturerSerialNumber` | Manufacturer’s serial number for the assembly. |
-|`physicalLocation.slot` | Physical slot identifier where this assembly is installed. |
-|`physicalLocation.position` | Position within the node or assembly where this assembly is installed. |
-|`subAssemblies` | Nested assemblies. |
+Table: Code Currency `component` Elements Definition
 
-The table below defines the elements of the "components" element for the Code Currency JSON schema.
+| Element Name | Description |
+|:-------------|:------------|
+| `componentClass` | Industry-aligned component class. Permitted values: `processor`, `memory`, `networkInterface`, `storageDevice`, `accelerator`, `powerSupply`, `fan`, `thermalSensor`, `voltageRegulator`, `clockGenerator`, `retimer`, `bridge`, `switchASIC`, `controller`, `bios`, `firmware`, `bmc`, `managementController`, `securityModule`, `fpga`, `cpld`. (required) |
+| `componentId` | Unique identifier for the component. (required) |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `configuration` | Array of custom configuration attributes for the component. |
+| `configuration.description` | Description of the configuration attribute. |
+| `configuration.name` | Configuration attribute name. (required) |
+| `configuration.value` | Configuration attribute value. (required) |
+| `firmware` | Array of firmware entries associated with the component. (required) |
+| `firmware.imageRole` | Role of the firmware image. Permitted values: `Active`, `Recovery`, `Standby`. |
+| `firmware.lastUpdated` | Timestamp of the last firmware update. |
+| `firmware.minimumSecurityVersionNumber` | Minimum enforced Security Version Number (SVN). |
+| `firmware.securityVersionNumber` | Current Security Version Number (SVN). |
+| `firmware.version` | Firmware version identifier. (required) |
+| `logicalAssociation` | Logical connectivity information for the component. |
+| `logicalAssociation.links` | Array of logical links associated with the component. |
+| `logicalAssociation.links.connectedTo` | Identifier of the object connected to this link. (required) |
+| `logicalAssociation.links.laneCount` | Number of lanes associated with the link. |
+| `logicalAssociation.links.protocol` | Protocol used on the link. (required) |
+| `manufacturerSerialNumber` | Manufacturer serial number for the component. |
+| `physicalLocation.position` | Position of the component within the node or assembly. |
+| `physicalLocation.slot` | Physical slot identifier where the component is installed. |
 
-Table: Code Currency "components" Elements Definition 
-
-| Element Name          | Description             |
-| :-------------------- | :---------------------- |
-|`componentId` | Unique identifier. (required) |
-|`componentType` | Type of component.  Permitted values: CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC, AMC. (required) |
-|`configuration` | Array of custom configuration attributes for the component. |
-|`configuration.description` | Description of the attribute. |
-|`configuration.name` | Configuration attribute name. (required) |
-|`configuration.value` | Configuration attribute value. (required) |
-|`firmware` | Array of firmware entries for the component. (required) |
-|`firmware.imageRole` | Indicates if this firmware is actively running or a redundant recovery image.  Permitted values: Active, Recovery, or Standby. |
-|`firmware.lastUpdated` | Timestamp of last update. |
-|`firmware.minimumSecurityVersionNumber` | Minimum enforced SVN. |
-|`firmware.securityVersionNumber` | Current Security Version Number (SVN). |
-|`firmware.version`| Firmware version (required). |
-|`logicalAssociation` | Array of logical connectivity details for this component. |
-|`logicalAssociation.links.connectedTo` | What the link is connected to. (required) |
-|`logicalAssociation.links.laneCount` | Number of lanes for the link. |
-|`logicalAssociation.links.protocol` | The protocol of the link. (required) |
-|`manufacturerSerialNumber` | Manufacturer’s serial number. |
-|`physicalLocation.position` | Position within the node or assembly where this component is installed. |
-|`physicalLocation.slot` | Physical slot identifier where this component is installed. |
-
-Examples of the JSON files following the given schema can be found in @sec:code-currency-examples.
-
-
-### Code Currency Redfish Schema
 
 
 ### Requirements
@@ -785,60 +786,159 @@ Examples of the JSON files following the given schema can be found in @sec:code-
   "title": "Node Code Currency Record",
   "type": "object",
   "properties": {
-    "nodeId": { "type": "string", "description": "Unique identifier for the node" },
-    "nodeType": { "type": "string", "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)" },
-    "hostname": { "type": "string", "description": "Node hostname" },
+    "nodeId": {
+      "type": "string",
+      "description": "Unique identifier for the node"
+    },
+    "nodeType": {
+      "$ref": "#/$defs/systemAssemblyType",
+      "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)"
+    },
+    "hostName": {
+      "type": "string",
+      "description": "Node hostname"
+    },
+    "vid": {
+      "type": "string",
+      "pattern": "^[0-9A-Fa-f]{4}$",
+      "description": "PCIe Vendor ID"
+    },
+    "pid": {
+      "type": "string",
+      "pattern": "^[0-9A-Fa-f]{4}$",
+      "description": "PCIe Product ID"
+    },
     "networkConfiguration": {
       "type": "object",
       "description": "Network configuration details for the node",
       "properties": {
-        "ipAddresses": { "type": "array", "items": { "type": "string", "format": "ipv4" } },
-        "ports": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 65535 } },
-        "macAddresses": { "type": "array", "items": { "type": "string", "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" } }
+        "ipAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "ipv4"
+          }
+        },
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        "macAddresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+          }
+        }
       },
-      "required": ["ipAddresses"]
+      "required": [
+        "ipAddresses"
+      ]
     },
     "physicalLocation": {
       "type": "object",
       "description": "Physical location of the node in the datacenter",
       "properties": {
-        "rack": { "type": "string" },
-        "row": { "type": "string" },
-        "datacenter": { "type": "string" },
+        "rack": {
+          "type": "string"
+        },
+        "row": {
+          "type": "string"
+        },
+        "datacenter": {
+          "type": "string"
+        },
         "placement": {
           "type": "object",
           "properties": {
-            "type": { "type": "string", "enum": ["RackSlot", "Bay"] },
-            "slot": { "type": "integer", "description": "Rack unit position if RackSlot" },
-            "heightInU": { "type": "integer", "description": "Height in U if RackSlot" },
-            "bayId": { "type": "string", "description": "Bay identifier if Bay" },
-            "bayPosition": { "type": "string", "description": "Position within the bay" }
+            "type": {
+              "$ref": "#/$defs/physicalLocationType",
+              "description": "Placement type"
+            },
+            "slot": {
+              "type": "integer",
+              "description": "Rack unit position if RackSlot"
+            },
+            "heightInU": {
+              "type": "integer",
+              "description": "Height in U if RackSlot"
+            },
+            "bayId": {
+              "type": "string",
+              "description": "Bay identifier if Bay"
+            },
+            "bayPosition": {
+              "type": "string",
+              "description": "Position within the bay"
+            }
           },
-          "required": ["type"]
+          "required": [
+            "type"
+          ]
         }
       },
-      "required": ["rack", "row", "datacenter", "placement"]
+      "required": [
+        "rack",
+        "row",
+        "datacenter",
+        "placement"
+      ]
     },
     "assemblies": {
       "type": "array",
       "description": "List of assemblies within the node (supports nested assemblies)",
-      "items": { "$ref": "#/$defs/assembly" }
+      "items": {
+        "$ref": "#/$defs/assembly"
+      }
     }
   },
-  "required": ["nodeId", "nodeType", "assemblies"],
+  "required": [
+    "nodeId",
+    "nodeType",
+    "vid",
+    "pid",
+    "assemblies"
+  ],
   "$defs": {
     "assembly": {
       "type": "object",
       "properties": {
-        "assemblyName": { "type": "string" },
-        "assemblyId": { "type": "string" },
-        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the assembly" },
+        "assemblyName": {
+          "type": "string"
+        },
+        "assemblyId": {
+          "type": "string"
+        },
+        "manufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the assembly"
+        },
+        "vid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Vendor ID"
+        },
+        "pid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Product ID"
+        },
         "physicalLocation": {
           "type": "object",
           "description": "Physical slot or bay where this assembly is installed",
           "properties": {
-            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)" },
-            "position": { "type": "string", "description": "Position within the node or assembly" }
+            "slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)"
+            },
+            "position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
           }
         },
         "logicalAssociation": {
@@ -851,49 +951,106 @@ Examples of the JSON files following the given schema can be found in @sec:code-
               "items": {
                 "type": "object",
                 "properties": {
-                  "connectedTo": { "type": "string" },
-                  "protocol": { "type": "string" },
-                  "laneCount": { "type": "integer" }
+                  "connectedTo": {
+                    "type": "string"
+                  },
+                  "protocol": {
+                    "type": "string"
+                  },
+                  "laneCount": {
+                    "type": "integer"
+                  }
                 },
-                "required": ["connectedTo", "protocol"]
+                "required": [
+                  "connectedTo",
+                  "protocol"
+                ]
               }
             }
           }
         },
-        "components": { "type": "array", "items": { "$ref": "#/$defs/component" } },
-        "subAssemblies": { "type": "array", "items": { "$ref": "#/$defs/assembly" } }
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "subAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assembly"
+          }
+        }
       },
-      "required": ["assemblyName", "assemblyId"]
+      "required": [
+        "assemblyName",
+        "assemblyId",
+        "vid",
+        "pid"
+      ]
     },
     "component": {
       "type": "object",
       "properties": {
-        "componentType": { "type": "string", "enum": ["CPU", "Memory", "NIC", "Storage", "GPU", "PSU", "Fan", "BIOS", "BMC", "AMC"] },
-        "componentId": { "type": "string" },
-        "manufacturerSerialNumber": { "type": "string", "description": "Manufacturer's serial number for the component" },
+        "componentClass": {
+          "$ref": "#/$defs/componentClass",
+          "description": "Industry-aligned component class."
+        },
+        "componentId": {
+          "type": "string"
+        },
+        "manufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the component"
+        },
+        "vid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Vendor ID"
+        },
+        "pid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Product ID"
+        },
         "physicalLocation": {
           "type": "object",
           "description": "Physical slot or bay where this component is installed",
           "properties": {
-            "slot": { "type": "string", "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)" },
-            "position": { "type": "string", "description": "Position within the node or assembly" }
+            "slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)"
+            },
+            "position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
           }
         },
         "logicalAssociation": {
           "type": "object",
           "description": "Logical connectivity details for this component",
           "properties": {
-            "inks": {
+            "links": {
               "type": "array",
               "description": "List of logical links consumed by this component",
               "items": {
                 "type": "object",
                 "properties": {
-                  "connectedTo": { "type": "string" },
-                  "protocol": { "type": "string" },
-                  "laneCount": { "type": "integer" }
+                  "connectedTo": {
+                    "type": "string"
+                  },
+                  "protocol": {
+                    "type": "string"
+                  },
+                  "laneCount": {
+                    "type": "integer"
+                  }
                 },
-                "required": ["connectedTo", "protocol"]
+                "required": [
+                  "connectedTo",
+                  "protocol"
+                ]
               }
             }
           }
@@ -904,17 +1061,36 @@ Examples of the JSON files following the given schema can be found in @sec:code-
           "items": {
             "type": "object",
             "properties": {
-              "version": { "type": "string", "description": "Firmware version" },
-              "lastUpdated": { "type": "string", "format": "date-time", "description": "Timestamp of last firmware update" },
-              "securityVersionNumber": { "type": "integer", "description": "Current Security Version Number (SVN)" },
-              "minimumSecurityVersionNumber": { "type": "integer", "description": "Minimum enforced Security Version Number (SVN)" },
+              "version": {
+                "type": "string",
+                "description": "Firmware version"
+              },
+              "lastUpdated": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp of last firmware update"
+              },
+              "securityVersionNumber": {
+                "type": "integer",
+                "description": "Current Security Version Number (SVN)"
+              },
+              "minimumSecurityVersionNumber": {
+                "type": "integer",
+                "description": "Minimum enforced Security Version Number (SVN)"
+              },
               "imageRole": {
                 "type": "string",
-                "enum": ["Active", "Recovery", "Standby"],
+                "enum": [
+                  "Active",
+                  "Recovery",
+                  "Standby"
+                ],
                 "description": "Indicates if this firmware is actively running or a redundant recovery image"
               }
             },
-            "required": ["version"]
+            "required": [
+              "version"
+            ]
           }
         },
         "configuration": {
@@ -923,23 +1099,786 @@ Examples of the JSON files following the given schema can be found in @sec:code-
           "items": {
             "type": "object",
             "properties": {
-              "name": { "type": "string", "description": "Configuration attribute name" },
-              "value": { "type": "string", "description": "Configuration attribute value" },
-              "description": { "type": "string", "description": "Optional description of the attribute" }
+              "name": {
+                "type": "string",
+                "description": "Configuration attribute name"
+              },
+              "value": {
+                "type": "string",
+                "description": "Configuration attribute value"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the attribute"
+              }
             },
-            "required": ["name", "value"]
+            "required": [
+              "name",
+              "value"
+            ]
           }
         }
       },
-      "required": ["componentType", "componentId", "firmware"]
+      "required": [
+        "componentClass",
+        "componentId",
+        "vid",
+        "pid",
+        "firmware"
+      ]
+    },
+    "physicalLocationType": {
+      "type": "string",
+      "description": "Industry-aligned physical installation location type.",
+      "enum": [
+        "rackUnit",
+        "bay",
+        "slot",
+        "socket",
+        "drawer",
+        "shelf",
+        "tray",
+        "cage",
+        "zone"
+      ]
+    },
+    "componentClass": {
+      "type": "string",
+      "description": "Industry-aligned component class (inventory category).",
+      "enum": [
+        "processor",
+        "memory",
+        "networkInterface",
+        "storageDevice",
+        "accelerator",
+        "powerSupply",
+        "fan",
+        "thermalSensor",
+        "voltageRegulator",
+        "clockGenerator",
+        "retimer",
+        "bridge",
+        "switchASIC",
+        "controller",
+        "bios",
+        "firmware",
+        "bmc",
+        "managementController",
+        "securityModule",
+        "fpga",
+        "cpld"
+      ]
+    },
+    "systemAssemblyType": {
+      "type": "string",
+      "description": "Industry-aligned top-level assembly type (system/chassis class).",
+      "enum": [
+        "server",
+        "blade",
+        "computeNode",
+        "ethernetSwitch",
+        "networkAppliance",
+        "storageSystem",
+        "jbod",
+        "nvmeShelf",
+        "acceleratorSystem",
+        "gpuServer",
+        "managementController",
+        "rackManager",
+        "powerDistributionUnit",
+        "powerShelf",
+        "batteryBackupUnit",
+        "coolingDistributionUnit",
+        "coolingManifold",
+        "liquidCoolingSystem",
+        "chassis",
+        "enclosure"
+      ]
     }
   }
 }
 ```
 
+### Code Currency Redfish Schema
+
 
 ## Status Dump {#sec:status-dump}
 
+### Introduction
+
+The purpose of this feature is to provide a way to quickly retrieve relevant debug information for a given PCIe device.
+
+### Definitions:
+
+Extended Register Dump: In depth dump about the component without information about the environment that the component is in. Is typically not human readable.
+Status Dump: The dump is about the component as a part of the environment that it exists in. Is typically human readable. Crash Dump: The dump with information from a non-functional component to determine what caused the failure.
+
+In-band: Host OS’s ethernet device and locked in host device. Interact with devices via driver stack. Based on CLI/Local UI.
+In-band(2): From PCI differential pair.
+Out-of-band: Using BMC or non-OS access methods.
+Out-of-band(2): I2C
+
+Hierarchy is for physical troubleshoot and replacement of components, not to determine internal bus mapping or similar non-technician level items.
+
+### MVP Requirements:
+
+Ability to have “tagged” data based on the component the dump comes from. Tagging includes sufficient identifying data to allow determination of component type (for example, that the dump is from a CPU and not a GPU).
+Ability to receive status dump during a CPU lockup.
+Dump readability (need to discuss between two options):
+Dump capable of reading via publicly accessible tools (can be vendor specific but must be usable by hardware owner) and or human readable as is (text file) and in place (no removing from rack). (Auditability)
+Dump based on OCP NVME standard.
+Data includes the most recent error state. Can be error code or “corrupted” data (in the case of things such as RAM).
+Component level dump.
+Ability to collect data without performance impact of the working system. (Define performance impact).
+Dumps must be pullable without downtime to the system. This includes the need to put the device in a "maintenance mode” to pull the dump.
+Dumps should be generated on demand by user.
+Ability to clear error codes and dump data by user.
+Data is stored during power outage for later retrieval (for example if the system is shipped offsite for debugging.)
+
+### Optional:
+
+Deep dump that utilizes vendor supplied technician tools that can gather additional data, such as proprietary information.
+Devices have an alert mechanism to flag when a dump or an error status has been generated.
+BMC accessibility or other Out of Band accessibility.
+Sufficient identifying data to allow debug at the component level (for example, CPU socket number for multi-CPU servers).
+Data includes comprehensive debug information including historical error logs.
+Data collection may incorporate collection methods with performance impact. This may involve a combination of non-performance impacting collection methods and collection methods, or may solely consist of the “data bundling” of non-performance impacting collection methods.
+Timed based or schedule based dump creation.
+Ability to delete historical data on schedule.
+Ability to have aggregated “high level summary” document at the system (server, switch, etc) level.
+
+
+The table below defines the elements of the Status Dump JSON schema.
+
+Table: Status Dump Node-Level Elements Definition
+
+| Element Name | Description |
+|:-------------|:------------|
+| `nodeId` | Unique identifier for the node. (required) |
+| `nodeType` | Type of node. Permitted values: `server`, `blade`, `computeNode`, `ethernetSwitch`, `networkAppliance`, `storageSystem`, `jbod`, `nvmeShelf`, `acceleratorSystem`, `gpuServer`, `managementController`, `rackManager`, `powerDistributionUnit`, `powerShelf`, `batteryBackupUnit`, `coolingDistributionUnit`, `coolingManifold`, `liquidCoolingSystem`, `chassis`, `enclosure`. (required) |
+| `hostName` | Hostname for network identification. |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `healthy` | Indicates whether the node is healthy. (required) |
+| `mode` | Operational mode of the node. (required) |
+| `status` | Current status of the node. (required) |
+| `lastError` | Most recent error encountered by the node. |
+| `errorLog` | Array of error log entries. |
+| `lifecycle` | Lifecycle state of the node. (required) |
+| `power` | Power telemetry object. |
+| `power.power` | Power reading. (required) |
+| `power.powerUnit` | Power unit. Permitted values: `Watt`, `kiloWatt`, `megaWatt`. |
+| `power.voltage` | Voltage reading. (required) |
+| `power.voltageUnit` | Voltage unit. Permitted values: `Volt`, `kiloVolt`. |
+| `power.current` | Current reading. (required) |
+| `power.currentUnit` | Current unit. Permitted values: `Amps`, `kiloAmps`, `megaAmps`. |
+| `temperature.temperature` | Temperature reading. (required) |
+| `temperature.temperatureUnit` | Temperature unit. Permitted values: `Degrees C`, `Degrees F`, `Kelvins`. |
+| `vendor.organization` | Vendor-defined organization name. |
+| `physicalLocation.datacenter` | Datacenter identifier. |
+| `physicalLocation.rack` | Rack identifier. |
+| `physicalLocation.row` | Row identifier. |
+| `physicalLocation.placement.type` | Physical installation location type. Permitted values: `rackUnit`, `bay`, `slot`, `socket`, `drawer`, `shelf`, `tray`, `cage`, `zone`. (required) |
+| `physicalLocation.placement.slot` | Rack unit position if type is `rackUnit`. |
+| `physicalLocation.placement.heightInU` | Height in rack units if type is `rackUnit`. |
+| `physicalLocation.placement.bayId` | Bay identifier if type is `bay`. |
+| `physicalLocation.placement.bayPosition` | Position within the bay if type is `bay`. |
+| `assemblies` | Array of assemblies contained within the node. (required) |
+
+Table: Status Dump `assembly` Elements Definition
+
+| Element Name | Description |
+|:-------------|:------------|
+| `assemblyName` | Name of the assembly. (required) |
+| `assemblyId` | Unique identifier for the assembly. (required) |
+| `manufacturerSerialNumber` | Manufacturer serial number for the assembly. |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `healthy` | Indicates whether the assembly is healthy. (required) |
+| `mode` | Operational mode of the assembly. |
+| `status` | Current status of the assembly. |
+| `lastError` | Most recent error for the assembly. |
+| `errorLog` | Array of error log entries. |
+| `lifecycle` | Lifecycle state of the assembly. |
+| `power` | Power telemetry object. |
+| `temperature` | Temperature telemetry object. |
+| `vendor` | Vendor-defined data. |
+| `physicalLocation.slot` | Physical slot identifier where the assembly is installed. |
+| `physicalLocation.position` | Position of the assembly within the node or parent assembly. |
+| `components` | Array of components contained within the assembly. |
+| `subAssemblies` | Array of nested assemblies. |
+
+Table: Status Dump `component` Elements Definition
+
+| Element Name | Description |
+|:-------------|:------------|
+| `componentClass` | Industry-aligned component class. Permitted values: `processor`, `memory`, `networkInterface`, `storageDevice`, `accelerator`, `powerSupply`, `fan`, `thermalSensor`, `voltageRegulator`, `clockGenerator`, `retimer`, `bridge`, `switchASIC`, `controller`, `bios`, `firmware`, `bmc`, `managementController`, `securityModule`, `fpga`, `cpld`. |
+| `componentId` | Unique identifier for the component. (required) |
+| `manufacturerSerialNumber` | Manufacturer serial number for the component. |
+| `vid` | PCIe Vendor ID represented as a four-digit hexadecimal value. (required) |
+| `pid` | PCIe Product ID represented as a four-digit hexadecimal value. (required) |
+| `physicalLocation.slot` | Physical slot identifier where the component is installed. |
+| `physicalLocation.position` | Position of the component within the node or assembly. |
+| `healthy` | Indicates whether the component is healthy. (required) |
+| `mode` | Operational mode of the component. |
+| `status` | Current status of the component. (required) |
+| `lastError` | Most recent error encountered by the component. (required) |
+| `errorLog` | Array of error log entries. |
+| `lifecycle` | Lifecycle state of the component. |
+| `power` | Power telemetry object. |
+| `temperature` | Temperature telemetry object. |
+| `vendor.organization` | Vendor-defined organization name. |
+| `utilization` | Utilization value or utilization object. |
+| `utilization.accelerator` | Accelerator utilization. |
+| `utilization.acceleration` | Acceleration utilization. |
+| `utilization.ram` | RAM utilization. |
+| `clockSpeed` | Clock speed reading. |
+| `clockSpeedUnit` | Clock speed unit (for example GHz or MHz). |
+| `interface` | Physical or logical interface type. |
+| `communication` | Communication protocol used by the component. |
+| `dataRate` | Data transfer rate. |
+| `dataRateValue` | Data rate unit descriptor. |
+| `performance.Packet Loss/Resend` | Packet loss or resend count/rate. |
+| `performance.Thermal Throttling` | Thermal throttling metric. |
+| `performance.ECC` | ECC-related metric. |
+| `latency` | Latency measurement. |
+| `latencyUnit` | Latency measurement unit. |
+| `errorRate` | Error rate measurement. |
+| `errorUnit` | Error rate unit. |
+| `subComponents` | Array of nested subcomponents. |
+
+### Requirements
+
+<a href="req-sd-0001"></a>
+
+- **[SD-0001]** The Status Dump log shall be in JSON format with the following schema:
+
+```json {.small}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OCP System Status Dump Schema",
+  "type": "object",
+  "properties": {
+    "nodeId": {
+      "type": "string",
+      "description": "Unique identifier for the node"
+    },
+    "nodeType": {
+      "$ref": "#/$defs/systemAssemblyType",
+      "description": "Type of node (e.g., AI Server, Ethernet Switch, Management Tray)"
+    },
+    "hostName": {
+      "type": "string",
+      "description": "Node hostname"
+    },
+    "vid": {
+      "type": "string",
+      "pattern": "^[0-9A-Fa-f]{4}$",
+      "description": "PCIe Vendor ID"
+    },
+    "pid": {
+      "type": "string",
+      "pattern": "^[0-9A-Fa-f]{4}$",
+      "description": "PCIe Product ID"
+    },
+    "healthy": {
+          "type": "boolean"
+        },
+    "mode": { 
+      "type": "string" 
+    },
+    "status": { 
+      "type": "string" 
+    },
+    "lastError": { 
+      "type": "string" 
+    },
+    "errorLog": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lifecycle": { 
+      "type": "string" 
+    },
+    "power": { 
+      "$ref": "#/$defs/power" 
+    },
+    "temperature": {
+      "$ref": "#/$defs/temperature"
+    },
+    "vendor": {
+      "$ref": "#/$defs/vendor"
+    },
+    "physicalLocation": {
+      "type": "object",
+      "description": "Physical location of the node in the datacenter",
+      "properties": {
+        "rack": {
+          "type": "string"
+        },
+        "row": {
+          "type": "string"
+        },
+        "datacenter": {
+          "type": "string"
+        },
+        "placement": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "#/$defs/physicalLocationType",
+              "description": "Placement type"
+            },
+            "slot": {
+              "type": "integer",
+              "description": "Rack unit position if RackSlot"
+            },
+            "heightInU": {
+              "type": "integer",
+              "description": "Height in U if RackSlot"
+            },
+            "bayId": {
+              "type": "string",
+              "description": "Bay identifier if Bay"
+            },
+            "bayPosition": {
+              "type": "string",
+              "description": "Position within the bay"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "required": [
+        "rack",
+        "row",
+        "datacenter",
+        "placement"
+      ]
+    },
+    "assemblies": {
+      "type": "array",
+      "description": "List of assemblies within the node (supports nested assemblies)",
+      "items": {
+        "$ref": "#/$defs/assembly"
+      }
+    }
+  },
+  "required": [
+    "nodeId",
+    "nodeType",
+    "vid",
+    "pid",
+    "healthy",
+    "mode",
+    "status",
+    "lifecycle",
+    "assemblies"
+  ],
+  "$defs": {
+    "power": {
+      "type": "object",
+      "required": ["power","voltage", "current"],
+      "additionalProperties": false,
+      "properties": {
+        "power": {
+          "type": "number" 
+         },
+        "powerUnit": {
+          "type": "string",
+          "enum" : [
+            "Watt",
+            "kiloWatt",
+            "megaWatt"
+          ],
+           "default": "Watt"
+         },
+        "voltage": {
+          "type": "number" 
+         },
+        "voltageUnit": {
+          "type": "string",
+          "enum" : [
+            "Volt",
+            "kiloVolt"
+          ],
+          "default": "Volt"
+         },
+        "current": {
+          "type": "number" 
+         },
+        "currentUnit": {
+          "type": "string",
+          "enum" : [
+            "Amps",
+            "kiloAmps",
+            "megaAmps"
+          ],
+          "default": "Amps"
+         }
+      }
+    },
+    "temperature": {
+      "type": "object",
+      "required": ["temperature"],
+      "additionalProperties": false,
+      "properties": {
+        "temperature": {
+          "type": "number"
+         },
+         "temperatureUnit": {
+          "type": "string",
+          "enum" : [
+            "Degrees C",
+            "Degrees F",
+            "Kelvins"
+          ],
+           "default": "Degrees C"
+         }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance metrics; keys vary by component type.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "properties": {
+        "Packet Loss/Resend": {
+          "type": "number" 
+         },
+        "Thermal Throttling": {
+          "type": "number" 
+         },
+        "ECC": {
+          "type": "number" 
+         }
+      }
+    },
+    "utilization": {
+      "description": "Utilization may be a single percentage string or a map of resource utilizations.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "properties": {
+            "accelerator": {
+              "type": "number" 
+              },
+            "acceleration": {
+               "type": "number" 
+             },
+            "ram": {
+              "type": "number" 
+             }
+          }
+        }
+      ]
+    },
+    "vendor": {
+      "description": "Vendor defined details when present; otherwise null.",
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "properties": {
+            "organization": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "assembly": {
+      "type": "object",
+      "properties": {
+        "assemblyName": {
+          "type": "string"
+        },
+        "assemblyId": {
+          "type": "string"
+        },
+        "manufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the assembly"
+        },
+        "vid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Vendor ID"
+        },
+        "pid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Product ID"
+        },
+        "healthy": {
+          "type": "boolean"
+        },
+        "mode": { 
+          "type": "string" 
+        },
+        "status": { 
+          "type": "string" 
+        },
+        "lastError": { 
+          "type": "string" 
+        },
+        "errorLog": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lifecycle": { 
+          "type": "string" 
+        },
+        "power": { 
+          "$ref": "#/$defs/power" 
+        },
+        "temperature": {
+          "$ref": "#/$defs/temperature"
+        },
+        "vendor": {
+          "$ref": "#/$defs/vendor"
+        },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this assembly is installed",
+          "properties": {
+            "slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, OCP slot)"
+            },
+            "position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
+          }
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        },
+        "subAssemblies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/assembly"
+          }
+        }
+      },
+      "required": [
+        "assemblyName",
+        "assemblyId",
+        "vid",
+        "pid",
+        "healthy"
+      ]
+    },
+    "component": {
+      "type": "object",
+      "properties": {
+        "componentClass": {
+          "$ref": "#/$defs/componentClass",
+          "description": "Industry-aligned component class."
+        },
+        "componentId": {
+          "type": "string"
+        },
+        "manufacturerSerialNumber": {
+          "type": "string",
+          "description": "Manufacturer's serial number for the component"
+        },
+        "vid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Vendor ID"
+        },
+        "pid": {
+          "type": "string",
+          "pattern": "^[0-9A-Fa-f]{4}$",
+          "description": "PCIe Product ID"
+        },
+        "physicalLocation": {
+          "type": "object",
+          "description": "Physical slot or bay where this component is installed",
+          "properties": {
+            "slot": {
+              "type": "string",
+              "description": "Physical slot identifier (e.g., PCIe slot, DIMM slot)"
+            },
+            "position": {
+              "type": "string",
+              "description": "Position within the node or assembly"
+            }
+          }
+        },
+        "healthy": {
+          "type": "boolean"
+        },
+        "mode": { "type": "string" },
+        "status": {
+          "type": "string",
+          "examples": ["Ok", "Crash", "ERD"]
+        },
+        "lastError": {
+          "type": "string",
+          "examples": ["NULL", "1D10T", "501", "T"]
+        },
+        "errorLog": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifecycle": {
+          "type": "string",
+          "examples": ["production", "quarantine", "development"]
+        },
+        "power": { 
+          "$ref": "#/$defs/power" 
+        },
+        "temperature": {
+          "$ref": "#/$defs/temperature"
+        },
+        "vendor": {
+          "$ref": "#/$defs/vendor"
+        },
+        "utilization": {
+          "$ref": "#/$defs/utilization"
+        },
+        "clockSpeed": {
+          "type": "number"
+        },
+        "clockSpeedUnit": {
+          "type": "string",
+          "examples": ["GHz", "MHz"] 
+        },
+        "interface": {
+          "type": "string",
+          "examples": ["USB", "PCI-E"]
+        },
+        "communication": {
+          "type": "string",
+          "examples": ["PLDM", "Redfish"]
+        },
+        "dataRate": {
+          "type": "number" 
+        },
+        "dataRateValue": {
+          "type": "string",
+          "examples": ["MT/s"]
+        },
+        "performance": {
+          "$ref": "#/$defs/performance"  
+        },
+        "latency": {
+          "type": "number"
+        },
+        "latencyUnit": {
+          "type": "string",
+          "examples": ["Seconds", "Milliseconds"]
+        },
+        "errorRate": {
+          "type": "number" 
+         },
+        "errorUnit": {
+          "type": "string",
+          "examples": ["errors per second"]
+        },
+        "subComponents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        }
+      },
+      "required": [
+        "componentId",
+        "vid",
+        "pid",
+        "healthy",
+        "status",
+        "lastError"
+      ]
+    },
+    "physicalLocationType": {
+      "type": "string",
+      "description": "Industry-aligned physical installation location type.",
+      "enum": [
+        "rackUnit",
+        "bay",
+        "slot",
+        "socket",
+        "drawer",
+        "shelf",
+        "tray",
+        "cage",
+        "zone"
+      ]
+    },
+    "componentClass": {
+      "type": "string",
+      "description": "Industry-aligned component class (inventory category).",
+      "enum": [
+        "processor",
+        "memory",
+        "networkInterface",
+        "storageDevice",
+        "accelerator",
+        "powerSupply",
+        "fan",
+        "thermalSensor",
+        "voltageRegulator",
+        "clockGenerator",
+        "retimer",
+        "bridge",
+        "switchASIC",
+        "controller",
+        "bios",
+        "firmware",
+        "bmc",
+        "managementController",
+        "securityModule",
+        "fpga",
+        "cpld"
+      ]
+    },
+    "systemAssemblyType": {
+      "type": "string",
+      "description": "Industry-aligned top-level assembly type (system/chassis class).",
+      "enum": [
+        "server",
+        "blade",
+        "computeNode",
+        "ethernetSwitch",
+        "networkAppliance",
+        "storageSystem",
+        "jbod",
+        "nvmeShelf",
+        "acceleratorSystem",
+        "gpuServer",
+        "managementController",
+        "rackManager",
+        "powerDistributionUnit",
+        "powerShelf",
+        "batteryBackupUnit",
+        "coolingDistributionUnit",
+        "coolingManifold",
+        "liquidCoolingSystem",
+        "chassis",
+        "enclosure"
+      ]
+    }
+  }
+}
+```
 
 ## Console {#sec:console}
 
@@ -976,19 +1915,28 @@ Below is a JSON example for Code Currency of a hypothetical node with:
 ```json {.small}
 {
   "nodeId": "AI-Node-001",
-  "nodeType": "AI Server",
-  "hostname": "ai-node-001.dc.local",
+  "nodeType": "gpuServer",
+  "hostName": "ai-node-001.dc.local",
+  "vid": "0CC0",
+  "pid": "0001",
   "networkConfiguration": {
-    "ipAddresses": ["192.168.10.101"],
-    "ports": [22, 443],
-    "macAddresses": ["00:1A:2B:3C:4D:5E"]
+    "ipAddresses": [
+      "192.168.10.101"
+    ],
+    "ports": [
+      22,
+      443
+    ],
+    "macAddresses": [
+      "00:1A:2B:3C:4D:5E"
+    ]
   },
   "physicalLocation": {
     "rack": "R42",
     "row": "Row-A",
     "datacenter": "DC-West",
     "placement": {
-      "type": "RackSlot",
+      "type": "rackUnit",
       "slot": 12,
       "heightInU": 2
     }
@@ -998,11 +1946,15 @@ Below is a JSON example for Code Currency of a hypothetical node with:
       "assemblyName": "Baseboard",
       "assemblyId": "BB-001",
       "manufacturerSerialNumber": "BB-SN-12345",
+      "vid": "0CC0",
+      "pid": "0002",
       "components": [
         {
-          "componentType": "CPU",
+          "componentClass": "processor",
           "componentId": "CPU-001",
           "manufacturerSerialNumber": "CPU-SN-11111",
+          "vid": "8086",
+          "pid": "1001",
           "firmware": [
             {
               "version": "1.2.3",
@@ -1014,9 +1966,11 @@ Below is a JSON example for Code Currency of a hypothetical node with:
           ]
         },
         {
-          "componentType": "CPU",
+          "componentClass": "processor",
           "componentId": "CPU-002",
           "manufacturerSerialNumber": "CPU-SN-22222",
+          "vid": "8086",
+          "pid": "1002",
           "firmware": [
             {
               "version": "1.2.3",
@@ -1028,25 +1982,35 @@ Below is a JSON example for Code Currency of a hypothetical node with:
           ]
         },
         {
-          "componentType": "Memory",
+          "componentClass": "memory",
           "componentId": "MEM-001",
           "manufacturerSerialNumber": "MEM-SN-33333",
+          "vid": "1AD9",
+          "pid": "3001",
           "firmware": [
-            { "version": "N/A" }
+            {
+              "version": "N/A"
+            }
           ]
         },
         {
-          "componentType": "Memory",
+          "componentClass": "memory",
           "componentId": "MEM-002",
           "manufacturerSerialNumber": "MEM-SN-44444",
+          "vid": "1AD9",
+          "pid": "3002",
           "firmware": [
-            { "version": "N/A" }
+            {
+              "version": "N/A"
+            }
           ]
         },
         {
-          "componentType": "BMC",
+          "componentClass": "bmc",
           "componentId": "BMC-001",
           "manufacturerSerialNumber": "BMC-SN-55555",
+          "vid": "1A03",
+          "pid": "2600",
           "firmware": [
             {
               "version": "3.4.5",
@@ -1063,37 +2027,55 @@ Below is a JSON example for Code Currency of a hypothetical node with:
           "assemblyName": "HotSwap Backplane",
           "assemblyId": "HSBP-001",
           "manufacturerSerialNumber": "HSBP-SN-66666",
+          "vid": "0CC0",
+          "pid": "0003",
           "components": [
             {
-              "componentType": "Storage",
+              "componentClass": "storageDevice",
               "componentId": "NVME-001",
               "manufacturerSerialNumber": "NVME-SN-77777",
+              "vid": "144D",
+              "pid": "7001",
               "firmware": [
-                { "version": "2.1.0" }
+                {
+                  "version": "2.1.0"
+                }
               ]
             },
             {
-              "componentType": "Storage",
+              "componentClass": "storageDevice",
               "componentId": "NVME-002",
               "manufacturerSerialNumber": "NVME-SN-88888",
+              "vid": "144D",
+              "pid": "7002",
               "firmware": [
-                { "version": "2.1.0" }
+                {
+                  "version": "2.1.0"
+                }
               ]
             },
             {
-              "componentType": "NIC",
-              "domponentId": "NIC-001",
+              "componentClass": "networkInterface",
+              "componentId": "NIC-001",
               "manufacturerSerialNumber": "NIC-SN-99999",
+              "vid": "8086",
+              "pid": "8001",
               "firmware": [
-                { "version": "1.0.0" }
+                {
+                  "version": "1.0.0"
+                }
               ]
             },
             {
-              "componentType": "NIC",
+              "componentClass": "networkInterface",
               "componentId": "NIC-002",
               "manufacturerSerialNumber": "NIC-SN-10101",
+              "vid": "8086",
+              "pid": "8002",
               "firmware": [
-                { "version": "1.0.0" }
+                {
+                  "version": "1.0.0"
+                }
               ]
             }
           ]
@@ -1102,26 +2084,52 @@ Below is a JSON example for Code Currency of a hypothetical node with:
           "assemblyName": "UBB",
           "assemblyId": "UBB-001",
           "manufacturerSerialNumber": "UBB-SN-20202",
+          "vid": "0CC0",
+          "pid": "0004",
+          "components": [
+            {
+              "componentClass": "managementController",
+              "componentId": "ubb-bmc",
+              "vid": "1A03",
+              "pid": "2601",
+              "firmware": [
+                {
+                  "version": "4.2.0",
+                  "imageRole": "Active"
+                }
+              ]
+            }
+          ],
           "subAssemblies": [
             {
               "assemblyName": "OAM-1",
               "assemblyId": "OAM-001",
               "manufacturerSerialNumber": "OAM-SN-30303",
+              "vid": "0CC0",
+              "pid": "0101",
               "components": [
                 {
-                  "componentType": "GPU",
+                  "componentClass": "accelerator",
                   "componentId": "GPU-001",
                   "manufacturerSerialNumber": "GPU-SN-40404",
+                  "vid": "8086",
+                  "pid": "9001",
                   "firmware": [
-                    { "version": "510.85" }
+                    {
+                      "version": "510.85"
+                    }
                   ]
                 },
                 {
-                  "componentType": "AMC",
+                  "componentClass": "managementController",
                   "componentId": "AMC-001",
                   "manufacturerSerialNumber": "AMC-SN-50505",
+                  "vid": "1050",
+                  "pid": "A001",
                   "firmware": [
-                    { "version": "1.0.0" }
+                    {
+                      "version": "1.0.0"
+                    }
                   ]
                 }
               ]
@@ -1130,21 +2138,31 @@ Below is a JSON example for Code Currency of a hypothetical node with:
               "assemblyName": "OAM-2",
               "assemblyId": "OAM-002",
               "manufacturerSerialNumber": "OAM-SN-60606",
+              "vid": "0CC0",
+              "pid": "0102",
               "components": [
                 {
-                  "componentType": "GPU",
+                  "componentClass": "accelerator",
                   "componentId": "GPU-002",
                   "manufacturerSerialNumber": "GPU-SN-70707",
+                  "vid": "8086",
+                  "pid": "9002",
                   "firmware": [
-                    { "version": "510.85" }
+                    {
+                      "version": "510.85"
+                    }
                   ]
                 },
                 {
-                  "componentType": "AMC",
+                  "componentClass": "managementController",
                   "componentId": "AMC-002",
                   "manufacturerSerialNumber": "AMC-SN-80808",
+                  "vid": "1050",
+                  "pid": "A002",
                   "firmware": [
-                    { "version": "1.0.0" }
+                    {
+                      "version": "1.0.0"
+                    }
                   ]
                 }
               ]
@@ -1165,3 +2183,729 @@ Below is a JSON example for Code Currency of a hypothetical node with:
 
 # Status Dump Examples {#sec:status-dump-examples}
 
+
+Below is a JSON example for Status Dump of a hypothetical node with:
+
+- Dual-socket CPUs
+- Memory modules
+- BMC
+- Two NVMe drives
+- Two NICs on a hot-swap backplane
+- UBB subassembly with BMC
+- Two OAM subassemblies (each with GPU and AMC)
+
+```json {.small}
+
+{
+  "nodeId": "node-001",
+  "nodeType": "server",
+  "hostName": "ai-server-01",
+  "vid": "0CC0",
+  "pid": "0001",
+  "healthy": false,
+  "mode": "Awake",
+  "status": "Crash",
+  "lastError": "1D10T",
+  "errorLog": [
+    "1D10T: System Halt",
+    "PEBKAC: OverVoltage"
+  ],
+  "lifecycle": "production",
+  "power": {
+    "power": 22000,
+    "powerUnit": "Watt",
+    "voltage": 220,
+    "voltageUnit": "Volt",
+    "current": 100,
+    "currentUnit": "Amps"
+  },
+  "temperature": {
+    "temperature": 125,
+    "temperatureUnit": "Degrees C"
+  },
+  "physicalLocation": {
+    "rack": "R12",
+    "row": "Row-A",
+    "datacenter": "DC1",
+    "placement": {
+      "type": "rackUnit",
+      "slot": 20,
+      "heightInU": 4
+    }
+  },
+  "assemblies": [
+    {
+      "assemblyName": "MainBoard",
+      "assemblyId": "mb-001",
+      "vid": "0CC0",
+      "pid": "0002",
+      "healthy": false,
+      "mode": "Awake",
+      "status": "Crash",
+      "lastError": "1D10T",
+      "errorLog": [
+        "1D10T: System Halt",
+        "PEBKAC: OverVoltage",
+        "501: Server Error"
+      ],
+      "lifecycle": "production",
+      "power": {
+        "power": 3000,
+        "powerUnit": "Watt",
+        "voltage": 60,
+        "voltageUnit": "Volt",
+        "current": 50,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 125,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "processor",
+          "componentId": "cpu-0",
+          "vid": "8086",
+          "pid": "1000",
+          "physicalLocation": {
+            "slot": "CPU0",
+            "position": "Socket-0"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "1D10T",
+          "errorLog": [
+            "1D10T: System Halt",
+            "PEBKAC: OverVoltage",
+            "501: Server Error"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 165,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 50,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 125,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 100,
+            "PCIe": 80,
+            "UPI": 10
+          },
+          "interface": "Northbridge",
+          "communication": "JEDEC DDR",
+          "dataRate": 6400,
+          "dataRateValue": "MT/s",
+          "performance": {
+            "Packet Loss/Resend": 13,
+            "Thermal Throttling": 15,
+            "ECC": 0
+          },
+          "latency": 0,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "processor",
+          "componentId": "cpu-1",
+          "vid": "8086",
+          "pid": "1001",
+          "physicalLocation": {
+            "slot": "CPU1",
+            "position": "Socket-1"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "1D10T",
+          "errorLog": [
+            "1D10T: System Halt"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 165,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 50,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 30,
+            "PCIe": 10,
+            "UPI": 10
+          },
+          "interface": "Northbridge",
+          "communication": "JEDEC DDR",
+          "dataRate": 6400,
+          "dataRateValue": "MT/s",
+          "performance": {
+            "Packet Loss/Resend": 13,
+            "Thermal Throttling": 15,
+            "ECC": 0
+          },
+          "latency": 0,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "memory",
+          "componentId": "dimm-0",
+          "vid": "1AD9",
+          "pid": "6405",
+          "physicalLocation": {
+            "slot": "DIMM-A1",
+            "position": "Channel-A"
+          },
+          "healthy": false,
+          "mode": "Awake",
+          "status": "Crash",
+          "lastError": "UCB10",
+          "errorLog": [
+            "UCB10: Uncorrectable Error Bank 10",
+            "UCB09: Uncorrectable Error Bank 9",
+            "UCB08: Uncorrectable Error Bank 8",
+            "UCB07: Uncorrectable Error Bank 7"
+          ],
+          "lifecycle": "production",
+          "power": {
+            "power": 6.6,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 2,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          }
+        },
+        {
+          "componentClass": "memory",
+          "componentId": "dimm-1",
+          "vid": "1AD9",
+          "pid": "6405",
+          "physicalLocation": {
+            "slot": "DIMM-B1",
+            "position": "Channel-B"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 6.6,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 2,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 75,
+            "temperatureUnit": "Degrees C"
+          }
+        },
+        {
+          "componentClass": "bmc",
+          "componentId": "bmc-0",
+          "vid": "1A03",
+          "pid": "2600",
+          "physicalLocation": {
+            "slot": "BMC-0",
+            "position": "MainBoard"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 3.3,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 1,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 52,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 15,
+            "Memory": 40,
+            "Network": 10
+          },
+          "interface": "RMII",
+          "communication": "NC-SI",
+          "dataRate": 1000,
+          "dataRateValue": "Mbps",
+          "latency": 1,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ]
+    },
+    {
+      "assemblyName": "HotSwapBackplane",
+      "assemblyId": "bp-nvme-01",
+      "vid": "0CC0",
+      "pid": "0003",
+      "healthy": true,
+      "mode": "Awake",
+      "status": "Healthy",
+      "lastError": "",
+      "errorLog": [],
+      "lifecycle": "production",
+      "power": {
+        "power": 60,
+        "powerUnit": "Watt",
+        "voltage": 12,
+        "voltageUnit": "Volt",
+        "current": 5,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 85,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "storageDevice",
+          "componentId": "nvme-0",
+          "vid": "144D",
+          "pid": "A384",
+          "physicalLocation": {
+            "slot": "NVMe-1",
+            "position": "Front"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 9.6,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 0.8,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 45,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CapacityUsed": 72,
+            "ReadBandwidth": 40,
+            "WriteBandwidth": 15
+          },
+          "interface": "PCIe Gen4 x4",
+          "communication": "NVMe",
+          "dataRate": 64,
+          "dataRateValue": "GT/s",
+          "latency": 80,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "storageDevice",
+          "componentId": "nvme-1",
+          "vid": "144D",
+          "pid": "A385",
+          "physicalLocation": {
+            "slot": "NVMe-2",
+            "position": "Front"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 8.4,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 0.7,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 43,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CapacityUsed": 65,
+            "ReadBandwidth": 20,
+            "WriteBandwidth": 10
+          },
+          "interface": "PCIe Gen4 x4",
+          "communication": "NVMe",
+          "dataRate": 64,
+          "dataRateValue": "GT/s",
+          "latency": 75,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "networkInterface",
+          "componentId": "nic-0",
+          "vid": "8086",
+          "pid": "1592",
+          "physicalLocation": {
+            "slot": "NIC-1",
+            "position": "HotSwap-Bay-1"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "LinkUp",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 18,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 1.5,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 58,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "TxBandwidth": 40,
+            "RxBandwidth": 35,
+            "LinkUtilization": 38
+          },
+          "interface": "PCIe Gen5 x16",
+          "communication": "Ethernet",
+          "dataRate": 100,
+          "dataRateValue": "Gbps",
+          "latency": 2,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        },
+        {
+          "componentClass": "networkInterface",
+          "componentId": "nic-1",
+          "vid": "8086",
+          "pid": "1593",
+          "physicalLocation": {
+            "slot": "NIC-2",
+            "position": "HotSwap-Bay-2"
+          },
+          "healthy": true,
+          "mode": "Active",
+          "status": "LinkUp",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 15.6,
+            "powerUnit": "Watt",
+            "voltage": 12,
+            "voltageUnit": "Volt",
+            "current": 1.3,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 56,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "TxBandwidth": 15,
+            "RxBandwidth": 12,
+            "LinkUtilization": 14
+          },
+          "interface": "PCIe Gen5 x16",
+          "communication": "Ethernet",
+          "dataRate": 100,
+          "dataRateValue": "Gbps",
+          "latency": 2,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ]
+    },
+    {
+      "assemblyName": "UBB",
+      "assemblyId": "ubb-01",
+      "vid": "0CC0",
+      "pid": "0004",
+      "healthy": true,
+      "mode": "Awake",
+      "status": "Healthy",
+      "lastError": "",
+      "errorLog": [],
+      "lifecycle": "production",
+      "power": {
+        "power": 3000,
+        "powerUnit": "Watt",
+        "voltage": 60,
+        "voltageUnit": "Volt",
+        "current": 50,
+        "currentUnit": "Amps"
+      },
+      "temperature": {
+        "temperature": 85,
+        "temperatureUnit": "Degrees C"
+      },
+      "components": [
+        {
+          "componentClass": "managementController",
+          "componentId": "ubb-bmc",
+          "vid": "1A03",
+          "pid": "2600",
+          "physicalLocation": {
+            "slot": "UBB-BMC-0",
+            "position": "UBB"
+          },
+          "healthy": true,
+          "mode": "Awake",
+          "status": "Healthy",
+          "lastError": "",
+          "errorLog": [],
+          "lifecycle": "production",
+          "power": {
+            "power": 3.3,
+            "powerUnit": "Watt",
+            "voltage": 3.3,
+            "voltageUnit": "Volt",
+            "current": 1,
+            "currentUnit": "Amps"
+          },
+          "temperature": {
+            "temperature": 48,
+            "temperatureUnit": "Degrees C"
+          },
+          "utilization": {
+            "CPU": 12,
+            "Memory": 35,
+            "Network": 8
+          },
+          "interface": "USB",
+          "communication": "redfish",
+          "dataRate": 480,
+          "dataRateValue": "Mbps",
+          "latency": 1,
+          "latencyUnit": "us",
+          "errorRate": 0,
+          "errorUnit": "errors per second"
+        }
+      ],
+      "subAssemblies": [
+        {
+          "assemblyName": "OAM-0",
+          "assemblyId": "oam-0",
+          "vid": "0CC0",
+          "pid": "0100",
+          "healthy": true,
+          "components": [
+            {
+              "componentClass": "accelerator",
+              "componentId": "gpu-0",
+              "vid": "8086",
+              "pid": "1020",
+              "physicalLocation": {
+                "slot": "OAM-0",
+                "position": "UBB-Slot-0"
+              },
+              "healthy": true,
+              "mode": "Active",
+              "status": "Healthy",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 960,
+                "powerUnit": "Watt",
+                "voltage": 48,
+                "voltageUnit": "Volt",
+                "current": 20,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 72,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "Compute": 85,
+                "Memory": 78,
+                "Fabric": 65
+              },
+              "interface": "PCIe Gen5 x16",
+              "communication": "PCIe",
+              "dataRate": 800,
+              "dataRateValue": "Gbps",
+              "latency": 1,
+              "latencyUnit": "us",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            },
+            {
+              "componentClass": "managementController",
+              "componentId": "amc-0",
+              "vid": "1050",
+              "pid": "1000",
+              "physicalLocation": {
+                "slot": "AMC-0",
+                "position": "OAM-0"
+              },
+              "healthy": true,
+              "mode": "Awake",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 1.65,
+                "powerUnit": "Watt",
+                "voltage": 3.3,
+                "voltageUnit": "Volt",
+                "current": 0.5,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 45,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "CPU": 10,
+                "Memory": 25,
+                "FabricManagement": 20
+              },
+              "interface": "I2C",
+              "communication": "PLDM over MCTP",
+              "dataRate": 1,
+              "dataRateValue": "Mbps",
+              "latency": 5,
+              "latencyUnit": "ms",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            }
+          ]
+        },
+        {
+          "assemblyName": "OAM-1",
+          "assemblyId": "oam-1",
+          "vid": "0CC0",
+          "pid": "0101",
+          "healthy": true,
+          "components": [
+            {
+              "componentClass": "accelerator",
+              "componentId": "gpu-1",
+              "vid": "8086",
+              "pid": "1021",
+              "physicalLocation": {
+                "slot": "OAM-1",
+                "position": "UBB-Slot-1"
+              },
+              "healthy": true,
+              "mode": "Active",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 960,
+                "powerUnit": "Watt",
+                "voltage": 48,
+                "voltageUnit": "Volt",
+                "current": 20,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 69,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "Compute": 62,
+                "Memory": 55,
+                "Fabric": 48
+              },
+              "interface": "PCIe Gen5 x16",
+              "communication": "PCIe",
+              "dataRate": 800,
+              "dataRateValue": "Gbps",
+              "latency": 1,
+              "latencyUnit": "us",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            },
+            {
+              "componentClass": "managementController",
+              "componentId": "amc-1",
+              "vid": "1050",
+              "pid": "1001",
+              "physicalLocation": {
+                "slot": "AMC-1",
+                "position": "OAM-1"
+              },
+              "healthy": true,
+              "mode": "Awake",
+              "status": "Enabled",
+              "lastError": "",
+              "errorLog": [],
+              "lifecycle": "production",
+              "power": {
+                "power": 1.65,
+                "powerUnit": "Watt",
+                "voltage": 3.3,
+                "voltageUnit": "Volt",
+                "current": 0.5,
+                "currentUnit": "Amps"
+              },
+              "temperature": {
+                "temperature": 44,
+                "temperatureUnit": "Degrees C"
+              },
+              "utilization": {
+                "CPU": 9,
+                "Memory": 22,
+                "FabricManagement": 18
+              },
+              "interface": "I2C",
+              "communication": "PLDM over MCTP",
+              "dataRate": 1,
+              "dataRateValue": "Mbps",
+              "latency": 5,
+              "latencyUnit": "ms",
+              "errorRate": 0,
+              "errorUnit": "errors per second"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```

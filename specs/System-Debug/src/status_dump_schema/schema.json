@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Node Code Currency Record",
+  "title": "OCP System Status Dump Schema",
   "type": "object",
   "properties": {
     "nodeId": {
@@ -25,36 +25,33 @@
       "pattern": "^[0-9A-Fa-f]{4}$",
       "description": "PCIe Product ID"
     },
-    "networkConfiguration": {
-      "type": "object",
-      "description": "Network configuration details for the node",
-      "properties": {
-        "ipAddresses": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "ipv4"
-          }
+    "healthy": {
+          "type": "boolean"
         },
-        "ports": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "minimum": 1,
-            "maximum": 65535
-          }
-        },
-        "macAddresses": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
-          }
-        }
-      },
-      "required": [
-        "ipAddresses"
-      ]
+    "mode": { 
+      "type": "string" 
+    },
+    "status": { 
+      "type": "string" 
+    },
+    "lastError": { 
+      "type": "string" 
+    },
+    "errorLog": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lifecycle": { 
+      "type": "string" 
+    },
+    "power": { 
+      "$ref": "#/$defs/power" 
+    },
+    "temperature": {
+      "$ref": "#/$defs/temperature"
+    },
+    "vendor": {
+      "$ref": "#/$defs/vendor"
     },
     "physicalLocation": {
       "type": "object",
@@ -118,9 +115,130 @@
     "nodeType",
     "vid",
     "pid",
+    "healthy",
+    "mode",
+    "status",
+    "lifecycle",
     "assemblies"
   ],
   "$defs": {
+    "power": {
+      "type": "object",
+      "required": ["power","voltage", "current"],
+      "additionalProperties": false,
+      "properties": {
+        "power": {
+          "type": "number" 
+         },
+        "powerUnit": {
+          "type": "string",
+          "enum" : [
+            "Watt",
+            "kiloWatt",
+            "megaWatt"
+          ],
+           "default": "Watt"
+         },
+        "voltage": {
+          "type": "number" 
+         },
+        "voltageUnit": {
+          "type": "string",
+          "enum" : [
+            "Volt",
+            "kiloVolt"
+          ],
+          "default": "Volt"
+         },
+        "current": {
+          "type": "number" 
+         },
+        "currentUnit": {
+          "type": "string",
+          "enum" : [
+            "Amps",
+            "kiloAmps",
+            "megaAmps"
+          ],
+          "default": "Amps"
+         }
+      }
+    },
+    "temperature": {
+      "type": "object",
+      "required": ["temperature"],
+      "additionalProperties": false,
+      "properties": {
+        "temperature": {
+          "type": "number"
+         },
+         "temperatureUnit": {
+          "type": "string",
+          "enum" : [
+            "Degrees C",
+            "Degrees F",
+            "Kelvins"
+          ],
+           "default": "Degrees C"
+         }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance metrics; keys vary by component type.",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "properties": {
+        "Packet Loss/Resend": {
+          "type": "number" 
+         },
+        "Thermal Throttling": {
+          "type": "number" 
+         },
+        "ECC": {
+          "type": "number" 
+         }
+      }
+    },
+    "utilization": {
+      "description": "Utilization may be a single percentage string or a map of resource utilizations.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "properties": {
+            "accelerator": {
+              "type": "number" 
+              },
+            "acceleration": {
+               "type": "number" 
+             },
+            "ram": {
+              "type": "number" 
+             }
+          }
+        }
+      ]
+    },
+    "vendor": {
+      "description": "Vendor defined details when present; otherwise null.",
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "properties": {
+            "organization": { "type": "string" }
+          }
+        }
+      ]
+    },
     "assembly": {
       "type": "object",
       "properties": {
@@ -144,6 +262,34 @@
           "pattern": "^[0-9A-Fa-f]{4}$",
           "description": "PCIe Product ID"
         },
+        "healthy": {
+          "type": "boolean"
+        },
+        "mode": { 
+          "type": "string" 
+        },
+        "status": { 
+          "type": "string" 
+        },
+        "lastError": { 
+          "type": "string" 
+        },
+        "errorLog": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lifecycle": { 
+          "type": "string" 
+        },
+        "power": { 
+          "$ref": "#/$defs/power" 
+        },
+        "temperature": {
+          "$ref": "#/$defs/temperature"
+        },
+        "vendor": {
+          "$ref": "#/$defs/vendor"
+        },
         "physicalLocation": {
           "type": "object",
           "description": "Physical slot or bay where this assembly is installed",
@@ -155,34 +301,6 @@
             "position": {
               "type": "string",
               "description": "Position within the node or assembly"
-            }
-          }
-        },
-        "logicalAssociation": {
-          "type": "object",
-          "description": "Logical connectivity details for this assembly",
-          "properties": {
-            "links": {
-              "type": "array",
-              "description": "List of logical links consumed by this assembly",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "connectedTo": {
-                    "type": "string"
-                  },
-                  "protocol": {
-                    "type": "string"
-                  },
-                  "laneCount": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "connectedTo",
-                  "protocol"
-                ]
-              }
             }
           }
         },
@@ -203,7 +321,8 @@
         "assemblyName",
         "assemblyId",
         "vid",
-        "pid"
+        "pid",
+        "healthy"
       ]
     },
     "component": {
@@ -244,104 +363,93 @@
             }
           }
         },
-        "logicalAssociation": {
-          "type": "object",
-          "description": "Logical connectivity details for this component",
-          "properties": {
-            "links": {
-              "type": "array",
-              "description": "List of logical links consumed by this component",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "connectedTo": {
-                    "type": "string"
-                  },
-                  "protocol": {
-                    "type": "string"
-                  },
-                  "laneCount": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "connectedTo",
-                  "protocol"
-                ]
-              }
-            }
+        "healthy": {
+          "type": "boolean"
+        },
+        "mode": { "type": "string" },
+        "status": {
+          "type": "string",
+          "examples": ["Ok", "Crash", "ERD"]
+        },
+        "lastError": {
+          "type": "string",
+          "examples": ["NULL", "1D10T", "501", "T"]
+        },
+        "errorLog": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         },
-        "firmware": {
-          "type": "array",
-          "description": "List of firmware entries for the component",
-          "items": {
-            "type": "object",
-            "properties": {
-              "version": {
-                "type": "string",
-                "description": "Firmware version"
-              },
-              "lastUpdated": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Timestamp of last firmware update"
-              },
-              "securityVersionNumber": {
-                "type": "integer",
-                "description": "Current Security Version Number (SVN)"
-              },
-              "minimumSecurityVersionNumber": {
-                "type": "integer",
-                "description": "Minimum enforced Security Version Number (SVN)"
-              },
-              "imageRole": {
-                "type": "string",
-                "enum": [
-                  "Active",
-                  "Recovery",
-                  "Standby"
-                ],
-                "description": "Indicates if this firmware is actively running or a redundant recovery image"
-              }
-            },
-            "required": [
-              "version"
-            ]
-          }
+        "lifecycle": {
+          "type": "string",
+          "examples": ["production", "quarantine", "development"]
         },
-        "configuration": {
+        "power": { 
+          "$ref": "#/$defs/power" 
+        },
+        "temperature": {
+          "$ref": "#/$defs/temperature"
+        },
+        "vendor": {
+          "$ref": "#/$defs/vendor"
+        },
+        "utilization": {
+          "$ref": "#/$defs/utilization"
+        },
+        "clockSpeed": {
+          "type": "number"
+        },
+        "clockSpeedUnit": {
+          "type": "string",
+          "examples": ["GHz", "MHz"] 
+        },
+        "interface": {
+          "type": "string",
+          "examples": ["USB", "PCI-E"]
+        },
+        "communication": {
+          "type": "string",
+          "examples": ["PLDM", "Redfish"]
+        },
+        "dataRate": {
+          "type": "number" 
+        },
+        "dataRateValue": {
+          "type": "string",
+          "examples": ["MT/s"]
+        },
+        "performance": {
+          "$ref": "#/$defs/performance"  
+        },
+        "latency": {
+          "type": "number"
+        },
+        "latencyUnit": {
+          "type": "string",
+          "examples": ["Seconds", "Milliseconds"]
+        },
+        "errorRate": {
+          "type": "number" 
+         },
+        "errorUnit": {
+          "type": "string",
+          "examples": ["errors per second"]
+        },
+        "subComponents": {
           "type": "array",
-          "description": "Custom configuration attributes for the component",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Configuration attribute name"
-              },
-              "value": {
-                "type": "string",
-                "description": "Configuration attribute value"
-              },
-              "description": {
-                "type": "string",
-                "description": "Optional description of the attribute"
-              }
-            },
-            "required": [
-              "name",
-              "value"
-            ]
+            "$ref": "#/$defs/component"
           }
         }
       },
       "required": [
-        "componentClass",
         "componentId",
         "vid",
         "pid",
-        "firmware"
+        "healthy",
+        "status",
+        "lastError"
       ]
     },
     "physicalLocationType": {

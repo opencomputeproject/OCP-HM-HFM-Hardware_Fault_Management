@@ -52,14 +52,19 @@
 \contentsline {section}{\numberline {11}Data Stacks}{29}{section.11}%
 \contentsline {subsection}{\numberline {11.1}Code Currency}{29}{subsection.11.1}%
 \contentsline {subsubsection}{\numberline {11.1.1}File Format and Schema}{29}{subsubsection.11.1.1}%
-\contentsline {subsubsection}{\numberline {11.1.2}Code Currency Redfish Schema}{32}{subsubsection.11.1.2}%
-\contentsline {subsubsection}{\numberline {11.1.3}Requirements}{32}{subsubsection.11.1.3}%
-\contentsline {subsection}{\numberline {11.2}Status Dump}{35}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Console}{35}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Interactive Debug/Run Control}{35}{subsection.11.4}%
-\contentsline {section}{\numberline {12}Future Work}{36}{section.12}%
-\contentsline {section}{Appendices}{37}{section*.6}%
-\contentsline {section}{\numberline {A}Code Currency Examples}{37}{appendix.A}%
-\contentsline {section}{\numberline {B}Status Dump Examples}{41}{appendix.B}%
-\contentsline {section}{References}{42}{appendix.B}%
+\contentsline {subsubsection}{\numberline {11.1.2}Requirements}{33}{subsubsection.11.1.2}%
+\contentsline {subsubsection}{\numberline {11.1.3}Code Currency Redfish Schema}{40}{subsubsection.11.1.3}%
+\contentsline {subsection}{\numberline {11.2}Status Dump}{40}{subsection.11.2}%
+\contentsline {subsubsection}{\numberline {11.2.1}Introduction}{40}{subsubsection.11.2.1}%
+\contentsline {subsubsection}{\numberline {11.2.2}Definitions:}{40}{subsubsection.11.2.2}%
+\contentsline {subsubsection}{\numberline {11.2.3}MVP Requirements:}{40}{subsubsection.11.2.3}%
+\contentsline {subsubsection}{\numberline {11.2.4}Optional:}{40}{subsubsection.11.2.4}%
+\contentsline {subsubsection}{\numberline {11.2.5}Requirements}{44}{subsubsection.11.2.5}%
+\contentsline {subsection}{\numberline {11.3}Console}{52}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Interactive Debug/Run Control}{52}{subsection.11.4}%
+\contentsline {section}{\numberline {12}Future Work}{53}{section.12}%
+\contentsline {section}{Appendices}{54}{section*.6}%
+\contentsline {section}{\numberline {A}Code Currency Examples}{54}{appendix.A}%
+\contentsline {section}{\numberline {B}Status Dump Examples}{60}{appendix.B}%
+\contentsline {section}{References}{71}{appendix.B}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
