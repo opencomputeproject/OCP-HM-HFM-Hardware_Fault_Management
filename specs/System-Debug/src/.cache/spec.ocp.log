@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  12 AUG 2026 22:31
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.19)  13 AUG 2026 19:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2177,13 +2177,7 @@ m/n/10 System Debug Specification
 
 [3
 
-]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[4])
+])
 \tf@toc=\write5
 \openout5 = `spec.ocp.toc'.
 
@@ -2193,7 +2187,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[5]
+[4]
 Package tocbasic Info: character protrusion at lof deactivated on input line 76
 1.
  (.cache/spec.ocp.lof)
@@ -2206,7 +2200,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[6
+[5
 
 ]
 Package tocbasic Info: character protrusion at lot deactivated on input line 76
@@ -2216,6 +2210,14 @@ Package tocbasic Info: character protrusion at lot deactivated on input line 76
 \openout7 = `spec.ocp.lot'.
 
 
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[6
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2232,6 +2234,31 @@ m/n/10 System Debug Specification
 [8
 
 ]
+Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
+ [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
+ [] [] [] [] 
+ []
+
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2240,45 +2267,12 @@ m/n/10 System Debug Specification
 [9
 
 ]
-Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
- [] [] [] [] 
- []
-
-
-Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
- [] [] [] [] 
- []
-
-
-Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
- [] [] [] [] 
- []
-
-
-Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
- [] [] [] [] 
- []
-
-
-Overfull \hbox (1.00769pt too wide) in alignment at lines 862--862
- [] [] [] [] 
- []
-
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [10
-
-]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[11
 
 ]
 Underfull \hbox (badness 1221) in paragraph at lines 921--927
@@ -2298,7 +2292,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[12
+[11
 
 ]
 Underfull \hbox (badness 1675) in paragraph at lines 1003--1006
@@ -2318,13 +2312,13 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[13]
+[12]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[14]
+[13]
 Underfull \hbox (badness 10000) in paragraph at lines 1139--1143
 []\TU/Arial(0)/m/n/10.95 An underscore (i.e., ’_-’) is sometimes used in the re
 presentation to improve readability. For
@@ -2342,7 +2336,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[15
+[14
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2350,7 +2344,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[16]
+[15]
 File: .cache/product_development_lifecycle.png.1efc1b0e50.convert.pdf Graphic f
 ile (type pdf)
 <use .cache/product_development_lifecycle.png.1efc1b0e50.convert.pdf>
@@ -2360,10 +2354,10 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[17
+[16
 
 ]
-Underfull \hbox (badness 1418) in paragraph at lines 1405--1408
+Underfull \hbox (badness 1418) in paragraph at lines 1417--1420
 \TU/Arial(0)/m/n/10.95 toward production-compatible mechanisms, telemetry colle
 ction, management interfaces, and 
  []
@@ -2374,8 +2368,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[18]
-Underfull \hbox (badness 1210) in paragraph at lines 1451--1455
+[17]
+Underfull \hbox (badness 1210) in paragraph at lines 1463--1467
 []\TU/Arial(0)/m/n/10.95 Although isolated from tenant workloads, the platform 
 continues to operate in a production-like 
  []
@@ -2386,13 +2380,13 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[19]
+[18]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[20]
+[19]
 File: .cache/execution_flow.png.a5893d21c7.convert.pdf Graphic file (type pdf)
 <use .cache/execution_flow.png.a5893d21c7.convert.pdf>
 
@@ -2401,14 +2395,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[21]
-Underfull \hbox (badness 1127) in paragraph at lines 1635--1642
+[20]
+Underfull \hbox (badness 1127) in paragraph at lines 1647--1654
 \TU/Arial(0)/m/n/10.95 A boot crash occurs when the platform fails to successfu
 lly transition from the Boot state to the 
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 1689--1696
+Underfull \hbox (badness 1005) in paragraph at lines 1701--1708
 \TU/Arial(0)/m/n/10.95 This use case is triggered while the platform remains fu
 nctional and ends when the condition is 
  []
@@ -2419,8 +2413,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[22]
-Underfull \hbox (badness 1365) in paragraph at lines 1738--1745
+[21]
+Underfull \hbox (badness 1365) in paragraph at lines 1750--1757
 \TU/Arial(0)/m/n/10.95 Performance degradation occurs when the platform continu
 es to function but exhibits reduced 
  []
@@ -2431,7 +2425,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[23]
+[22]
 File: .cache/fig:system-debug-architecture.7424c8bec8.mermaid.pdf Graphic file 
 (type pdf)
 <use .cache/fig:system-debug-architecture.7424c8bec8.mermaid.pdf>
@@ -2441,12 +2435,18 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[24]
+[23]
 File: .cache/fig:configuration-vs-physical-error-determination-flow.2481787625.
 mermaid.pdf Graphic file (type pdf)
 <use .cache/fig:configuration-vs-physical-error-determination-flow.2481787625.m
 ermaid.pdf>
 
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[24]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2458,7 +2458,9 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[26]
+[26
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2467,6 +2469,18 @@ m/n/10 System Debug Specification
 [27
 
 ]
+Underfull \hbox (badness 1226) in paragraph at lines 2013--2024
+\TU/Arial(0)/m/n/10.95 Debug capabilities are foundational to the development, 
+deployment, and operation of modern 
+ []
+
+
+Underfull \hbox (badness 1231) in paragraph at lines 2037--2041
+[]\TU/Arial(0)/m/n/10.95 For the purposes of this Specification, information an
+d data (collectively called material) that is 
+ []
+
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2475,129 +2489,13 @@ m/n/10 System Debug Specification
 [28
 
 ]
-Underfull \hbox (badness 1226) in paragraph at lines 2001--2012
-\TU/Arial(0)/m/n/10.95 Debug capabilities are foundational to the development, 
-deployment, and operation of modern 
- []
-
-
-Underfull \hbox (badness 1226) in paragraph at lines 2049--2059
-[]\TU/Arial(0)/m/n/10.95 Debug data is inherently high-value. It may expose fir
-mware state, internal hardware behavior, 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[29
-
-]
-Underfull \hbox (badness 1253) in paragraph at lines 2080--2086
-\TU/Arial(0)/m/n/10.95 This section describes the threat model for debug capabi
-lities in open datacenter systems and 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[30]
-Underfull \hbox (badness 1132) in paragraph at lines 2187--2190
-[]\TU/Arial(0)/b/n/10.95 External Network Attackers \TU/Arial(0)/m/n/10.95 - At
-tempting to intercept, inject, or replay debug traffic over 
- []
-
-
-Underfull \hbox (badness 1087) in paragraph at lines 2249--2253
-[]\TU/Arial(0)/b/n/10.95 End-to-End Protection \TU/Arial(0)/m/n/10.95 - Debug r
-equests and data need to be protected across all hops, 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[31]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[32]
-Underfull \hbox (badness 1558) in paragraph at lines 2384--2393
-[]\TU/Arial(0)/m/n/10.95 A secured debug transport establishes confidence that 
-debug traffic reaches only its intended 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[33]
-Underfull \hbox (badness 1590) in paragraph at lines 2465--2470
-[]\TU/Arial(0)/m/n/10.95 End-to-end trust assumptions distinguish between who i
-s communicating and what that entity 
- []
-
-
-Underfull \hbox (badness 1748) in paragraph at lines 2465--2470
-\TU/Arial(0)/m/n/10.95 is permitted to do. Session establishment builds confide
-nce in the identity and integrity of the 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[34]
-Underfull \hbox (badness 1622) in paragraph at lines 2501--2506
-[]\TU/Arial(0)/m/n/10.95 Debug communication remains anchored to endpoint ident
-ity and session context rather than 
- []
-
-
-Underfull \hbox (badness 1092) in paragraph at lines 2501--2506
-\TU/Arial(0)/m/n/10.95 vendor-specific wiring or isolation guarantees. This app
-roach supports scalable, remote debug 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[35]
-Underfull \hbox (badness 2486) in paragraph at lines 2633--2636
-[]\TU/Arial(0)/b/n/10.95 [SEC-0018] \TU/Arial(0)/m/n/10.95 Debug operations sha
-ll be observable and auditable through the platform 
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[36]
-Underfull \hbox (badness 2368) in paragraph at lines 2678--2684
+Underfull \hbox (badness 2368) in paragraph at lines 2098--2104
 \TU/Arial(0)/m/n/10.95 artifacts that participate in debug enablement, control,
  and analysis. In the context of debug 
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 2694--2709
+Underfull \hbox (badness 1019) in paragraph at lines 2114--2129
 \TU/Arial(0)/m/n/10.95 shop style standardized machine readable method to retri
 eve all relevant information about the 
  []
@@ -2611,79 +2509,79 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[37
+[29
 
 ]
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2798--2798
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2218--2218
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2798--2798
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2218--2218
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2798--2798
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2218--2218
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2798--2798
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2218--2218
  [] [] 
  []
 
 
-Underfull \hbox (badness 1043) in paragraph at lines 2798--2798
+Underfull \hbox (badness 1043) in paragraph at lines 2218--2218
 []|\TU/Arial(0)/m/n/10 Type of node. Permitted values: \TU/NotoSansMono(0)/m/n/
 10 server\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1163) in paragraph at lines 2798--2798
+Underfull \hbox (badness 1163) in paragraph at lines 2218--2218
 \TU/NotoSansMono(0)/m/n/10 networkAppliance\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
 no(0)/m/n/10 storageSystem\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1163) in paragraph at lines 2798--2798
+Underfull \hbox (badness 1163) in paragraph at lines 2218--2218
 \TU/NotoSansMono(0)/m/n/10 gpuServer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m
 /n/10 managementController\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 2798--2798
+Underfull \hbox (badness 2221) in paragraph at lines 2218--2218
 \TU/NotoSansMono(0)/m/n/10 powerShelf\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
 m/n/10 batteryBackupUnit\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 7203) in paragraph at lines 2798--2798
+Underfull \hbox (badness 7203) in paragraph at lines 2218--2218
 \TU/NotoSansMono(0)/m/n/10 coolingDistributionUnit\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2798--2798
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 []|\TU/Arial(0)/m/n/10 Bay identifier if 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2798--2798
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 []|\TU/Arial(0)/m/n/10 Position within the bay if 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2798--2798
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 []|\TU/Arial(0)/m/n/10 Height in rack units if 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2798--2798
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 []|\TU/Arial(0)/m/n/10 Rack unit position if 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2798--2798
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2218--2218
  [] [] 
  []
 
@@ -2693,28 +2591,28 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[38]
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2850--2850
+[30]
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2270--2270
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2850--2850
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2270--2270
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2850--2850
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2270--2270
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2850--2850
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2270--2270
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2850--2850
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2270--2270
  [] [] 
  []
 
@@ -2724,77 +2622,77 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[39]
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2926--2926
+[31]
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2346--2346
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2926--2926
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2346--2346
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2926--2926
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2346--2346
  [] [] 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2926--2926
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2346--2346
  [] [] 
  []
 
 
-Underfull \hbox (badness 5008) in paragraph at lines 2926--2926
+Underfull \hbox (badness 5008) in paragraph at lines 2346--2346
 []|\TU/Arial(0)/m/n/10 Industry-aligned component class. 
  []
 
 
-Underfull \hbox (badness 1389) in paragraph at lines 2926--2926
+Underfull \hbox (badness 1389) in paragraph at lines 2346--2346
 \TU/Arial(0)/m/n/10 Permitted values: \TU/NotoSansMono(0)/m/n/10 processor\TU/A
 rial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 memory\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1163) in paragraph at lines 2926--2926
+Underfull \hbox (badness 1163) in paragraph at lines 2346--2346
 \TU/NotoSansMono(0)/m/n/10 networkInterface\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
 no(0)/m/n/10 storageDevice\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 3000) in paragraph at lines 2926--2926
+Underfull \hbox (badness 3000) in paragraph at lines 2346--2346
 \TU/NotoSansMono(0)/m/n/10 accelerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)
 /m/n/10 powerSupply\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 fan\TU/Aria
 l(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1163) in paragraph at lines 2926--2926
+Underfull \hbox (badness 1163) in paragraph at lines 2346--2346
 \TU/NotoSansMono(0)/m/n/10 thermalSensor\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(
 0)/m/n/10 voltageRegulator\TU/Arial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1675) in paragraph at lines 2926--2926
+Underfull \hbox (badness 1675) in paragraph at lines 2346--2346
 \TU/NotoSansMono(0)/m/n/10 clockGenerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono
 (0)/m/n/10 retimer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bridge\TU/Ar
 ial(0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 3861) in paragraph at lines 2926--2926
+Underfull \hbox (badness 3861) in paragraph at lines 2346--2346
 \TU/NotoSansMono(0)/m/n/10 switchASIC\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
 m/n/10 controller\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bios\TU/Arial
 (0)/m/n/10 , 
  []
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 2926--2926
+Underfull \hbox (badness 1478) in paragraph at lines 2346--2346
 []|\TU/Arial(0)/m/n/10 Array of logical links associated with the 
  []
 
 
-Overfull \hbox (0.99998pt too wide) in alignment at lines 2926--2926
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2346--2346
  [] [] 
  []
 
@@ -2804,28 +2702,232 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[40]
+[32]
 LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 9.00096pt on input line 3246.
+(Font)              scaled to size 9.00096pt on input line 2666.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(2)/m/n' will be
-(Font)              scaled to size 6.00064pt on input line 3246.
+(Font)              scaled to size 6.00064pt on input line 2666.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 8.99904pt on input line 3246.
+(Font)              scaled to size 8.99904pt on input line 2666.
 LaTeX Font Info:    Font shape `TU/LibertinusMath(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 3246.
+(Font)              scaled to size 5.99936pt on input line 2666.
 
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[33]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[34]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[35]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[36]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[37]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[38]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[39]
+Underfull \hbox (badness 1748) in paragraph at lines 2796--2802
+\TU/Arial(0)/m/n/10.95 Extended Register Dump: In depth dump about the componen
+t without information about the 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2947--2947
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2947--2947
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2947--2947
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2947--2947
+ [] [] 
+ []
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 2947--2947
+[]|\TU/Arial(0)/m/n/10 Type of node. Permitted values: \TU/NotoSansMono(0)/m/n/
+10 server\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 1163) in paragraph at lines 2947--2947
+\TU/NotoSansMono(0)/m/n/10 networkAppliance\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
+no(0)/m/n/10 storageSystem\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 1163) in paragraph at lines 2947--2947
+\TU/NotoSansMono(0)/m/n/10 gpuServer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m
+/n/10 managementController\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 2221) in paragraph at lines 2947--2947
+\TU/NotoSansMono(0)/m/n/10 powerShelf\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
+m/n/10 batteryBackupUnit\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 7203) in paragraph at lines 2947--2947
+\TU/NotoSansMono(0)/m/n/10 coolingDistributionUnit\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 2947--2947
+ [] [] 
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[40]
+ignored error: Infinite glue shrinkage found in box being split
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [41]
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3007--3007
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3007--3007
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3007--3007
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3007--3007
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3007--3007
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3106--3106
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3106--3106
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3106--3106
+ [] [] 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3106--3106
+ [] [] 
+ []
+
+
+Underfull \hbox (badness 5008) in paragraph at lines 3106--3106
+[]|\TU/Arial(0)/m/n/10 Industry-aligned component class. 
+ []
+
+
+Underfull \hbox (badness 1389) in paragraph at lines 3106--3106
+\TU/Arial(0)/m/n/10 Permitted values: \TU/NotoSansMono(0)/m/n/10 processor\TU/A
+rial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 memory\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 1163) in paragraph at lines 3106--3106
+\TU/NotoSansMono(0)/m/n/10 networkInterface\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
+no(0)/m/n/10 storageDevice\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 3000) in paragraph at lines 3106--3106
+\TU/NotoSansMono(0)/m/n/10 accelerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)
+/m/n/10 powerSupply\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 fan\TU/Aria
+l(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 1163) in paragraph at lines 3106--3106
+\TU/NotoSansMono(0)/m/n/10 thermalSensor\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(
+0)/m/n/10 voltageRegulator\TU/Arial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 1675) in paragraph at lines 3106--3106
+\TU/NotoSansMono(0)/m/n/10 clockGenerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono
+(0)/m/n/10 retimer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bridge\TU/Ar
+ial(0)/m/n/10 , 
+ []
+
+
+Underfull \hbox (badness 3861) in paragraph at lines 3106--3106
+\TU/NotoSansMono(0)/m/n/10 switchASIC\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
+m/n/10 controller\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bios\TU/Arial
+(0)/m/n/10 , 
+ []
+
+
+Overfull \hbox (0.99998pt too wide) in alignment at lines 3106--3106
+ [] [] 
+ []
+
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [42]
+ignored error: Infinite glue shrinkage found in box being split
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -2856,180 +2958,24 @@ m/n/10 System Debug Specification
  []
 
 [47]
-Underfull \hbox (badness 1748) in paragraph at lines 3376--3382
-\TU/Arial(0)/m/n/10.95 Extended Register Dump: In depth dump about the componen
-t without information about the 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3527--3527
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3527--3527
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3527--3527
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3527--3527
- [] [] 
- []
-
-
-Underfull \hbox (badness 1043) in paragraph at lines 3527--3527
-[]|\TU/Arial(0)/m/n/10 Type of node. Permitted values: \TU/NotoSansMono(0)/m/n/
-10 server\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 1163) in paragraph at lines 3527--3527
-\TU/NotoSansMono(0)/m/n/10 networkAppliance\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
-no(0)/m/n/10 storageSystem\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 1163) in paragraph at lines 3527--3527
-\TU/NotoSansMono(0)/m/n/10 gpuServer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m
-/n/10 managementController\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 2221) in paragraph at lines 3527--3527
-\TU/NotoSansMono(0)/m/n/10 powerShelf\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
-m/n/10 batteryBackupUnit\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 7203) in paragraph at lines 3527--3527
-\TU/NotoSansMono(0)/m/n/10 coolingDistributionUnit\TU/Arial(0)/m/n/10 , 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3527--3527
- [] [] 
- []
-
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [48]
-ignored error: Infinite glue shrinkage found in box being split
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [49]
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3587--3587
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3587--3587
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3587--3587
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3587--3587
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3587--3587
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3686--3686
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3686--3686
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3686--3686
- [] [] 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3686--3686
- [] [] 
- []
-
-
-Underfull \hbox (badness 5008) in paragraph at lines 3686--3686
-[]|\TU/Arial(0)/m/n/10 Industry-aligned component class. 
- []
-
-
-Underfull \hbox (badness 1389) in paragraph at lines 3686--3686
-\TU/Arial(0)/m/n/10 Permitted values: \TU/NotoSansMono(0)/m/n/10 processor\TU/A
-rial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 memory\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 1163) in paragraph at lines 3686--3686
-\TU/NotoSansMono(0)/m/n/10 networkInterface\TU/Arial(0)/m/n/10 , \TU/NotoSansMo
-no(0)/m/n/10 storageDevice\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 3000) in paragraph at lines 3686--3686
-\TU/NotoSansMono(0)/m/n/10 accelerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)
-/m/n/10 powerSupply\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 fan\TU/Aria
-l(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 1163) in paragraph at lines 3686--3686
-\TU/NotoSansMono(0)/m/n/10 thermalSensor\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(
-0)/m/n/10 voltageRegulator\TU/Arial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 1675) in paragraph at lines 3686--3686
-\TU/NotoSansMono(0)/m/n/10 clockGenerator\TU/Arial(0)/m/n/10 , \TU/NotoSansMono
-(0)/m/n/10 retimer\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bridge\TU/Ar
-ial(0)/m/n/10 , 
- []
-
-
-Underfull \hbox (badness 3861) in paragraph at lines 3686--3686
-\TU/NotoSansMono(0)/m/n/10 switchASIC\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/
-m/n/10 controller\TU/Arial(0)/m/n/10 , \TU/NotoSansMono(0)/m/n/10 bios\TU/Arial
-(0)/m/n/10 , 
- []
-
-
-Overfull \hbox (0.99998pt too wide) in alignment at lines 3686--3686
- [] [] 
- []
-
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
 [50]
-ignored error: Infinite glue shrinkage found in box being split
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -3042,18 +2988,28 @@ m/n/10 System Debug Specification
  []
 
 [52]
+Underfull \hbox (badness 1107) in paragraph at lines 3668--3671
+[]\TU/Arial(0)/m/n/10.95 Add sub-categories of sensitive material and the assoc
+iated requirements and necessary 
+ []
+
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[53]
+[53
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[54]
+[54
+
+]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -3078,24 +3034,17 @@ m/n/10 System Debug Specification
  []
 
 [58]
+File: .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conve
+rt.pdf Graphic file (type pdf)
+<use .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conver
+t.pdf>
+
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[59]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[60]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[61
+[59
 
 ]
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -3103,9 +3052,22 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[62
+[60
+
 
 ]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[61]
+Underfull \hbox (badness 10000) has occurred while \output is active
+ []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
+m/n/10 System Debug Specification 
+ []
+
+[62]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -3130,28 +3092,18 @@ m/n/10 System Debug Specification
  []
 
 [66]
-File: .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conve
-rt.pdf Graphic file (type pdf)
-<use .cache/fig:example-code-currency.598d05cd78.plantuml.svg.54a95227ba.conver
-t.pdf>
-
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[67
-
-]
+[67]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
  []
 
-[68
-
-
-]
+[68]
 Underfull \hbox (badness 10000) has occurred while \output is active
  []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
 m/n/10 System Debug Specification 
@@ -3169,55 +3121,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 m/n/10 System Debug Specification 
  []
 
-[71]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[72]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[73]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[74]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[75]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[76]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[77]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[78]
-Underfull \hbox (badness 10000) has occurred while \output is active
- []\TU/Arial(0)/m/n/10 Open Compute Project \TU/Arial(0)/b/n/10 · \TU/Arial(0)/
-m/n/10 System Debug Specification 
- []
-
-[79
+[71
 
 ] (.cache/spec.ocp.aux)
  ***********
@@ -3226,12 +3130,12 @@ L3 programming layer <2025-11-14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 44735 strings out of 470152
- 926585 string characters out of 5477859
- 1810588 words of memory out of 5000000
- 72543 multiletter control sequences out of 15000+600000
+ 44680 strings out of 470152
+ 925297 string characters out of 5477859
+ 1808704 words of memory out of 5000000
+ 72488 multiletter control sequences out of 15000+600000
  635578 words of font info for 151 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  108i,13n,112p,11227b,1008s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on .cache/spec.ocp.pdf (79 pages).
+Output written on .cache/spec.ocp.pdf (71 pages).
