@@ -693,6 +693,8 @@ Debug mechanisms inherently bridge development, manufacturing, validation, and f
 
 More often than not, the root cause of a failure or problem is simply that the system has not been configured correctly and/or it is running either outdated firmware, an incompatible combination of software/firmware components, or components that have not been configured appropriately. The concept of Code Currency in this Specification is used to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. By explicitly accounting for these forms of data covered by Code Currency, the debug architecture can reason about compatibility, enforce policy consistently, and detect invalid or unsafe combinations of code and authorization. Treating Code Currency as an architectural concern—rather than an implicit assumption—helps ensure that debug capabilities remain controlled, auditable, and resilient as the platform evolves over time.
 
+Code currency is considered non-sensitive material which is human readable and therefore can be audited by the customer before providing it a supplier.
+
 ### File Format and Schema
 
 The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema defined by Requirement [CC-0001].  The relationship diagram below outlines this JSON schema.
@@ -1247,6 +1249,7 @@ Timed based or schedule based dump creation.
 Ability to delete historical data on schedule.
 Ability to have aggregated “high level summary” document at the system (server, switch, etc) level.
 
+The status dump is considered non-sensitive material which is human readable and therefore can be audited by the customer before providing it a supplier.
 
 The table below defines the elements of the Status Dump JSON schema.
 
@@ -2173,11 +2176,6 @@ Below is a JSON example for Code Currency of a hypothetical node with:
     }
   ]
 }
-
-```
-
-```plantuml {caption="Example Code Currency" #fig:example-code-currency .landscape}
-!include examplerepresentation.uml
 
 ```
 

@@ -56,6 +56,10 @@ Example (from `ocp-spec-tools` usage):
 - 
 > Store published outputs under `docpubs/<SpecName>/pdf/` only when you intend to publish/version outputs; otherwise keep the PR focused on source changes.
 
+### Commit your changes to your branch
+
+`git commit --signoff`
+
 ### Push your branch and open the PR on GitHub
 On GitHub:
 - Open a Pull Request from your **head** branch into the target **base** branch (typically `main`). 
@@ -68,6 +72,26 @@ On GitHub:
 
 ### After you open the PR
 - Respond to review comments and push updates to the same branch (the PR updates automatically). 
+
+### Resolving merge conflicts
+
+If your PR is reporting merge conflicts follow the following steps to merge manually:
+
+`Git checkout main`
+`Git pull`
+`Git checkout <yourbranch>`
+`Git merge main`
+
+Git status will report a number of merge conflicts:
+ 
+1.	If they are in .cache go into the .cache directory and delete all files
+2.	If there is conflicts in actual text files open the files and resolve them (standard git methods
+3.	If they are in the .pdf, rebuild the PDF
+ 
+`Git add .`
+`Git commit –signoff`
+`Git push -u origin <yourbranch>`
+
 
 ## Rendering / Building PDFs locally
 
