@@ -85,7 +85,7 @@ If your PR is reporting merge conflicts follow the following steps to merge manu
 Git status will report a number of merge conflicts:
  
 1.	If they are in .cache go into the .cache directory and delete all files
-2.	If there is conflicts in actual text files open the files and resolve them (standard git methods
+2.	If there is conflicts in actual text files open the files and resolve them (standard git methods)
 3.	If they are in the .pdf, rebuild the PDF
  
 `Git add .`
