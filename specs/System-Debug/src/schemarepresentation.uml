@@ -1,27 +1,33 @@
 @startuml
 
-title Node Codecurency Record Relationships
+title Node Code Currency Record Relationships
 
-class Node {
+class node {
     + nodeId : string
-    + nodeType : string
-    + hostname : string
+    + nodeType : systemAssemblyType
+    + hostName : string
+    + vid : string
+    + pid : string
     + networkConfiguration : object
     + physicalLocation : object
 }
 
-class Assembly {
+class assembly {
     + assemblyName : string
     + assemblyId : string
     + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
     + physicalLocation : object
     + logicalAssociation : object
 }
 
-class Component_1 {
-    + componentType : enum [CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC]
+class component_1 {
+    + componentClass : componentClass
     + componentId : string
     + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
     + physicalLocation : object
     + logicalAssociation : object
     + firmware : array
@@ -32,55 +38,61 @@ class subAssembly {
     + assemblyName : string
     + assemblyId : string
     + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
     + physicalLocation : object
     + logicalAssociation : object
 }
 
-class Component_2 {
-    + componentType : enum [CPU, Memory, NIC, Storage, GPU, PSU, Fan, BIOS, BMC]
+class component_2 {
+    + componentClass : componentClass
     + componentId : string
     + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
     + physicalLocation : object
     + logicalAssociation : object
     + firmware : array
     + configuration : array
 }
 
-class Firmware_1 {
+class firmware_1 {
     + version : string
-    + lastUpdated : date-time
+    + lastUpdated : dateTime
     + securityVersionNumber : int
     + minimumSecurityVersionNumber : int
-    + imageRole : enum [Active, Recovery, Standby]
+    + imageRole : enum
 }
 
-class Configuration_1 {
+class configuration_1 {
     + name : string
     + value : string
     + description : string
 }
 
-class Firmware_2 {
+class firmware_2 {
     + version : string
-    + lastUpdated : date-time
+    + lastUpdated : dateTime
     + securityVersionNumber : int
     + minimumSecurityVersionNumber : int
-    + imageRole : enum [Active, Recovery, Standby]
+    + imageRole : enum
 }
 
-class Configuration_2 {
+class configuration_2 {
     + name : string
     + value : string
     + description : string
 }
 
-Node  -->  Assembly
-Assembly --> Component_1 
-Assembly --> subAssembly
-subAssembly --> Component_2 
-Component_1  --> Firmware_1 
-Component_1  --> Configuration_1 
-Component_2  --> Firmware_2 
-Component_2  --> Configuration_2 
+node *--> assembly
+assembly *--> component_1
+assembly *--> subAssembly
+subAssembly *--> component_2
+
+component_1 *--> firmware_1
+component_1 *--> configuration_1
+
+component_2 *--> firmware_2
+component_2 *--> configuration_2
 
 @enduml
