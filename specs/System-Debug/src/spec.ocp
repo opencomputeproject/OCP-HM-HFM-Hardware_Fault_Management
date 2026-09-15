@@ -133,7 +133,7 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 ### In Scope {#sec:in-scope}
 
-This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumping.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor neutral though provide the flexibility to include vendor specific data alongside the standardized data.
+This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor neutral though provide the flexibility to include vendor specific data alongside the standardized data.
 
 Besides debug capabilities, this Specification will provide a common set of concepts including the product development lifecycle and a high-level debug architecture.  These concepts frame the capabilities in the overall system and environment for debugging.  Security of the debug capabilities in these environments will also be addressed.
 
@@ -1289,7 +1289,7 @@ By separating the Status Dump schema into mandatory and recommended categories, 
 
 ### File Format and Schema
 
-The Status Dump log will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files. The content of the file is organized using the JSON schema defined by Requirement [SD-0001]. 
+The Status Dump will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files. The content of the file is organized using the JSON schema defined by Requirement [SD-0001]. 
 
 The tables below define the elements of the Status Dump JSON schema.
 
