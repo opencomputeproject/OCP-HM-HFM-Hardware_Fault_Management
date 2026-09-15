@@ -48,18 +48,21 @@ PLEASE VERIFY THE CORRECT CLA/FSA IS USED AND EXECUTED FOR THIS CONTRIBUTION.
 The contributors of this Specification would like to acknowledge the following:
 
 - Marko Bartscherer (Intel)
+- Austin Bolen (Dell)
 - Enrico Carrieri (Qualcomm Technologies, Inc.)
 - Donald Gaither (Vertiv)
+- Justin King (AMD)
+-	Rolf Kuehnis (Lauterbach)
+- Jason Peck (NVIDIA)
 - James Zou (Aivres)
 
-Also, we wish to acknowledge Chris Fenner (Google) and the Trusted Computing Group for the use of their Pandoc markdown tooling.
 
 # Revision History
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Rev.       Date             Guiding Contributor(s)          Description                                                         
 ---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
-0.1        2026-05-04       Marko B., Enrico C., Donald G., Initial Release                                                     
+0.1        2026-09-09       Marko B., Enrico C., Donald G., Initial Release                                                     
                             James Z.
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -74,23 +77,25 @@ A full explanation of the OCP core tenets can be seen [here](https://146a55aca6f
 
 ## Openness
 
-This Specification is open.
+This specification follows the OCP tenet of openness by utilizing publicly available source materials, open development processes, and community review. The specification is self-contained and avoids dependencies on proprietary or restricted documentation. Requirements are defined within this document or reference publicly available standards, enabling transparent implementation, validation, and interoperability across vendors and deployments.
 
 ## Efficiency
 
-This Specification is efficient.
+This specification aligns with the OCP tenet of efficiency by reducing Mean Time to Debug (MTTD) through standardized debug discovery, data collection, and diagnostic workflows. The specification prioritizes reuse of existing infrastructure, industry standards, and established debug mechanisms to improve interoperability, minimize implementation overhead, and accelerate root cause analysis.
 
 ## Impact
 
-This Specification is impactful.
+This specification aligns with the OCP tenet of impact by standardizing debug data models and collection mechanisms across vendors. A common representation of debug information improves interoperability, enables reuse of analysis and decoding tools, and reduces reliance on vendor-specific workflows. This simplifies datacenter operations and supports efficient management of heterogeneous environments.
 
 ## Scale
 
-This Specification is scalable.
+This specification aligns with the OCP tenet of scale by providing a hierarchical and vendor-neutral approach to debug data management that spans datacenter deployments from clusters and racks to individual nodes and components. Standardized data models and interfaces allow systems of varying size, complexity, and architectural composition to be represented consistently.
+
+The specification is designed to accommodate diverse implementations across vendors while enabling common operational workflows. This approach supports scalable deployment, simplifies integration in heterogeneous environments, and enables consistent debug data collection and analysis across the datacenter infrastructure.
 
 ## Sustainability
 
-This Specification is sustainable.
+This specification aligns with the OCP tenet of sustainability by prioritizing reuse of existing infrastructure, interfaces, and industry standards. Leveraging established capabilities minimizes implementation impact, reduces complexity, and enables efficient adoption across existing datacenter environments.
 
 
 # Introduction {#sec:introduction}
@@ -128,6 +133,11 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 ### In Scope {#sec:in-scope}
 
+This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor neutral though provide the flexibility to include vendor specific data alongside the standardized data.
+
+Besides debug capabilities, this Specification will provide a common set of concepts including the product development lifecycle and a high-level debug architecture.  These concepts frame the capabilities in the overall system and environment for debugging.  Security of the debug capabilities in these environments will also be addressed.
+
+
 ### Out of Scope {#sec:out-of-scope}
 
 This Specification will not cover capabilities related to performance monitoring and telemetry.  
@@ -140,8 +150,12 @@ In addition, this Specification will not cover existing material already covered
 - Register Dumping - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
 - Array Dumping - covered by the GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] document.
 
+These may be incorporated (generically) or referenced in later versions of this specification.
+
 
 ## Audience {#sec:audience}
+
+The primary audience of this Specification is datacenter operators and field service technicians who need to quickly debug datacenter systems and components.  The secondary audience is datacenter component and system vendors who wish to design OCP compliant hardware.
 
 
 ## Objectives {#sec:objectives}
@@ -165,9 +179,6 @@ The system shall support vendor-specific extensions to enable additional diagnos
 ## Expected Outcomes {#sec:expected-outcomes}
 
 This Specification will standardize the data structure of configuration registers and status registers, and accessing method. It will help the customers of data center on rapid identification of system failures, precise locating of failing components, reducing time for root cause analysis (RCA), efficient hardware replacement and repair workflows, and support for pre-emptive maintenance based on failure risk prediction of the components. The results are expected to reduce system downtime and improve the overall efficiency of data center. This Specification will simplify the data center debugging.
-
-
-
 
 
 
@@ -206,15 +217,23 @@ In addition to this naming convention, key names written in this Specification w
 
 * **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
 
+* **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
+
 * **Hyperscalers** -  Cloud service providers of the world, who value scaling and rapid time to market of new hardware products.
 
+* **In-Band** - Data access methods designed to be collected over a network connection to the host OS’s Ethernet device. This method has the ability to interact with devices via driver stack.
+
 * **Life Cycle** - 
+
+* **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a Flash drive via the systems USB subsystem or from the PCI differential pair.
 
 * **Node** -  A platform designed by a supplier integrating multiple components that run an operating system. These are sometimes also called compute nodes.
 
 * **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
-* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed.  e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP
+* **Out-of-Band** - Data access methods designed to be collected over a dedicated network connection that is independent from the host OS’s accessible Ethernet devices.
+
+* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed.  e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP.
 
 
 
@@ -225,6 +244,10 @@ In addition to this naming convention, key names written in this Specification w
 |          |                                                                          |
 |:---------|:-------------------------------------------------------------------------|
 | DBG      | Debug |
+| e.g.     | (Latin) exempli gratia - meaning: "for example" |
+| etc.     | (Latin) et cetera - meaning: "and other similar things" or "and so forth" |
+| i.e.     | (Latin) id est - meaning: "that is" |
+
 
 
 ## Acronyms {#sec:acronyms}
@@ -232,27 +255,43 @@ In addition to this naming convention, key names written in this Specification w
 : {.plain}
 |          |                                                                          |
 |:---------|:-------------------------------------------------------------------------|
+| AMC      | Accelerator Management Controller |
+| API      | Application Programming Interface | 
+| BIOS     | Basic Input/Output System | 
 | BMC      | Baseboard Management Controller |
+| CI/CD    | Continuous Integration and Continuous Delivery |
+| CLI      | Command-Line Interface | 
 | CPER     | Common Platform Error Record |
+| CPU      | Central Processing Unit | 
 | DVT      | Design Validation Test |
 | EVT      | Engineering Validation Test |
 | FW       | Firmware |
+| GPU      | Graphics Processing Unit |
 | IMA      | In-band Management Agent | 
+| IP       | intellectual Property |
 | JSON     | JavaScript Object Notation |
 | JTAG     | Joint Test Action Group - Bare metal interface to access on-chip debug and test resources. |
 | MCTP     | Management Component Transport Protocol |
 | MTTD     | Mean Time to Debug |
+| NIC      | Network Interconnect |
+| NVMe     | Non-Volatile Memory Express |
+| OAM      | OCP Accelerator Module | 
 | OCP      | Open Compute Project |
 | OEM      | Original Equipment Manufacturer |
 | OMA      | Out-of-Band Management Agent |
 | OOB      | Out-of-Band |
 | OS       | Operating System |
+| PCIe     | Peripheral Component Interconnect Express |
 | PLDM     | Platform Level Data Model |
 | PVT      | Production Validation Test |
 | RAS      | Reliability, Availability, and Serviceability |
 | RCA      | Root Cause Analysis |
+| SDK      | Software Development Kit |
+| SoC      | System on Chip | 
 | SPDM     | Security Protocol and Data Model |
 | SW       | Software | 
+| UBB      | Universal Baseboard |
+| USB      | Universal Serial Bus |
 | WDT      | Watchdog Timer |
 
 
@@ -654,11 +693,6 @@ In this Specification, we will define the data structure and the accessing metho
 The combination of configuration registers and status registers shall enable accurate fault identification and root cause analysis.
 
 
-# Layering
-
-
-# Handling Multiple Users
-
 
 # Security and Privacy {#sec:security-and-privacy}
 
@@ -704,7 +738,7 @@ The information for Code Currency will be exposed by a system as a file in the R
 
 ```
 
-The table below defines the elements of the node-level for the Code Currency JSON schema.
+The tables below define the elements for the Code Currency JSON schema.
 
 Table: Code Currency Node-Level Elements Definition
 
@@ -780,7 +814,7 @@ Table: Code Currency `component` Elements Definition
 
 <a href="req-cc-0001"></a>
 
-- **[CC-0001]** The Code Currency log shall be in JSON format with the following schema:
+- **[CC-0001]** The Code Currency log SHALL be in JSON format with the following schema:
 
 ```json {.small}
 {
@@ -1201,57 +1235,63 @@ Table: Code Currency `component` Elements Definition
 }
 ```
 
+<a href="req-cc-0002"></a>
+
+- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  In other words, the data collected in the log SHALL NOT contain any Hyperscaler sensitive data, end-user sensitive data, or 
+data collected directly from the workload that was executing.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+
+- **[CC-0003]** The Code Currency log SHALL NOT be encrypted as it is not necessary based on Requirement [CC-0002].
+
+- **[CC-0004]** The Code Currency log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
+
+- **[CC-0005]** The collection of the Code Currency log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies 
+on Hyperscaler management/control plane.
+
+- **[CC-0006]** The collection of the Code Currency log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
+
+- **[CC-0007]** The Code Currency feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This may include timeouts or retries.
+
+- **[CC-0008]** The Code Currency feature SHALL have a mechanism to enable and disable the feature.  Since the Code Currency log only contains non-sensitive material, the feature may be enabled by default.
+
+- **[CC-0009]** The Code Currency feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
+
+
+
 ### Code Currency Redfish Schema
 
 
 ## Status Dump {#sec:status-dump}
 
-### Introduction
+A Status Dump is used to provide a way to quickly retrieve relevant debug information about the environment for a given system and its components.  A Status Dump log contains state data and error codes from a system or component meant to be used to assist in debugging and troubleshooting device fault states. The data of the Status Dump is about the component as a part of the environment that it exists in.  
 
-The purpose of this feature is to provide a way to quickly retrieve relevant debug information for a given PCIe device.
+### Data Selection Methodology
 
-### Definitions:
+The Status Dump data model is intended to provide a concise, interoperable, and actionable set of diagnostic information that enables rapid fault isolation and system troubleshooting while minimizing implementation burden on platform components. The selection of Status Dump fields/keys was guided by the objective of capturing the minimum information required to identify the source of a fault, determine the current operational state of a component, and understand the most recent error condition without requiring service interruption or specialized vendor tooling.
 
-Extended Register Dump: In depth dump about the component without information about the environment that the component is in. Is typically not human readable.
-Status Dump: The dump is about the component as a part of the environment that it exists in. Is typically human readable. Crash Dump: The dump with information from a non-functional component to determine what caused the failure.
+The mandatory set of Status Dump fields represents the minimum viable data required to provide meaningful debug value across a broad range of platform components. These required fields/keys were selected based on the following principles:
 
-In-band: Host OS’s ethernet device and locked in host device. Interact with devices via driver stack. Based on CLI/Local UI.
-In-band(2): From PCI differential pair.
-Out-of-band: Using BMC or non-OS access methods.
-Out-of-band(2): I2C
+* **Component Identification** - Every dump will contain sufficient identifying information to determine the originating component and its function within the system. This allows collected data to be correlated across heterogeneous devices and enables automated processing by fleet management and service tools.
+* **Operational Availability** - Required data will remain accessible during conditions such as CPU lockup events and will be retrievable without requiring platform downtime or intrusive debug operations.
+* **Accessibility and Auditability** - Required fields will be represented in a format that can be interpreted using publicly accessible tools or otherwise be directly human readable. This ensures that dump data remains useful to the hardware owner regardless of the component vendor.
+* **Current Fault Visibility** - The mandatory dataset includes information describing the most recent error condition, whether represented as an error code, status indicator, or corruption indication. This information provides the baseline context necessary for root-cause analysis.
+* **Component-Level Diagnostics** - The mandatory dataset focuses on information directly associated with the reporting component, ensuring that each component can independently communicate its health and failure status.
+* **Low-Impact Collection** - Required fields are limited to information that can be collected without measurable impact to normal system operation and can be retrieved on demand by the user.
 
-Hierarchy is for physical troubleshoot and replacement of components, not to determine internal bus mapping or similar non-technician level items.
+In addition to this mandatory set, there is an additional recommended set of Status Dump fields/keys that contain data elements that provide additional diagnostic value but might not be available on all implementations due to architectural, cost, performance, security, or proprietary technology constraints. These fields/keys are therefore considered recommended when available, but each field/key are not required for compliance.  These recommended fields/keys were selected according to the following principles:
 
-### MVP Requirements:
+* **Enhanced Diagnostic Depth** - Information such as historical error logs, extended debug data, and vendor-specific diagnostic content can significantly improve root-cause determination but often requires implementation-specific infrastructure or proprietary tooling.
+* **Improved Serviceability** - Data that supports precise component localization, such as physical socket identifiers or other topology information, improves operational efficiency but might not be universally supported across all device classes.
+* **Operational Automation** - Features such as alert generation, scheduled dump creation, dump lifecycle management, and summary reporting support large-scale datacenter operations but are not fundamental to the basic Status Dump capability.
+* **Advanced Collection Mechanisms** - Some diagnostic information might require collection methods that introduce performance overhead or rely on out-of-band management infrastructure. Such information provides incremental value but is intentionally separated from the mandatory dataset to preserve broad applicability and low-impact operation.
 
-Ability to have “tagged” data based on the component the dump comes from. Tagging includes sufficient identifying data to allow determination of component type (for example, that the dump is from a CPU and not a GPU).
-Ability to receive status dump during a CPU lockup.
-Dump readability (need to discuss between two options):
-Dump capable of reading via publicly accessible tools (can be vendor specific but must be usable by hardware owner) and or human readable as is (text file) and in place (no removing from rack). (Auditability)
-Dump based on OCP NVME standard.
-Data includes the most recent error state. Can be error code or “corrupted” data (in the case of things such as RAM).
-Component level dump.
-Ability to collect data without performance impact of the working system. (Define performance impact).
-Dumps must be pullable without downtime to the system. This includes the need to put the device in a "maintenance mode” to pull the dump.
-Dumps should be generated on demand by user.
-Ability to clear error codes and dump data by user.
-Data is stored during power outage for later retrieval (for example if the system is shipped offsite for debugging.)
+By separating the Status Dump schema into mandatory and recommended categories, this Specification establishes a consistent baseline that all compliant implementations can support while providing a path for vendors to expose richer diagnostic information when platform capabilities permit. This approach promotes interoperability, scalability, and ease of deployment while maximizing the usefulness of diagnostic data across a diverse ecosystem of system components.
 
-### Optional:
 
-Deep dump that utilizes vendor supplied technician tools that can gather additional data, such as proprietary information.
-Devices have an alert mechanism to flag when a dump or an error status has been generated.
-BMC accessibility or other Out of Band accessibility.
-Sufficient identifying data to allow debug at the component level (for example, CPU socket number for multi-CPU servers).
-Data includes comprehensive debug information including historical error logs.
-Data collection may incorporate collection methods with performance impact. This may involve a combination of non-performance impacting collection methods and collection methods, or may solely consist of the “data bundling” of non-performance impacting collection methods.
-Timed based or schedule based dump creation.
-Ability to delete historical data on schedule.
-Ability to have aggregated “high level summary” document at the system (server, switch, etc) level.
+### File Format and Schema
 
-The status dump is considered non-sensitive material which is human readable and therefore can be audited by the customer before providing it a supplier.
+The Status Dump will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files. The content of the file is organized using the JSON schema defined by Requirement [SD-0001]. 
 
-The table below defines the elements of the Status Dump JSON schema.
+The tables below define the elements of the Status Dump JSON schema.
 
 Table: Status Dump Node-Level Elements Definition
 
@@ -1348,13 +1388,13 @@ Table: Status Dump `component` Elements Definition
 | `latencyUnit` | Latency measurement unit. |
 | `errorRate` | Error rate measurement. |
 | `errorUnit` | Error rate unit. |
-| `subComponents` | Array of nested subcomponents. |
+| `subComponents` | Array of nested sub-components. |
 
 ### Requirements
 
 <a href="req-sd-0001"></a>
 
-- **[SD-0001]** The Status Dump log shall be in JSON format with the following schema:
+- **[SD-0001]** The Status Dump log SHALL be in JSON format with the following schema:
 
 ```json {.small}
 {
@@ -1883,10 +1923,25 @@ Table: Status Dump `component` Elements Definition
 }
 ```
 
-## Console {#sec:console}
+<a href="req-sd-0002"></a>
 
+- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  In other words, the data collected in the log SHALL NOT contain any Hyperscaler sensitive data, end-user sensitive data, or 
+data collected directly from the workload that was executing.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-## Interactive Debug/Run Control {#sec:interactive-debug}
+- **[SD-0003]** The Status Dump log SHALL NOT be encrypted as it is not necessary based on Requirement [SD-0002].
+
+- **[SD-0004]** The Status Dump log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
+
+- **[SD-0005]** The collection of the Status Dump log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies 
+on Hyperscaler management/control plane.
+
+- **[SD-0006]** The collection of the Status Dump log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
+
+- **[SD-0007]** The Status Dump feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This may include timeouts or retries.
+
+- **[SD-0008]** The Status Dump feature SHALL have a mechanism to enable and disable the feature.  Since the Status Dump log only contains non-sensitive material, the feature may be enabled by default.
+
+- **[SD-0009]** The Status Dump feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
 
 
 
@@ -1899,6 +1954,14 @@ Future versions of this Specification will include the following topics, require
 * Add sub-categories of sensitive material and the associated requirements and necessary protections.
 
 * Describe how to securely communicate/transfer debug data across interfaces on the platform. (i.e., secure debug communication)
+
+* Describe how to communicate/transfer console data messages (addition to the [Data Stacks Section](#sec:data-stacks)).
+
+* Describe how to interactively perform debug and run control (addition to the [Data Stacks Section](#sec:data-stacks)).
+
+* Describe the layering of the capabilities and how to implement in the "stack" of the datacenter.
+
+* Describe how to handle multiple users debugging within the datacenter (mostly at the node level is where it is interesting and needs a common method).
 
 
 \beginappendices
