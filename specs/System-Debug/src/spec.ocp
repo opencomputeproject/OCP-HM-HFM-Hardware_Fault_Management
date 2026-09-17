@@ -145,10 +145,12 @@ This Specification will not cover capabilities related to performance monitoring
 In addition, this Specification will not cover existing material already covered by another OCP specification even if it is related to the goals stated in @sec:goals.  This includes the following:
 
 - Error Events - covered by the RAS API Specification [@{ocp-ras-api}].
-- Bulk Dumping - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
-- Crash Dumping - covered by the RAS API Specification [@{ocp-ras-api}], Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}], and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
-- Register Dumping - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
-- Array Dumping - covered by the GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] document.
+- Crash Dump - covered by the RAS API Specification [@{ocp-ras-api}], Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}], and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
+- Register Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] and GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] documents.
+- Extended Register Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}]
+- State Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] document
+- Debug Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] document
+- Trace Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] document
 
 These may be incorporated (generically) or referenced in later versions of this specification.
 
@@ -215,26 +217,26 @@ In addition to this naming convention, key names written in this Specification w
 
 ## Definitions {#sec:definitions}
 
-* **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
-
-* **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
-
 * **Hyperscalers** -  Cloud service providers of the world, who value scaling and rapid time to market of new hardware products.
-
-* **In-Band** - Data access methods designed to be collected over a network connection to the host OS’s Ethernet device. This method has the ability to interact with devices via driver stack.
-
-* **Life Cycle** - 
-
-* **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a Flash drive via the systems USB subsystem or from the PCI differential pair.
 
 * **Node** -  A platform designed by a supplier integrating multiple components that run an operating system. These are sometimes also called compute nodes.
 
-* **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
+* **Life Cycle** - The operational states of a component, platform, or software product throughout its existence, such as development, validation, manufacturing, production deployment, service, and end-of-life. The life cycle state determines the availability of debug features and security restrictions.
 
-* **Out-of-Band** - Data access methods designed to be collected over a dedicated network connection that is independent from the host OS’s accessible Ethernet devices.
+
+* **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
+
+* **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
 * **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed.  e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP.
 
+* **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a Flash drive via the systems USB subsystem or from the PCI differential pair.
+
+* **In-Band** - Data access methods designed to be collected over a network connection to the host OS’s Ethernet device. This method has the ability to interact with devices via driver stack.
+
+* **Out-of-Band** - Data access methods designed to be collected over a dedicated network connection that is independent from the host OS’s accessible Ethernet devices.
+
+* **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
 
 
 
@@ -689,7 +691,7 @@ The system debug process shall include collecting status register data to identi
 
 The Baseboard Management Controller (BMC) shall act as the central entity for system-level debugging. The BMC shall collect and aggregate debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
 
-In this Specification, we will define the data structure and the accessing methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapters. The data format and dumping method of the status registers of a given system will be described in Status Dump chapters.
+In this Specification, we will define the data structure and the accessing methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapters. The data format and dump method of the status registers of a given system will be described in Status Dump chapters.
 The combination of configuration registers and status registers shall enable accurate fault identification and root cause analysis.
 
 
@@ -1256,9 +1258,18 @@ on Hyperscaler management/control plane.
 - **[CC-0009]** The Code Currency feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
 
 
+### Code Currency generation
 
+To handle diverse systems build from components and subsystems from multiple suppliers, each component shall expose it's own code currency file. The node management controller and sub system management controllers (where applicable) shall collect the information from the relevant components and create consolidated code currency files. The files created by sub system management controllers will be retrieved by the node management controller to expose a single file on the redfish interface.
+
+```plantuml {caption="Code Currency creation" #fig:schemarr}
+!include schemacreater.uml
+
+```
+
+<!--
 ### Code Currency Redfish Schema
-
+-->
 
 ## Status Dump {#sec:status-dump}
 
@@ -1963,6 +1974,11 @@ Future versions of this Specification will include the following topics, require
 
 * Describe how to handle multiple users debugging within the datacenter (mostly at the node level is where it is interesting and needs a common method).
 
+* Describe how to detect and handle performance degradation
+
+* Describe generic versions of the debug methodologies created by the CPU and GPU closed CLA workstreams.
+
+* Describe methodologies to utilize AI to aid and accelerate debug
 
 \beginappendices
 
