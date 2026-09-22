@@ -1258,14 +1258,18 @@ on Hyperscaler management/control plane.
 - **[CC-0009]** The Code Currency feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
 
 
-### Code Currency generation
+### Code Currency Generation
 
-To handle diverse systems build from components and subsystems from multiple suppliers, each component shall expose it's own code currency file. The node management controller and sub system management controllers (where applicable) shall collect the information from the relevant components and create consolidated code currency files. The files created by sub system management controllers will be retrieved by the node management controller to expose a single file on the redfish interface.
+To handle diverse systems build from components and subsystems from multiple suppliers, each component exposes it's own Code Currency file. The node management controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the node management controller to expose a single file on the redfish interface.
 
 ```plantuml {caption="Code Currency creation" #fig:schemarr}
 !include schemacreater.uml
 
 ```
+<a href="req-cc-0010"></a>
+
+- **[CC-0010]** Each component SHALL expose its own Code currency file as a PLDM Type 7 file.
+- **[CC-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated code currency files.
 
 <!--
 ### Code Currency Redfish Schema
