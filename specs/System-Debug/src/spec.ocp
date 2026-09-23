@@ -120,7 +120,7 @@ The main goal of this Specification is to prescribe an architecture, including i
   - Data/message payloads stay vendor-specific.
 * Using existing specifications/standards when available.
   - Leverage existing standard transports (e.g., USB) and protocols (e.g., PLDM).
-* Allowing flexibility while provide interoperability.
+* Allowing flexibility while providing interoperability.
   - Flexibility in how the system is put together.
   - Debug capabilities need to be discoverable and self-describing.
   - Interoperability with both different components and different debug tooling.
