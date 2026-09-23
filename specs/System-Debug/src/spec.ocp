@@ -100,15 +100,15 @@ This specification aligns with the OCP tenet of sustainability by prioritizing r
 
 # Introduction {#sec:introduction}
 
-With the rise of large datacenter and AI systems, nodes and components are becoming more diverse and increasing in size and complexity.  For example, training LLM models in datacenters requires orchestration of clusters consisting of a large number of server systems. The scale of such clusters is determined by factors including model size (parameters) and training dataset volume. During long-duration training, system failures are expected and can result in workload interruption, reduced efficiency, increased operational cost and delayed new AI version releasing.
+With the rise of large datacenter and AI systems, nodes and components are becoming more diverse and increasing in size and complexity.  For example, training LLM models in datacenters requires orchestration of clusters consisting of a large number of server systems. The scale of such clusters is determined by factors including model size (parameters) and training dataset volume. During long-duration training, system failures are expected and can result in workload interruption, reduced efficiency, increased operational cost and delays in releasing new AI versions.
 
-This increasing complexity requires the need to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this Specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at the different levels from components to cluster.  There was a need to develop a Specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
+This increasing complexity requires the ability to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this Specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at different levels, from components to cluster.  There was a need to develop a Specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
 
-The following challenges are commonly observed in data center debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures may occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
+The following challenges are commonly observed in datacenter debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures may occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
 
-System designs that comply with OCP Fault Management Infrastructure Requirements [@{ocp-fm-infra-req}] and OCP GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for data center operations.
+System designs that comply with OCP Fault Management Infrastructure Requirements [@{ocp-fm-infra-req}] and OCP GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for datacenter operations.
 
-This Specification will address debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribe an architecture to communicate various debug data in a common method and data models across the datacenter.  The Specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter.  A system-level debugging framework is created to improve fault observability, root cause analysis (RCA), and remediation efficiency in server systems deployed in datacenters. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
+This Specification addresses debugging components and nodes within a datacenter across the lifecycle of the datacenter.  It will prescribe an architecture to communicate various debug data in a common method and data models across the datacenter.  The Specification will define interfaces, protocols, APIs, and data models incorporating existing work from other OCP Workstreams and other standards bodies improving the effectiveness of these for debugging in the datacenter.  A system-level debugging framework is created to improve fault observability, root cause analysis (RCA), and remediation efficiency in server systems deployed in datacenters. Scalability across the lifecycle of the datacenter including but not limited to accessible ports, diagnostic and debug capabilities, and security and privacy requirements.
 
 
 ## Goals {#sec:goals}
@@ -117,15 +117,15 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 * Defining the use of common connectivity, transports, and protocols.
   - Define a common communication “pipe” for debug data/messages.
-  - Data/message payloads stay vendor specific.
+  - Data/message payloads stay vendor-specific.
 * Using existing specifications/standards when available.
-  - Leverage existing standard transports (e.g., USB) and protocols (e.g., PLDM)
-* Allowing flexibility but provide interoperability.
+  - Leverage existing standard transports (e.g., USB) and protocols (e.g., PLDM).
+* Allowing flexibility while provide interoperability.
   - Flexibility in how the system is put together.
-  - Debug capabilities need to be discoverable and self describing
+  - Debug capabilities need to be discoverable and self-describing.
   - Interoperability with both different components and different debug tooling.
   - Data needs to be opaque to components in the middle (e.g., BMC). 
-* Providing scalability across the life cycle of development.
+* Providing scalability across the lifecycle of development.
   - Use starting from manufacturing through to the at-scale, in-field deployment.
 
 
@@ -133,7 +133,7 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 ### In Scope {#sec:in-scope}
 
-This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor neutral though provide the flexibility to include vendor specific data alongside the standardized data.
+This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor-neutral, though provide the flexibility to include vendor-specific data alongside the standardized data.
 
 Besides debug capabilities, this Specification will provide a common set of concepts including the product development lifecycle and a high-level debug architecture.  These concepts frame the capabilities in the overall system and environment for debugging.  Security of the debug capabilities in these environments will also be addressed.
 
@@ -162,13 +162,13 @@ The primary audience of this Specification is datacenter operators and field ser
 
 ## Objectives {#sec:objectives}
 
-This Specification defines requirements in the following areas: standardization of failure reporting; definition of debug levels based on system complexity; provision of security controls for debug data and support for vendor-specific diagnostic extensions. 
+This Specification defines requirements in the following areas: standardization of failure reporting; definition of debug levels based on system complexity, provision of security controls for debug data and support for vendor-specific diagnostic extensions. 
 
 ### Standardization of Failure Reporting
 The system shall standardize: failure report items, data formats, data collection methods and reporting sequences. All debug data shall be represented using structured JSON key-value pairs to ensure consistency and machine readability. The system should support access to debug data via industry-standard interfaces such as Redfish. Each reported event shall include timestamp information sufficient to enable event ordering and cross-component correlation.
 
 ### Debug Levels
-During the development of the server system, we can define which level of debugging the system will support. Low debug level provides minimal diagnostic information (e.g., error codes and basic status indicators).  High debug level provides detailed diagnostic information, including but not limited to error trigger conditions, fault location, timing information, error counters and history. The supported debug level shall be configurable based on debugging bus bandwidth, debugging device complexity and debugging device storage volume.
+During the development of the server system, we can define which level of debugging the system will support. Low debug level provides minimal diagnostic information (e.g., error codes and basic status indicators).  High debug level provides detailed diagnostic information, including but not limited to error trigger conditions, fault location, timing information, error counters and history. The supported debug level shall be configurable based on debug bus bandwidth, debug device complexity and debug device storage capacity.
 
 ### Security Controls
 The system shall provide mechanisms to protect sensitive debug data. Security features shall include: configurable access control for debug data, optional encoding or protection of configuration and status register contents, integration with platform-level security configuration (e.g., BIOS settings).
@@ -180,7 +180,7 @@ The system shall support vendor-specific extensions to enable additional diagnos
 
 ## Expected Outcomes {#sec:expected-outcomes}
 
-This Specification will standardize the data structure of configuration registers and status registers, and accessing method. It will help the customers of data center on rapid identification of system failures, precise locating of failing components, reducing time for root cause analysis (RCA), efficient hardware replacement and repair workflows, and support for pre-emptive maintenance based on failure risk prediction of the components. The results are expected to reduce system downtime and improve the overall efficiency of data center. This Specification will simplify the data center debugging.
+This Specification will standardize the data structure of configuration registers and status registers, and access method. It will help datacenter customers rapidly identify system failures, precisely locate failing components, reduce root-cause analysis (RCA) time, improve hardware replacement and repair workflows, and support pre-emptive maintenance based on predicted component failure risk. The results are expected to reduce system downtime and improve the overall efficiency of the datacenter. This Specification will simplify datacenter debugging.
 
 
 
@@ -221,22 +221,22 @@ In addition to this naming convention, key names written in this Specification w
 
 * **Node** -  A platform designed by a supplier integrating multiple components that run an operating system. These are sometimes also called compute nodes.
 
-* **Life Cycle** - The operational states of a component, platform, or software product throughout its existence, such as development, validation, manufacturing, production deployment, service, and end-of-life. The life cycle state determines the availability of debug features and security restrictions.
+* **Life Cycle** - The operational states of a component, platform, or software product throughout its existence, such as development, validation, manufacturing, production deployment, service, and end-of-life. The lifecycle state determines the availability of debug features and security restrictions.
 
 
 * **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
 
 * **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
-* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed.  e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP.
+* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed, e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP.
 
-* **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a Flash drive via the systems USB subsystem or from the PCI differential pair.
+* **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a flash drive via the system's USB subsystem or from the PCI differential pair.
 
 * **In-Band** - Data access methods designed to be collected over a network connection to the host OS’s Ethernet device. This method has the ability to interact with devices via driver stack.
 
 * **Out-of-Band** - Data access methods designed to be collected over a dedicated network connection that is independent from the host OS’s accessible Ethernet devices.
 
-* **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
+* **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting that the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
 
 
 
@@ -302,7 +302,7 @@ In addition to this naming convention, key names written in this Specification w
 
 ## Product Development Life Cycle
 
-To better understand the requirements, usages, and restrictions on the various debug capabilities, it is important to understand the different environments and stages of progression through a product's development life cycle.  Each stage of the Product Development Life Cycle represents a specific environment that has a certain set of expectations, behaviors, and limitations on what debug can be performed.  These stages form a continuous lifecycle progression.  As systems move through this progression, ownership transitions from silicon providers to OEMs and ultimately to datacenter operators and tenants, while debug access progressively transitions from unrestricted hardware-level visibility toward highly controlled management-based diagnostics and telemetry-driven operations.  The Product Development Life Cycle is illustrated in the diagram below.
+To better understand the requirements, usages, and restrictions on the various debug capabilities, it is important to understand the different environments and stages of progression through a product's development lifecycle.  Each stage of the Product Development Life Cycle represents a specific environment that has a certain set of expectations, behaviors, and limitations on what debug can be performed.  These stages form a continuous lifecycle progression.  As systems move through this progression, ownership transitions from silicon providers to OEMs and ultimately to datacenter operators and tenants, while debug access progressively transitions from unrestricted hardware-level visibility toward highly controlled management-based diagnostics and telemetry-driven operations.  The Product Development Life Cycle is illustrated in the diagram below.
 
 ![Product Development Life Cycle](product_development_lifecycle.png){#fig:product-development-lifecycle width=98%}
 
@@ -485,7 +485,7 @@ During this use case, the following are typical debug actions taken:
 
 This use case occurs while the platform is operating normally in the Execution state.  Monitoring and telemetry mechanisms detect indicators suggesting that a future failure may occur if corrective action is not taken. Rather than waiting for visible service degradation, debug operations are initiated proactively.  This use case is triggered while the platform remains functional and ends when the condition is corrected or progresses into a degradation condition.
 
-Examples of data collected to preempt issues include:
+Examples of data collected to proactively identify issues include:
 
 - Correctable error accumulation
 - Thermal margin reduction
@@ -493,7 +493,7 @@ Examples of data collected to preempt issues include:
 - Reliability threshold violations
 - Predictive hardware health indicators
 
-It is important to note that detection accuracy is critical.  Excessive data collection should not significantly impact workload execution.  In addition, actions need to minimize disruption to production operation.
+It is important to note that detection accuracy is critical.  Excessive data collection should not significantly impact workload execution.  In addition, actions need to minimize disruption to production operations.
 
 Reproducibility can be difficult because failures have not yet fully manifested.  Correlation across multiple telemetry samples may be necessary.
 
@@ -642,7 +642,7 @@ Where:
 
 ## Configuration vs Physical Error Determination Flow
 
-The system debug shall implement the following end-to-end debug data flow.
+The system shall implement the following end-to-end debug data flow.
 
 ```mermaid {caption="Configuration vs Physical Error Determination Flow" #fig:configuration-vs-physical-error-determination-flow}
 block
@@ -685,13 +685,13 @@ block
 
 ## Content Arrangement
 
-Configuration registers and status registers are primary mechanisms for device control and fault diagnosis. During system debugging, status registers shall be used to detect and localize failures. Configuration registers shall provide the settings for working operation.  Failures shall be classified into the following categories: configuration errors, which caused by incorrect configuration, typically resolved through firmware or driver updates, and physical errors, which caused by hardware faults, requiring repair or replacement of components.
+Configuration registers and status registers are primary mechanisms for device control and fault diagnosis. During system debugging, status registers shall be used to detect and localize failures. Configuration registers shall provide the settings for working operation.  Failures shall be classified into the following categories: configuration errors, which are caused by incorrect configuration, typically resolved through firmware or driver updates, and physical errors, which are caused by hardware faults, requiring repair or replacement of components.
 
-The system debug process shall include collecting status register data to identify failing components, collecting configuration register data to scan firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending of remediation actions.
+The system debug process shall include collecting status register data to identify failing components, collecting configuration register data to identify firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending remediation actions.
 
 The Baseboard Management Controller (BMC) shall act as the central entity for system-level debugging. The BMC shall collect and aggregate debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
 
-In this Specification, we will define the data structure and the accessing methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapters. The data format and dump method of the status registers of a given system will be described in Status Dump chapters.
+In this Specification, we will define the data structure and the access methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapter. The data format and dump method of the status registers of a given system will be described in Status Dump chapter.
 The combination of configuration registers and status registers shall enable accurate fault identification and root cause analysis.
 
 
@@ -704,9 +704,9 @@ Security and privacy are broad topics that have many different aspects that can 
 
 For the purposes of this Specification, information and data (collectively called material) that is collected and extracted from the SoC and/or system are classified into two categories: sensitive and non-sensitive.
 
-**Sensitive material**, simply put, is anything that would be damaging to the owner of the material if exposed.  Sensitive material sometimes is referred to as an asset and includes material such as cryptographic keys, device identifiers, and vendor- or tenant-specific IP.  Due to the fact that this material could cause damage, such as monetary loss, to the owner, sensitive material needs to be handled properly in order to protect the material from being exposed to other besides the owner and authorized agents given by the owner of the material.  Note, damage may be caused directly or indirectly (e.g., side channel) by the exposure of the material.
+**Sensitive material**, simply put, is anything that would be damaging to the owner of the material if exposed.  Sensitive material sometimes is referred to as an asset and includes material such as cryptographic keys, device identifiers, and vendor- or tenant-specific IP.  Due to the fact that this material could cause damage, such as monetary loss, to the owner, sensitive material needs to be handled properly in order to protect the material from being exposed to others besides the owner and authorized agents given by the owner of the material.  Note, damage may be caused directly or indirectly (e.g., side channel) by the exposure of the material.
 
-**Non-sensitive material** is anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In other words, non-sensitive material is simply material that is not sensitive and can be exposed publicly (though the owner may not choose to expose for other reasons outside of security and privacy).  Non-sensitive material still has value, and for purposed of this Specification, value to help debug and triage the system.  However, the exposure of non-sensitive material will not harm the owner of the material and not violate any expectations or legal agreements related to the protection of sensitive material.  In addition, the expectation is that exposing non-sensitive material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
+**Non-sensitive material** is anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In other words, non-sensitive material is simply material that is not sensitive and can be exposed publicly (though the owner may not choose to expose for other reasons outside of security and privacy).  Non-sensitive material still has value, and for purposes of this Specification, value to help debug and triage the system.  However, the exposure of non-sensitive material will not harm the owner of the material and not violate any expectations or legal agreements related to the protection of sensitive material.  In addition, the expectation is that exposing non-sensitive material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
 Future versions of this Specification may break down the sensitive material category even further into sub-categories.  However, for this version of the Specification, there is currently no need.  The capabilities defined in this Specification focus on the handling of non-sensitive material.  In future versions where sensitive material is being handled, then this breaking down of sensitive material may be performed and detailed.
 
@@ -716,7 +716,7 @@ Future versions of this Specification may break down the sensitive material cate
 
 ## Code Currency {#sec:code-currency}
 
-Code Currency is a term used to describe how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.  This codebase includes, but not limited to, the following: 
+Code Currency is a term used to describe how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.  This codebase includes, but is not limited to, the following: 
 
 - Programming languages and compiler versions
 - Libraries, frameworks, and SDKs
@@ -727,13 +727,13 @@ Code Currency refers to the timeliness, consistency, and lineage awareness of co
 
 Debug mechanisms inherently bridge development, manufacturing, validation, and field operation. As a result, debug flows often depend on a diverse set of artifacts—including firmware binaries, microcode, configuration tables, entitlement credentials, policy definitions, and tooling metadata—that evolve independently over time. Without explicit consideration of code currency, mismatches between these artifacts can introduce ambiguity in debug behavior, weaken security guarantees, and complicate auditability and incident response. 
 
-More often than not, the root cause of a failure or problem is simply that the system has not been configured correctly and/or it is running either outdated firmware, an incompatible combination of software/firmware components, or components that have not been configured appropriately. The concept of Code Currency in this Specification is used to address this issue by providing a one-stop shop style standardized machine readable method to retrieve all relevant information about the configuration of a given system. By explicitly accounting for these forms of data covered by Code Currency, the debug architecture can reason about compatibility, enforce policy consistently, and detect invalid or unsafe combinations of code and authorization. Treating Code Currency as an architectural concern—rather than an implicit assumption—helps ensure that debug capabilities remain controlled, auditable, and resilient as the platform evolves over time.
+More often than not, the root cause of a failure or problem is simply that the system has not been configured correctly and/or it is running either outdated firmware, an incompatible combination of software/firmware components, or components that have not been configured appropriately. The concept of Code Currency in this Specification is used to address this issue by providing a one-stop shop standardized, machine-readable method to retrieve all relevant information about the configuration of a given system. By explicitly accounting for these forms of data covered by Code Currency, the debug architecture can reason about compatibility, enforce policy consistently, and detect invalid or unsafe combinations of code and authorization. Treating Code Currency as an architectural concern—rather than an implicit assumption—helps ensure that debug capabilities remain controlled, auditable, and resilient as the platform evolves over time.
 
-Code currency is considered non-sensitive material which is human readable and therefore can be audited by the customer before providing it a supplier.
+Code currency is considered non-sensitive material which is human readable and therefore can be audited by the customer before providing it to a supplier.
 
 ### File Format and Schema
 
-The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema defined by Requirement [CC-0001].  The relationship diagram below outlines this JSON schema.
+The information for Code Currency will be exposed by a system as a file in the Redfish profile of the system. Components and subsystems will expose their part of the information to the main BMC as PLDM type 7 files.  The content of the file is organized using the JSON schema defined by Requirement [CC-0001].  The relationship diagram below outlines this JSON schema.
 
 ```plantuml {caption="Code Currency Relationships" #fig:schema}
 !include schemarepresentation.uml
@@ -1260,7 +1260,7 @@ on Hyperscaler management/control plane.
 
 ### Code Currency Generation
 
-To handle diverse systems build from components and subsystems from multiple suppliers, each component exposes it's own Code Currency file. The node management controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the node management controller to expose a single file on the redfish interface.
+To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Code Currency file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
 
 ```plantuml {caption="Code Currency creation" #fig:schemarr}
 !include schemacreater.uml
@@ -1277,7 +1277,7 @@ To handle diverse systems build from components and subsystems from multiple sup
 
 ## Status Dump {#sec:status-dump}
 
-A Status Dump is used to provide a way to quickly retrieve relevant debug information about the environment for a given system and its components.  A Status Dump log contains state data and error codes from a system or component meant to be used to assist in debugging and troubleshooting device fault states. The data of the Status Dump is about the component as a part of the environment that it exists in.  
+A Status Dump is used to provide a way to quickly retrieve relevant debug information about the environment for a given system and its components.  A Status Dump log contains state data and error codes from a system or component intended to assist in debugging and troubleshooting device fault states. The data of the Status Dump describes the component as a part of the environment that it exists in.  
 
 ### Data Selection Methodology
 
@@ -1288,11 +1288,11 @@ The mandatory set of Status Dump fields represents the minimum viable data requi
 * **Component Identification** - Every dump will contain sufficient identifying information to determine the originating component and its function within the system. This allows collected data to be correlated across heterogeneous devices and enables automated processing by fleet management and service tools.
 * **Operational Availability** - Required data will remain accessible during conditions such as CPU lockup events and will be retrievable without requiring platform downtime or intrusive debug operations.
 * **Accessibility and Auditability** - Required fields will be represented in a format that can be interpreted using publicly accessible tools or otherwise be directly human readable. This ensures that dump data remains useful to the hardware owner regardless of the component vendor.
-* **Current Fault Visibility** - The mandatory dataset includes information describing the most recent error condition, whether represented as an error code, status indicator, or corruption indication. This information provides the baseline context necessary for root-cause analysis.
+* **Current Fault Visibility** - The mandatory dataset includes information describing the most recent error condition, whether represented by an error code, status indicator, or corruption indication. This information provides the baseline context necessary for root-cause analysis.
 * **Component-Level Diagnostics** - The mandatory dataset focuses on information directly associated with the reporting component, ensuring that each component can independently communicate its health and failure status.
 * **Low-Impact Collection** - Required fields are limited to information that can be collected without measurable impact to normal system operation and can be retrieved on demand by the user.
 
-In addition to this mandatory set, there is an additional recommended set of Status Dump fields/keys that contain data elements that provide additional diagnostic value but might not be available on all implementations due to architectural, cost, performance, security, or proprietary technology constraints. These fields/keys are therefore considered recommended when available, but each field/key are not required for compliance.  These recommended fields/keys were selected according to the following principles:
+In addition to this mandatory set, there is an additional recommended set of Status Dump fields/keys that contain data elements that provide additional diagnostic value but might not be available on all implementations due to architectural, cost, performance, security, or proprietary technology constraints. These fields/keys are therefore considered recommended when available, but each field/key is not required for compliance.  These recommended fields/keys were selected according to the following principles:
 
 * **Enhanced Diagnostic Depth** - Information such as historical error logs, extended debug data, and vendor-specific diagnostic content can significantly improve root-cause determination but often requires implementation-specific infrastructure or proprietary tooling.
 * **Improved Serviceability** - Data that supports precise component localization, such as physical socket identifiers or other topology information, improves operational efficiency but might not be universally supported across all device classes.
@@ -1304,7 +1304,7 @@ By separating the Status Dump schema into mandatory and recommended categories, 
 
 ### File Format and Schema
 
-The Status Dump will be exposed by a system as a file in the Redfish profile of the system. Components and subsystem will expose their part of the information to the Main BMC as PLDM type 7 files. The content of the file is organized using the JSON schema defined by Requirement [SD-0001]. 
+The Status Dump will be exposed by a system as a file in the Redfish profile of the system. Components and subsystems will expose their part of the information to the main BMC as PLDM type 7 files. The content of the file is organized using the JSON schema defined by Requirement [SD-0001]. 
 
 The tables below define the elements of the Status Dump JSON schema.
 
@@ -1449,7 +1449,8 @@ Table: Status Dump `component` Elements Definition
       "type": "string" 
     },
     "lastError": { 
-      "type": "string" 
+      "type": "string",
+      "examples": ["NULL", "1D10T", "501", "T"] 
     },
     "errorLog": {
       "type": "array",
@@ -1686,7 +1687,8 @@ Table: Status Dump `component` Elements Definition
           "type": "string" 
         },
         "lastError": { 
-          "type": "string" 
+          "type": "string",
+          "examples": ["NULL", "1D10T", "501", "T"] 
         },
         "errorLog": {
           "type": "array",
@@ -1978,11 +1980,11 @@ Future versions of this Specification will include the following topics, require
 
 * Describe how to handle multiple users debugging within the datacenter (mostly at the node level is where it is interesting and needs a common method).
 
-* Describe how to detect and handle performance degradation
+* Describe how to detect and handle performance degradation.
 
 * Describe generic versions of the debug methodologies created by the CPU and GPU closed CLA workstreams.
 
-* Describe methodologies to utilize AI to aid and accelerate debug
+* Describe methodologies to utilize AI to aid and accelerate debug.
 
 \beginappendices
 
@@ -2486,7 +2488,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Awake",
           "status": "Healthy",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2514,7 +2516,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Awake",
           "status": "Healthy",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2553,7 +2555,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
       "healthy": true,
       "mode": "Awake",
       "status": "Healthy",
-      "lastError": "",
+      "lastError": "NULL",
       "errorLog": [],
       "lifecycle": "production",
       "power": {
@@ -2581,7 +2583,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Active",
           "status": "Healthy",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2622,7 +2624,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Active",
           "status": "Healthy",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2663,7 +2665,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Active",
           "status": "LinkUp",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2704,7 +2706,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Active",
           "status": "LinkUp",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2743,7 +2745,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
       "healthy": true,
       "mode": "Awake",
       "status": "Healthy",
-      "lastError": "",
+      "lastError": "NULL",
       "errorLog": [],
       "lifecycle": "production",
       "power": {
@@ -2771,7 +2773,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
           "healthy": true,
           "mode": "Awake",
           "status": "Healthy",
-          "lastError": "",
+          "lastError": "NULL",
           "errorLog": [],
           "lifecycle": "production",
           "power": {
@@ -2821,7 +2823,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
               "healthy": true,
               "mode": "Active",
               "status": "Healthy",
-              "lastError": "",
+              "lastError": "NULL",
               "errorLog": [],
               "lifecycle": "production",
               "power": {
@@ -2862,7 +2864,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
               "healthy": true,
               "mode": "Awake",
               "status": "Enabled",
-              "lastError": "",
+              "lastError": "NULL",
               "errorLog": [],
               "lifecycle": "production",
               "power": {
@@ -2912,7 +2914,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
               "healthy": true,
               "mode": "Active",
               "status": "Enabled",
-              "lastError": "",
+              "lastError": "NULL",
               "errorLog": [],
               "lifecycle": "production",
               "power": {
@@ -2953,7 +2955,7 @@ Below is a JSON example for Status Dump of a hypothetical node with:
               "healthy": true,
               "mode": "Awake",
               "status": "Enabled",
-              "lastError": "",
+              "lastError": "NULL",
               "errorLog": [],
               "lifecycle": "production",
               "power": {
