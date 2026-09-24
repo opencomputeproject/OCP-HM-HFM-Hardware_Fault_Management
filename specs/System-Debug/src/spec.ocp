@@ -1268,8 +1268,8 @@ To handle diverse systems built from components and subsystems from multiple sup
 ```
 <a href="req-cc-0010"></a>
 
-- **[CC-0010]** Each component SHALL expose its own Code currency file as a PLDM Type 7 file.
-- **[CC-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated code currency files.
+- **[CC-0010]** Each component containing a management endpoint SHALL expose its own Code Currency file as a PLDM Type 7 file.
+- **[CC-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated Code Currency files.
 
 <!--
 ### Code Currency Redfish Schema
