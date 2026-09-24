@@ -1,0 +1,116 @@
+@startuml
+
+title Node Code Currency Record Relationships
+
+class node {
+    + nodeId : string
+    + nodeType : systemAssemblyType
+    + hostName : string
+    + vid : string
+    + pid : string
+    + networkConfiguration : object
+    + physicalLocation : object
+}
+
+note right: Created by Node MC
+
+class assembly {
+    + assemblyName : string
+    + assemblyId : string
+    + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
+    + physicalLocation : object
+    + logicalAssociation : object
+}
+
+note right: Created by Node MC
+
+class component_1 {
+    + componentClass : componentClass
+    + componentId : string
+    + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
+    + physicalLocation : object
+    + logicalAssociation : object
+    + firmware : array
+    + configuration : array
+}
+
+note right: Created by component
+
+class subAssembly {
+    + assemblyName : string
+    + assemblyId : string
+    + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
+    + physicalLocation : object
+    + logicalAssociation : object
+}
+
+note right: Created by sub system MC
+
+class component_2 {
+    + componentClass : componentClass
+    + componentId : string
+    + manufacturerSerialNumber : string
+    + vid : string
+    + pid : string
+    + physicalLocation : object
+    + logicalAssociation : object
+    + firmware : array
+    + configuration : array
+}
+
+note right: Created by component
+
+class firmware_1 {
+    + version : string
+    + lastUpdated : dateTime
+    + securityVersionNumber : int
+    + minimumSecurityVersionNumber : int
+    + imageRole : enum
+}
+
+note right: Created by component
+
+class configuration_1 {
+    + name : string
+    + value : string
+    + description : string
+}
+
+note right: Created by component
+
+class firmware_2 {
+    + version : string
+    + lastUpdated : dateTime
+    + securityVersionNumber : int
+    + minimumSecurityVersionNumber : int
+    + imageRole : enum
+}
+
+note right: Created by component
+
+class configuration_2 {
+    + name : string
+    + value : string
+    + description : string
+}
+
+note right: Created by component
+
+node *--> assembly
+assembly *--> component_1
+assembly *--> subAssembly
+subAssembly *--> component_2
+
+component_1 *--> firmware_1
+component_1 *--> configuration_1
+
+component_2 *--> firmware_2
+component_2 *--> configuration_2
+
+@enduml
