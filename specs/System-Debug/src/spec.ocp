@@ -1262,6 +1262,8 @@ on Hyperscaler management/control plane.
 
 To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Code Currency file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
 
+<a href="ccrr-diagram"></a>
+
 ```plantuml {caption="Code Currency creation" #fig:schemarr}
 !include schemacreater.uml
 
@@ -1960,7 +1962,28 @@ on Hyperscaler management/control plane.
 
 - **[SD-0009]** The Status Dump feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
 
+### Status Dump Generation
 
+To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Status Dump file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated Status Dump files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
+
+The relationship matches what is depicted in the Code Currency Section.
+
+<!--
+
+```plantuml {caption="Status Dump creation" #fig:schemarr}
+!include schemacreater.uml
+
+```
+-->
+
+<a href="req-sd-0010"></a>
+
+- **[SD-0010]** Each component containing a management endpoint SHALL expose its own Status Dump file as a PLDM Type 7 file.
+- **[SD-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated Status Dump files.
+
+<!--
+### Status Dump Redfish Schema
+-->
 
 # Future Work {#sec:future-work}
 
