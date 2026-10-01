@@ -24,6 +24,8 @@ This demo serves as the foundation for the other demos:
 
 [https://github.com/KrishnaAnnam/redfish-dev-server](https://github.com/KrishnaAnnam/redfish-dev-server)
 
+* The RAS API demo is in examples\ras_api_demo
+
 ### Arm RAS API over PLDM Demo
 https://gitlab.arm.com/server_management/PoCs/fvp-poc/-/tree/main/docs/ras_api
 
