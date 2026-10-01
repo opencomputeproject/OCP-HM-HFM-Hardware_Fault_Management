@@ -1,6 +1,6 @@
 ---
 title: "System Debug Specification"
-version: 0.1
+version: 0.2
 type: BASE
 project: Hardware Fault Management
 authors: [(See Acknowledgements Section)]
@@ -62,8 +62,10 @@ The contributors of this Specification would like to acknowledge the following:
 ---------------------------------------------------------------------------------------------------------------------------------
 Rev.       Date             Guiding Contributor(s)          Description                                                         
 ---------- ---------------- ------------------------------- --------------------------------------------------------------------- 
-0.1        2026-09-28       Marko B., Enrico C., Donald G., Initial Release                                                     
+0.1        2026-09-09       Marko B., Enrico C., Donald G., Initial Release                                                     
                             James Z.
+
+0.2        2026-10-01       Enrico C.                       Added KPIs, Cleaned up Requirements and Informative Material
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -162,11 +164,11 @@ The primary audience of this Specification is datacenter operators and field ser
 
 ## Objectives {#sec:objectives}
 
-This Specification defines requirements in the following areas: standardization of failure reporting, definition of debug levels based on system complexity, provision of security controls for debug data, and support for vendor-specific diagnostic extensions. 
+This Specification defines requirements in the following areas: standardization of reporting debug data, definition of debug levels based on system complexity, provision of security controls for debug data, and support for vendor-specific diagnostic extensions. 
 
-### Standardization of Failure Reporting
+### Standardization of Reporting Debug Data
 
-It is important for a system to have a standard set of failure report items, data formats, data collection methods, and reporting sequences.  All standardized debug data is represented using structured JSON key-value pairs to ensure consistency and machine readability. The system will support access to debug data via industry-standard interfaces such as Redfish. Each reported event will include timestamp information sufficient to enable event ordering and cross-component correlation.
+It is important for a system to have a standard set of debug data report items, data formats, data collection methods, and reporting sequences.  All standardized debug data is represented using structured JSON key-value pairs to ensure consistency and machine readability. The system will support access to debug data via industry-standard interfaces such as Redfish. Each reported event will include timestamp information sufficient to enable event ordering and cross-component correlation.
 
 
 ### Security Controls
@@ -689,7 +691,7 @@ Configuration registers and status registers are primary mechanisms for device c
 
 The system debug process includes collecting status register data to identify failing components, collecting configuration register data to identify firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending remediation actions.
 
-The Baseboard Management Controller (BMC) acts as the central entity for system-level debugging. The BMC collects and aggregate debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
+The Baseboard Management Controller (BMC) acts as the central entity for system-level debugging. The BMC collects and aggregates debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
 
 This Specification defines the data structures and the access methods for the necessary configuration registers and status registers of a given system.  Standardized data structures and machine readable methods to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapter. The data format and dump method of the status registers of a given system will be described in Status Dump chapter.  The combination of configuration registers and status registers enable accurate fault identification and root cause analysis.
 
@@ -1251,10 +1253,9 @@ To handle diverse systems built from components and subsystems from multiple sup
 
 <a href="req-cc-0002"></a>
 
-- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or 
-data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-- **[CC-0003]** The Code Currency log SHALL be readable to everyone permitted access to the system based on Requirement [CC-0002].  If not in plan, human-readable text (in part or in full), then the user who obtained the Code Currency log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Code Currency log SHALL be able to decrypt the log.
+- **[CC-0003]** The Code Currency log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Code Currency log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Code Currency log SHALL be able to decrypt the log.
 
 - **[CC-0004]** The Code Currency log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
@@ -1949,10 +1950,9 @@ Table: Status Dump `component` Elements Definition
 
 <a href="req-sd-0002"></a>
 
-- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or 
-data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-- **[SD-0003]** The Status Dump log SHALL be readable to everyone permitted access to the system based on Requirement [CC-0002].  If not in plan, human-readable text (in part or in full), then the user who obtained the Status Dump log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Status Dump log SHALL be able to decrypt the log.
+- **[SD-0003]** The Status Dump log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Status Dump log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Status Dump log SHALL be able to decrypt the log.
 
 - **[SD-0004]** The Status Dump log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
