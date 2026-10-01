@@ -1,6 +1,6 @@
 ---
 title: "System Debug Specification"
-version: 0.1
+version: 0.2
 type: BASE
 project: Hardware Fault Management
 authors: [(See Acknowledgements Section)]
@@ -65,6 +65,8 @@ Rev.       Date             Guiding Contributor(s)          Description
 0.1        2026-09-09       Marko B., Enrico C., Donald G., Initial Release                                                     
                             James Z.
 
+0.2        2026-10-01       Enrico C.                       Added KPIs, Cleaned up Requirements and Informative Material
+
 ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -104,7 +106,7 @@ With the rise of large datacenter and AI systems, nodes and components are becom
 
 This increasing complexity requires the ability to validate, diagnose, debug, and optimize beyond the component level.  Before the publication of this Specification, the datacenter community was lacking a standardized methodology to extract diagnostic data and perform debug operations across the datacenter at different levels, from components to cluster.  There was a need to develop a Specification that defines how debug data is exchanged between all components across the datacenter and the debug tooling.  The community desired to standardize the necessary control and transport protocols enabling uniform debug of diverse systems.
 
-The following challenges are commonly observed in datacenter debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures may occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
+The following challenges are commonly observed in datacenter debugging environments: It is difficult to identify the failure root cause when a training job terminates unexpectedly. Normally it takes multiple iterations to isolate and resolve hardware-related issues. Additional hardware failures can occur after the hardware issue was resolved. Sometimes, it is difficult to distinguish between hardware-induced and software-induced failures.
 
 System designs that comply with OCP Fault Management Infrastructure Requirements [@{ocp-fm-infra-req}] and OCP GPU & Accelerator RAS Requirements [@{ocp-gpu-ras-req}] improve observability and reliability.  However, such compliance does not eliminate system failures. Efficient system-level debugging remains a critical requirement for datacenter operations.
 
@@ -133,7 +135,7 @@ The main goal of this Specification is to prescribe an architecture, including i
 
 ### In Scope {#sec:in-scope}
 
-This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that future versions may add capabilities that handle sensitive material.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor-neutral, though provide the flexibility to include vendor-specific data alongside the standardized data.
+This Specification is part of a larger OCP Hardware Management work and is designed to supplement that greater work.  The Specification is focused on new capabilities that complement existing specified debug capabilities such as crash dumps.  For this version, the new capabilities do not put any sensitive material at risk.  Note that capabilities the handle sensitive material will be described in future versions.  These capabilities are meant to be used in all stages of development including production where real tenant workloads are present.  This Specification will be vendor-neutral, though provide the flexibility to include vendor-specific data alongside the standardized data.
 
 Besides debug capabilities, this Specification will provide a common set of concepts including the product development lifecycle and a high-level debug architecture.  These concepts frame the capabilities in the overall system and environment for debugging.  Security of the debug capabilities in these environments will also be addressed.
 
@@ -152,7 +154,7 @@ In addition, this Specification will not cover existing material already covered
 - Debug Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] document
 - Trace Dump - covered by the Hyperscale CPU Debug and RAS Requirements [@{ocp-cpu-ras-debug-req}] document
 
-These may be incorporated (generically) or referenced in later versions of this specification.
+These will be incorporated (generically) or referenced in later versions of this specification.
 
 
 ## Audience {#sec:audience}
@@ -162,20 +164,20 @@ The primary audience of this Specification is datacenter operators and field ser
 
 ## Objectives {#sec:objectives}
 
-This Specification defines requirements in the following areas: standardization of failure reporting; definition of debug levels based on system complexity, provision of security controls for debug data and support for vendor-specific diagnostic extensions. 
+This Specification defines requirements in the following areas: standardization of reporting debug data, definition of debug levels based on system complexity, provision of security controls for debug data, and support for vendor-specific diagnostic extensions. 
 
-### Standardization of Failure Reporting
-The system shall standardize: failure report items, data formats, data collection methods and reporting sequences. All debug data shall be represented using structured JSON key-value pairs to ensure consistency and machine readability. The system should support access to debug data via industry-standard interfaces such as Redfish. Each reported event shall include timestamp information sufficient to enable event ordering and cross-component correlation.
+### Standardization of Reporting Debug Data
 
-### Debug Levels
-During the development of the server system, we can define which level of debugging the system will support. Low debug level provides minimal diagnostic information (e.g., error codes and basic status indicators).  High debug level provides detailed diagnostic information, including but not limited to error trigger conditions, fault location, timing information, error counters and history. The supported debug level shall be configurable based on debug bus bandwidth, debug device complexity and debug device storage capacity.
+It is important for a system to have a standard set of debug data report items, data formats, data collection methods, and reporting sequences.  All standardized debug data is represented using structured JSON key-value pairs to ensure consistency and machine readability. The system will support access to debug data via industry-standard interfaces such as Redfish. Each reported event will include timestamp information sufficient to enable event ordering and cross-component correlation.
+
 
 ### Security Controls
-The system shall provide mechanisms to protect sensitive debug data. Security features shall include: configurable access control for debug data, optional encoding or protection of configuration and status register contents, integration with platform-level security configuration (e.g., BIOS settings).
-Debug data collection, storage, and access mechanisms shall comply with the configured security policies.
+
+The system will provide mechanisms to protect sensitive material collected as debug data.  Such security mechanisms include configurable access control for debug data, encoding or protection of configuration and status register contents, and integration of controls with platform-level security configuration (e.g., BIOS settings).  Debug data collection, storage, and access mechanisms will comply with the configured security policies.
 
 ### Vendor-Specific Extensions
-The system shall support vendor-specific extensions to enable additional diagnostic capabilities. Standardized data structures shall be preserved for interoperability. Vendor-specific data fields may be included as extensions to the standard schema. The system shall support access to vendor-specific data without impacting standard debug functionality.
+
+The system will enable additional diagnostic capabilities through vendor-specific extensions. Standardized data structures will be preserved for interoperability.  Vendor-specific data fields can be included as extensions to the standard schema.  The system will support access to vendor-specific data without impacting standard debug functionality.
 
 
 ## Expected Outcomes {#sec:expected-outcomes}
@@ -195,7 +197,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ### Number Radix {#sec:number-radix}
 
-This Specification may represent some numbers in non-decimal radix.  In these cases, the following radix notations are used:
+This Specification represents some numbers in non-decimal radix.  In these cases, the following radix notations are used:
 
 : {.plain}
 |                    |                                                                                       |
@@ -308,7 +310,7 @@ To better understand the requirements, usages, and restrictions on the various d
 
 This specification defines seven distinct debug environments that span the product lifecycle from silicon development through deployed datacenter operation. The environments differ in physical accessibility, ownership, security posture, and available debug capabilities.  These stages are described in the following subsections.
 
-It is important to note that the usual progression of the stages is from left to right in the diagram above.  However, some systems may progress back from right to left due to issues that need to be resolved.  For example, a system may be taken out of the production environments (e.g., Remotely Managed) to move left into the Quarantined or even the Production Validation Testing (PVT) environments to debug a complicated or large issue.  Once an issue is solved, the system may move again toward the right, back to the production environments again.
+It is important to note that the usual progression of the stages is from left to right in the diagram above.  However, some systems could progress back from right to left due to issues that need to be resolved.  For example, a system is taken out of the production environments (e.g., Remotely Managed) to move left into the Quarantined or even the Production Validation Testing (PVT) environments to debug a complicated or large issue.  Once an issue is solved, the system will move again toward the right, back to the production environments again.
 
 ### Engineering Validation Test (EVT)
 
@@ -332,7 +334,7 @@ This environment supports deep platform visibility including hardware trace, err
 
 The Design Validation Test (DVT) stage follows EVT and is used to validate that the platform design satisfies functional, reliability, performance, and interoperability requirements prior to production readiness. DVT remains within the Silicon Provider/OEM pre-production phase.
 
-Systems continue to operate in laboratory settings with extensive physical access and broad debug capabilities available. While the platform is more mature than EVT, engineering teams still require access to low-level debug mechanisms to investigate defects discovered during validation testing.
+Systems continue to operate in laboratory settings with extensive physical access and broad debug capabilities available. While the platform is more mature than EVT, engineering teams still need access to low-level debug mechanisms to investigate defects discovered during validation testing.
 
 Primary objectives during this stage include:
 
@@ -364,7 +366,7 @@ Debug capabilities become more restricted than EVT and DVT environments, with em
 
 ### Quarantined: Open Enclosure
 
-The Quarantined: Open Enclosure stage is used when a deployed platform is removed from normal service and placed into an isolated environment for detailed diagnosis and failure analysis. The chassis is physically accessible and may be opened to allow direct access to components.
+The Quarantined: Open Enclosure stage is used when a deployed platform is removed from normal service and placed into an isolated environment for detailed diagnosis and failure analysis. The chassis is physically accessible and can be opened to allow direct access to components.
 
 The system is quarantined from tenant workloads and production operations. Engineers have physical access to the hardware and can attach debug equipment while maintaining a configuration that is representative of the deployed platform.
 
@@ -410,7 +412,7 @@ Primary objectives during this stage include:
 - Failure prevention
 - Operational optimization
 
-This environment supports collection of telemetry, diagnostics, and serviceability data while enabling maintenance workflows that require limited physical interaction with deployed infrastructure. It serves as an intermediate step between quarantined analysis and fully remote operation.
+This environment supports collection of telemetry, diagnostics, and serviceability data while enabling maintenance workflows that demand limited physical interaction with deployed infrastructure. It serves as an intermediate step between quarantined analysis and fully remote operation.
 
 
 ### Production: - Remotely Managed
@@ -434,9 +436,9 @@ This environment is associated with remote maintenance, automated signature anal
 
 ## Execution Flow with Debug
 
-It is critical that during the execution lifetime of a system, that the ability to perform progressively deeper data collection and root-cause analysis throughout the entire platform lifecycle, from boot through crash recovery, is available.  A platform begins booting where firmware, hardware, and software initialization occur. Upon successful completion of boot activities, the platform transitions to the main execution state and enters normal operation.  When executing, the platform is expected to deliver normal service and system functionality. If no issues are encountered, execution continues uninterrupted.  However, as operational anomalies begin to emerge, the platform may enter different degraded or even halt/crash states.  In degraded states, the platform remains functional but exhibits symptoms such as reduced throughput, increased latency, excessive resource consumption, or intermittent errors.  If degradation worsens or corrective actions are not successful, the platform can progress to a halted/crashed (i.e., failure) state. In this condition, one or more platform functions are no longer operating correctly, and the escalation of failures may ultimately result in a platform becoming non-functional and normal execution stops.  At each stage, debug capabilities may be invoked to collect information, determine root cause, and attempt corrective action before the issue progresses to a more severe state.
+It is critical that during the execution lifetime of a system, that the ability to perform progressively deeper data collection and root-cause analysis throughout the entire platform lifecycle, from boot through crash recovery, is available.  A platform begins booting where firmware, hardware, and software initialization occur. Upon successful completion of boot activities, the platform transitions to the main execution state and enters normal operation.  When executing, the platform is expected to deliver normal service and system functionality. If no issues are encountered, execution continues uninterrupted.  However, as operational anomalies begin to emerge, the platform could enter different degraded or even halt/crash states.  In degraded states, the platform remains functional but exhibits symptoms such as reduced throughput, increased latency, excessive resource consumption, or intermittent errors.  If degradation worsens or corrective actions are not successful, the platform can progress to a halted/crashed (i.e., failure) state. In this condition, one or more platform functions are no longer operating correctly, and the escalation of failures could ultimately result in a platform becoming non-functional and normal execution stops.  At each stage, debug capabilities can be invoked to collect information, determine root cause, and attempt corrective action before the issue progresses to a more severe state.
 
-The diagram below provides a generic execution flow that shows the different use cases where operational issues may occur.  Note that boxes colored in green represent normal operating states, boxes in yellow represent degraded states, boxes in orange represent halted/crashed states, and boxes in blue represent debug states.
+The diagram below provides a generic execution flow that shows the different use cases where operational issues could occur.  Note that boxes colored in green represent normal operating states, boxes in yellow represent degraded states, boxes in orange represent halted/crashed states, and boxes in blue represent debug states.
 
 ![Execution Flow](execution_flow.png){#fig:execution-flow width=98%}
 
@@ -461,17 +463,17 @@ The next set of subsections describe these different use cases within this flow.
 
 ### Boot Crash Handling {#sec:exe-flow-boot-crash-handling}
 
-A boot crash occurs when the platform fails to successfully transition from the Boot state to the Execution state. The failure may occur during hardware initialization, firmware execution, security validation, configuration loading, training sequences, or other boot-time activities.  This use case begins when boot execution starts and ends when the platform either enters the Execution state successfully or enters a terminal boot failure condition requiring remediation.
+A boot crash occurs when the platform fails to successfully transition from the Boot state to the Execution state. The failure could occur during hardware initialization, firmware execution, security validation, configuration loading, training sequences, or other boot-time activities.  This use case begins when boot execution starts and ends when the platform either enters the Execution state successfully or enters a terminal boot failure condition requiring remediation.
 
 When a boot crash is detected:
 
 1.  The platform enters the Boot Crash state.
 2.  Debug capabilities are used to collect diagnostic data.
 3.  Root-cause analysis is performed.  Verify whether the boot failure occurs consistently and determine dependency on platform configuration, software version, environmental conditions, or hardware population.
-4.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+4.  Corrective actions can be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
 5.  The platform is rebooted and re-enters the Boot state.
 
-It is important to note that boot-time visibility may be limited and the logging infrastructure may not yet be available.  In addition, security policies may restrict debug access during early boot.  The recovery mechanisms should preserve relevant failure context.
+It is important to note that boot-time visibility can be limited due to things such as the logging infrastructure not being available yet.  In addition, security policies could restrict debug access during early boot.  The recovery mechanisms will need to preserve relevant failure context.
 
 During this use case, the following are typical debug actions taken:
 
@@ -483,7 +485,7 @@ During this use case, the following are typical debug actions taken:
 
 ### Preemptive Issues Handling {#sec:exe-flow-preemptive-issues-handling}
 
-This use case occurs while the platform is operating normally in the Execution state.  Monitoring and telemetry mechanisms detect indicators suggesting that a future failure may occur if corrective action is not taken. Rather than waiting for visible service degradation, debug operations are initiated proactively.  This use case is triggered while the platform remains functional and ends when the condition is corrected or progresses into a degradation condition.
+This use case occurs while the platform is operating normally in the Execution state.  Monitoring and telemetry mechanisms detect indicators suggesting that a future failure could occur if corrective action is not taken. Rather than waiting for visible service degradation, debug operations are initiated proactively.  This use case is triggered while the platform remains functional and ends when the condition is corrected or progresses into a degradation condition.
 
 Examples of data collected to proactively identify issues include:
 
@@ -493,9 +495,9 @@ Examples of data collected to proactively identify issues include:
 - Reliability threshold violations
 - Predictive hardware health indicators
 
-It is important to note that detection accuracy is critical.  Excessive data collection should not significantly impact workload execution.  In addition, actions need to minimize disruption to production operations.
+It is important to note that detection accuracy is critical.  Workload execution cannot be significantly impacted by excessive data collection.  In addition, actions need to minimize disruption to production operations.
 
-Reproducibility can be difficult because failures have not yet fully manifested.  Correlation across multiple telemetry samples may be necessary.
+Reproducibility can be difficult because failures have not yet fully manifested.  Correlation across multiple telemetry samples could be necessary.
 
 During this use case, the following are typical debug actions taken:
 
@@ -521,9 +523,9 @@ When performance is degraded, the following steps can be taken:
 
 1.  Debug capabilities are used to collect diagnostic data.
 2.  Root-cause analysis is performed. Determine whether the degradation is continuous, intermittent, workload dependent, and/or environment dependent.
-3.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+3.  Corrective actions can be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
 
-It is important to note that diagnostic activities should avoid further degrading performance.  In this case, data collection may require prioritization due to resource constraints.  Timely capture is important before symptoms disappear or worsen.
+It is important to note that diagnostic activities need to avoid further degrading performance.  In this case, prioritization of the data collection could be needed due to resource constraints.  Timely capture is important before symptoms disappear or worsen.
 
 During this use case, the following are typical debug actions taken:
 
@@ -534,7 +536,7 @@ During this use case, the following are typical debug actions taken:
 
 ### Failure Handling {#sec:exe-flow-failure-handling}
 
-A failure state indicates that one or more platform functions are no longer operating correctly, although the system may still be partially operational.  This use case begins when platform functionality is lost or significantly impaired and ends when either recovery occurs or the platform crashes.  At this stage, there exists a race between the failure escalating leading to a crash and the debug capabilities capturing sufficient information for diagnosis and recovery.
+A failure state indicates that one or more platform functions are no longer operating correctly, although the system can still be partially operational.  This use case begins when platform functionality is lost or significantly impaired and ends when either recovery occurs or the platform crashes.  At this stage, there exists a race between the failure escalating leading to a crash and the debug capabilities capturing sufficient information for diagnosis and recovery.
 
 Examples of different failures include:
 
@@ -548,9 +550,9 @@ When a failure occurs, the following steps can be taken:
 
 1.  Debug capabilities are used to collect diagnostic data.
 2.  Root-cause analysis is performed. Determine whether the failure is permanent, intermittent, or environment dependent.
-3.  Corrective actions may be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
+3.  Corrective actions can be taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
 
-It is important to note that the time available for diagnostics may be limited.  In some cases, some platform services may already be unavailable.  Therefore, data preservation becomes increasingly important.
+It is important to note that the time available for diagnostics can be limited.  In some cases, some platform services could already be unavailable.  Therefore, data preservation becomes increasingly important.
 
 During this use case, the following are typical debug actions taken:
 
@@ -572,7 +574,7 @@ Following a crash:
 3.  Corrective actions are taken, including firmware modification, configuration updates, hardware repair or replacement, and/or component replacement.
 4.  The platform is rebooted for validation and recovery. Validate that the corrective action eliminates the crash condition.
 
-It is important to note that the diagnostic information may be lost if not captured immediately.  Debug access may require specialized crash dump or post-mortem mechanisms.  Also, security requirements must still be enforced during crash analysis.
+It is important to note that the diagnostic information could be lost if not captured immediately.  Specialized crash dump or post-mortem mechanisms could be needed for debug access.  Also, security requirements will still be enforced during crash analysis.
 
 During this use case, the following are typical debug actions taken:
 
@@ -611,7 +613,7 @@ block
     
     space:3
 
-    inband["Inband Path (IMA/OS)"]
+    inband["In-Band Path (IMA/OS)"]
     space
     oob["Out-of-Band Path (BMC/OMA)"]
 
@@ -642,7 +644,7 @@ Where:
 
 ## Configuration vs Physical Error Determination Flow
 
-The system shall implement the following end-to-end debug data flow.
+A generic end-to-end debug data flow for a given system is shown in the figure below.  The remedies given at the bottom of the flow are examples and other remedies can be performed as well.
 
 ```mermaid {caption="Configuration vs Physical Error Determination Flow" #fig:configuration-vs-physical-error-determination-flow}
 block
@@ -670,8 +672,8 @@ block
 
   space:2
 
-  update_fw["Update Firmware"]
-  replace["Replace Hardware"]
+  update_fw["e.g., Update Firmware"]
+  replace["e.g., Replace Hardware"]
 
   failure --> collect_stat
   collect_stat --> collect_cfg
@@ -685,31 +687,30 @@ block
 
 ## Content Arrangement
 
-Configuration registers and status registers are primary mechanisms for device control and fault diagnosis. During system debugging, status registers shall be used to detect and localize failures. Configuration registers shall provide the settings for working operation.  Failures shall be classified into the following categories: configuration errors, which are caused by incorrect configuration, typically resolved through firmware or driver updates, and physical errors, which are caused by hardware faults, requiring repair or replacement of components.
+Configuration registers and status registers are primary mechanisms for device control and fault diagnosis. During system debugging, status registers are used to detect and localize failures. Configuration registers provide the settings for working operation.  Failures are classified into the following categories: configuration errors, which are caused by incorrect configuration, typically resolved through firmware or driver updates, and physical errors, which are caused by hardware faults, requiring repair or replacement of components.
 
-The system debug process shall include collecting status register data to identify failing components, collecting configuration register data to identify firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending remediation actions.
+The system debug process includes collecting status register data to identify failing components, collecting configuration register data to identify firmware issues if there is no hardware failure, determining failure classification (configuration vs. physical), and recommending remediation actions.
 
-The Baseboard Management Controller (BMC) shall act as the central entity for system-level debugging. The BMC shall collect and aggregate debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
+The Baseboard Management Controller (BMC) acts as the central entity for system-level debugging. The BMC collects and aggregates debug data across system components, identify failing devices based on status information, determine whether a failure is hardware-related or configuration-related, and provide diagnostic information and guidance for remediation.
 
-In this Specification, we will define the data structure and the access methods for the necessary configuration registers and status registers of a given system. Standardized data structure and machine readable method to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapter. The data format and dump method of the status registers of a given system will be described in Status Dump chapter.
-The combination of configuration registers and status registers shall enable accurate fault identification and root cause analysis.
-
+This Specification defines the data structures and the access methods for the necessary configuration registers and status registers of a given system.  Standardized data structures and machine readable methods to retrieve all relevant information about the configuration of a given system will be discussed in Code Currency chapter. The data format and dump method of the status registers of a given system will be described in Status Dump chapter.  The combination of configuration registers and status registers enable accurate fault identification and root cause analysis.
 
 
 # Security and Privacy {#sec:security-and-privacy}
 
 Debug capabilities are foundational to the development, deployment, and operation of modern datacenter platforms. Within the OCP ecosystem, debug is a critical enabler for system validation, fleet bring-up, fault isolation, reliability improvement, and root-cause analysis across heterogeneous, large-scale deployments. At the same time, debug interfaces represent one of the most powerful and sensitive control paths into a system. If not properly secured, they can undermine isolation boundaries, expose confidential and/or private tenant data, and compromise the integrity and trustworthiness of the platform. As such, security and privacy controls for debug are a core requirement for open, scalable, and trustworthy datacenter infrastructure.
 
-Security and privacy are broad topics that have many different aspects that can be specified.  Security and privacy and the necessary protections on assets, such as keys, intellectual property, and user data are important since security/privacy and debug have competing objectives.  However, for this version of the Specification, the areas of security and privacy will only cover the classification of information or data.  The classification of data is important when it comes to what is collected and extracted from the SoC and the system.  Other aspects of security and privacy may be discussed and handled in later versions of this Specification including the necessary protections of certain classifications of data.
+Security and privacy are broad topics that have many different aspects that can be specified.  Security and privacy and the necessary protections on assets, such as keys, intellectual property, and user data are important since security/privacy and debug have competing objectives.  However, for this version of the Specification, the areas of security and privacy will only cover the classification of information or data.  The classification of data is important when it comes to what is collected and extracted from the SoC and the system.  Other aspects of security and privacy could be discussed and handled in later versions of this Specification including the necessary protections of certain classifications of data.
 
 For the purposes of this Specification, information and data (collectively called material) that is collected and extracted from the SoC and/or system are classified into two categories: sensitive and non-sensitive.
 
-**Sensitive material**, simply put, is anything that would be damaging to the owner of the material if exposed.  Sensitive material sometimes is referred to as an asset and includes material such as cryptographic keys, device identifiers, and vendor- or tenant-specific IP.  Due to the fact that this material could cause damage, such as monetary loss, to the owner, sensitive material needs to be handled properly in order to protect the material from being exposed to others besides the owner and authorized agents given by the owner of the material.  Note, damage may be caused directly or indirectly (e.g., side channel) by the exposure of the material.
+**Sensitive material**, simply put, is anything that would be damaging to the owner of the material if exposed.  Sensitive material sometimes is referred to as an asset and includes material such as cryptographic keys, device identifiers, and vendor- or tenant-specific IP.  Due to the fact that this material could cause damage, such as monetary loss, to the owner, sensitive material needs to be handled properly in order to protect the material from being exposed to others besides the owner and authorized agents given by the owner of the material.  Note, damage could be caused directly or indirectly (e.g., side channel) by the exposure of the material.
 
-**Non-sensitive material** is anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In other words, non-sensitive material is simply material that is not sensitive and can be exposed publicly (though the owner may not choose to expose for other reasons outside of security and privacy).  Non-sensitive material still has value, and for purposes of this Specification, value to help debug and triage the system.  However, the exposure of non-sensitive material will not harm the owner of the material and not violate any expectations or legal agreements related to the protection of sensitive material.  In addition, the expectation is that exposing non-sensitive material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
+**Non-sensitive material** is anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In other words, non-sensitive material is simply material that is not sensitive and can be exposed publicly (though the owner could choose not to expose the material for other reasons outside of security and privacy).  Non-sensitive material still has value, and for purposes of this Specification, value to help debug and triage the system.  However, the exposure of non-sensitive material will not harm the owner of the material and not violate any expectations or legal agreements related to the protection of sensitive material.  In addition, the expectation is that exposing non-sensitive material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
-Future versions of this Specification may break down the sensitive material category even further into sub-categories.  However, for this version of the Specification, there is currently no need.  The capabilities defined in this Specification focus on the handling of non-sensitive material.  In future versions where sensitive material is being handled, then this breaking down of sensitive material may be performed and detailed.
+Future versions of this Specification will break down the sensitive material category even further into sub-categories.  However, for this version of the Specification, there is currently no need.  The capabilities defined in this Specification focus on the handling of non-sensitive material.  In future versions where sensitive material is being handled, then this breaking down of sensitive material will be performed and detailed.
 
+It is important to note that what is sensitive material can be dependant on who is collecting the material and/or has access to the material.  For example, if a particular dump log is restricted from collection (by physical enforcement or through the system or silicon) to only the hyperscaler, then it could be allowable that sensitive data to the hyperscaler is actually considered non-sensitive.  An example of such material could be the `physicalLocation` key (and its sub-keys) in the Code Currency log.  To the hyperscaler, this material is only accessible to members belonging to the hyperscaler and is non-sensitive to the members within the hyperscaler.  However, outside the hyperscaler, e.g., the system provider or silicon provider(s), this material would be sensitive.  In this case, there would be mechanisms in place to ensure that only the hyperscaler is permitted to access this dump else the material would be at risk and then no longer be considered non-sensitive.  It is left to the implementer to ensure these protection mechanisms and in place.  These mechanisms are not explicitly defined by this Specification.  Also note that if the hyperscaler wanted to later share this dump log (the log itself and not access to the system to collect the dump) to a system provider or silicon provider, they could strip the log of the sensitive material (e.g., remove the `physicalLocation` key and its sub-keys) from the log before transferring the log to the system provider/silicon provider.  Again, a mechanism to handle this removing of the sensitive material would be necessary and is not part of this Specification.
 
 # Data Stacks {#sec:data-stacks}
 
@@ -810,6 +811,19 @@ Table: Code Currency `component` Elements Definition
 | `physicalLocation.position` | Position of the component within the node or assembly. |
 | `physicalLocation.slot` | Physical slot identifier where the component is installed. |
 
+
+### Code Currency Generation
+
+To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Code Currency file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
+
+```plantuml {caption="Code Currency Creation" #fig:schemarr}
+!include schemacreater.uml
+
+```
+
+<!--
+### Code Currency Redfish Schema
+-->
 
 
 ### Requirements
@@ -1239,10 +1253,9 @@ Table: Code Currency `component` Elements Definition
 
 <a href="req-cc-0002"></a>
 
-- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  In other words, the data collected in the log SHALL NOT contain any Hyperscaler sensitive data, end-user sensitive data, or 
-data collected directly from the workload that was executing.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-- **[CC-0003]** The Code Currency log SHALL NOT be encrypted as it is not necessary based on Requirement [CC-0002].
+- **[CC-0003]** The Code Currency log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Code Currency log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Code Currency log SHALL be able to decrypt the log.
 
 - **[CC-0004]** The Code Currency log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
@@ -1251,29 +1264,24 @@ on Hyperscaler management/control plane.
 
 - **[CC-0006]** The collection of the Code Currency log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
 
-- **[CC-0007]** The Code Currency feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This may include timeouts or retries.
+- **[CC-0007]** The Code Currency feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This can include timeouts or retries.
 
-- **[CC-0008]** The Code Currency feature SHALL have a mechanism to enable and disable the feature.  Since the Code Currency log only contains non-sensitive material, the feature may be enabled by default.
+- **[CC-0008]** The Code Currency feature SHALL have a mechanism to enable and disable the feature.  Since the Code Currency log only contains non-sensitive material, the feature MAY be enabled by default.
 
 - **[CC-0009]** The Code Currency feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
 
+- **[CC-0010]** Each component containing a management controller endpoint SHALL expose its own Code Currency log as a PLDM Type 7 file.
 
-### Code Currency Generation
+- **[CC-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated Code Currency log.
 
-To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Code Currency file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
+- **[CC-0012]** The hierarchical collection of Code Currency data and/or log SHOULD follow the physical design of the node/system.
 
-```plantuml {caption="Code Currency creation" #fig:schemarr}
-!include schemacreater.uml
+- **[CC-0013]** The existing local management controller SHOULD be used to aggregate the hierarchical collection of the Code Currency data and/or log.
 
-```
-<a href="req-cc-0010"></a>
+- **[CC-0014]** The maximum size of an aggregated Code Currency log for a node (visible from Redfish) SHOULD not exceed 1 MBytes.
 
-- **[CC-0010]** Each component containing a management endpoint SHALL expose its own Code Currency file as a PLDM Type 7 file.
-- **[CC-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated Code Currency files.
+- **[CC-0015]** The maximum time for the topmost management controller of a node to pull an aggregated Code Currency log (visible from Redfish) SHOULD not exceed 1 second.
 
-<!--
-### Code Currency Redfish Schema
--->
 
 ## Status Dump {#sec:status-dump}
 
@@ -1283,7 +1291,7 @@ A Status Dump is used to provide a way to quickly retrieve relevant debug inform
 
 The Status Dump data model is intended to provide a concise, interoperable, and actionable set of diagnostic information that enables rapid fault isolation and system troubleshooting while minimizing implementation burden on platform components. The selection of Status Dump fields/keys was guided by the objective of capturing the minimum information required to identify the source of a fault, determine the current operational state of a component, and understand the most recent error condition without requiring service interruption or specialized vendor tooling.
 
-The mandatory set of Status Dump fields represents the minimum viable data required to provide meaningful debug value across a broad range of platform components. These required fields/keys were selected based on the following principles:
+The mandatory set of Status Dump fields represents the minimum viable data required to provide meaningful debug value across a broad range of platform components.  These required fields/keys were selected based on the following principles:
 
 * **Component Identification** - Every dump will contain sufficient identifying information to determine the originating component and its function within the system. This allows collected data to be correlated across heterogeneous devices and enables automated processing by fleet management and service tools.
 * **Operational Availability** - Required data will remain accessible during conditions such as CPU lockup events and will be retrievable without requiring platform downtime or intrusive debug operations.
@@ -1942,10 +1950,9 @@ Table: Status Dump `component` Elements Definition
 
 <a href="req-sd-0002"></a>
 
-- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  In other words, the data collected in the log SHALL NOT contain any Hyperscaler sensitive data, end-user sensitive data, or 
-data collected directly from the workload that was executing.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-- **[SD-0003]** The Status Dump log SHALL NOT be encrypted as it is not necessary based on Requirement [SD-0002].
+- **[SD-0003]** The Status Dump log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Status Dump log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Status Dump log SHALL be able to decrypt the log.
 
 - **[SD-0004]** The Status Dump log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
@@ -1954,11 +1961,23 @@ on Hyperscaler management/control plane.
 
 - **[SD-0006]** The collection of the Status Dump log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
 
-- **[SD-0007]** The Status Dump feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This may include timeouts or retries.
+- **[SD-0007]** The Status Dump feature SHALL have a survivability method to recover from errors or hangs in the data collection procedure.  This can include timeouts or retries.
 
-- **[SD-0008]** The Status Dump feature SHALL have a mechanism to enable and disable the feature.  Since the Status Dump log only contains non-sensitive material, the feature may be enabled by default.
+- **[SD-0008]** The Status Dump feature SHALL have a mechanism to enable and disable the feature.  Since the Status Dump log only contains non-sensitive material, the feature MAY be enabled by default.
 
 - **[SD-0009]** The Status Dump feature SHALL be enabled without the need to authenticate or perform a debug unlock to place the device into a debug mode.
+
+- **[SD-0010]** Each component containing a management controller endpoint SHALL expose its own Status Dump log as a PLDM Type 7 file.
+
+- **[SD-0011]** Each node or subsystem management controller SHALL collect the information from the relevant components and expose consolidated Status Dump log.
+
+- **[SD-0012]** The hierarchical collection of Status Dump data and/or log SHOULD follow the physical design of the node/system.
+
+- **[SD-0013]** The existing local management controller SHOULD be used to aggregate the hierarchical collection of the Status Dump data and/or log.
+
+- **[SD-0014]** The maximum size of an aggregated Status Dump log for a node (visible from Redfish) SHOULD not exceed 1 MBytes.
+
+- **[SD-0015]** The maximum time for the topmost management controller of a node to pull an aggregated Status Dump log (visible from Redfish) SHOULD not exceed 1 second.
 
 
 
@@ -1982,7 +2001,7 @@ Future versions of this Specification will include the following topics, require
 
 * Describe how to detect and handle performance degradation.
 
-* Describe generic versions of the debug methodologies created by the CPU and GPU closed CLA workstreams.
+* Describe generic versions of the debug methodologies created by the CPU and GPU closed CLA Workstreams.
 
 * Describe methodologies to utilize AI to aid and accelerate debug.
 
