@@ -816,9 +816,10 @@ Table: Code Currency `component` Elements Definition
 
 To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Code Currency file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated code currency files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
 
-```plantuml {caption="Code Currency Creation" #fig:schemarr}
-!include schemacreater.uml
+<a href="ccrr-diagram"></a>
 
+```plantuml {caption="Code Currency creation" #fig:schemarr}
+!include schemacreater.uml
 ```
 
 <!--
@@ -1412,6 +1413,24 @@ Table: Status Dump `component` Elements Definition
 | `errorRate` | Error rate measurement. |
 | `errorUnit` | Error rate unit. |
 | `subComponents` | Array of nested sub-components. |
+
+### Status Dump Generation
+
+To handle diverse systems built from components and subsystems from multiple suppliers, each component containing a management endpoint exposes its own Status Dump file. The Node Management Controller and subsystem management controllers (where applicable) collect the information from the relevant components and create consolidated Status Dump files. The files created by subsystem management controllers will be retrieved by the Node Management Controller to expose a single file on the Redfish interface.
+
+The relationship matches what is depicted in the Code Currency Section.
+
+<!--
+
+```plantuml {caption="Status Dump creation" #fig:schemarr}
+!include schemacreater.uml
+
+```
+-->
+
+<!--
+### Status Dump Redfish Schema
+-->
 
 ### Requirements
 
