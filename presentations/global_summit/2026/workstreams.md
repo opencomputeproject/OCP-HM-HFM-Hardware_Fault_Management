@@ -20,15 +20,18 @@
 
 ### Microsoft RAS API Demo
 
-This demo serves as the foundation for the other demos:
-
-[https://github.com/KrishnaAnnam/redfish-dev-server](https://github.com/KrishnaAnnam/redfish-dev-server)
-
-* The RAS API demo is in examples\ras_api_demo
+> This demo serves as the foundation for the other demos:
+>
+> [https://github.com/KrishnaAnnam/redfish-dev-server](https://github.com/KrishnaAnnam/redfish-dev-server)
+>
+> * The RAS API demo is in examples\ras_api_demo
 
 ### Arm RAS API over PLDM Demo
-https://gitlab.arm.com/server_management/PoCs/fvp-poc/-/tree/main/docs/ras_api
 
+> https://gitlab.arm.com/server_management/PoCs/fvp-poc/-/tree/main/docs/ras_api
+>
+> #### DMTF PLDM RAS API MODELING 
+> https://www.dmtf.org/sites/default/files/standards/documents/DSP2094_1.0.0WIP80.pdf
 
 ### Micron Memory Analyzer Demo
 
