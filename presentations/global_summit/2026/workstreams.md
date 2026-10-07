@@ -36,3 +36,14 @@
 ### Micron Memory Analyzer Demo
 
 ### Samsung Memory Analyzer Demo
+
+> #### Demo Video
+> [Samsung RAS API Demo (MP4)](media/Samsung_RAS_API_Demo.mp4)
+>
+> #### Reference
+> Page Offlining paper: [https://ieeexplore.ieee.org/abstract/document/11664665/](https://ieeexplore.ieee.org/abstract/document/11664665/)
+>
+> #### Contact Samsung Team for Q&A
+> * [stuti.patel@samsung.com](mailto:stuti.patel@samsung.com)
+> * [a1.saxena@samsung.com](mailto:a1.saxena@samsung.com)
+> * [jongminioi.lee@samsung.com](mailto:jongminioi.lee@samsung.com)
