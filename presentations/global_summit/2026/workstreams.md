@@ -23,6 +23,8 @@
 > This demo serves as the foundation for the other demos:
 >
 > [https://github.com/KrishnaAnnam/redfish-dev-server](https://github.com/KrishnaAnnam/redfish-dev-server)
+> 
+> [https://github.com/microsoft/redfish-dev-server](https://github.com/microsoft/redfish-dev-server)
 >
 > * The RAS API demo is in examples\ras_api_demo
 
