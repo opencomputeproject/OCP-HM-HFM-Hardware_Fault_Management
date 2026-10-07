@@ -38,8 +38,8 @@
 ### Samsung Memory Analyzer Demo
 
 > #### Demo Video
-> [Samsung RAS API Demo (MP4)](media/Samsung_RAS_API_Demo.mp4)
-> Source Code : [https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/](https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/)
+> * [Samsung RAS API Demo (MP4)](media/Samsung_RAS_API_Demo.mp4)
+> * Source Code : [https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/](https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/)
 >
 > #### Reference
 > Samsung's Dynamic Page Offlining Paper: [https://ieeexplore.ieee.org/abstract/document/11664665/](https://ieeexplore.ieee.org/abstract/document/11664665/)
