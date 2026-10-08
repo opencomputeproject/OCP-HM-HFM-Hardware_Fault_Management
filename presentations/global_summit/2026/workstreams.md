@@ -40,7 +40,7 @@
 ### Samsung Memory Analyzer Demo
 
 > #### Demo Video
-> * [Samsung RAS API Demo (MP4)](media/Samsung_RAS_API_Demo.mp4)
+> * [Samsung RAS API Demo (MP4)](media/Samsung_RAS_API_Demo.mp4?raw=1)
 > * Source Code : [https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/](https://github.com/KrishnaAnnam/redfish-dev-server/blob/main/examples/ras_api_demo/)
 >
 > #### Reference
