@@ -27,6 +27,9 @@
 > [https://github.com/microsoft/redfish-dev-server](https://github.com/microsoft/redfish-dev-server)
 >
 > * The RAS API demo is in examples\ras_api_demo
+>
+> #### CPER and CPAD Tools
+> [https://github.com/dwalton64/libcper](https://github.com/dwalton64/libcper)
 
 ### Arm RAS API over PLDM Demo
 
