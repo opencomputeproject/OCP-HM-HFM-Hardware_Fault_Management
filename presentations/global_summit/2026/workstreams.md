@@ -1,5 +1,7 @@
 # Call to Action: HWFM, FMFM, RAS API, and System Debug
 
+> [OCP Presentation](https://github.com/opencomputeproject/OCP-HM-HFM-Hardware_Fault_Management/blob/main/presentations/global_summit/2026/media/OCP26G_Presentation_OCP%20Hardware%20Fault%20Management%20Workstreams%20Status%20and%20Relationship.pptx.pdf)
+
 ## Get Involved
 
 - Support RAS API (PLDM and Redfish) mapping standardization efforts at DMTF.
@@ -20,6 +22,8 @@
 
 ### Microsoft RAS API Demo
 
+> [Poster from Microsoft Demo](https://github.com/opencomputeproject/OCP-HM-HFM-Hardware_Fault_Management/blob/main/presentations/global_summit/2026/media/OCP_RAS_API_Booth_Poster_24x48.pdf)
+>
 > This demo serves as the foundation for the other demos:
 >
 > [https://github.com/KrishnaAnnam/redfish-dev-server](https://github.com/KrishnaAnnam/redfish-dev-server)
