@@ -18,6 +18,10 @@
 - **RAS API:** [OCP-RAS-API+subscribe@OCP-All.groups.io](mailto:OCP-RAS-API+subscribe@OCP-All.groups.io)
 - **System Debug:** [OCP-system-debug+subscribe@OCP-All.groups.io](mailto:OCP-system-debug+subscribe@OCP-All.groups.io)
 
+## OCP Global Summit 2026 Pannel
+
+[OCP Hardware Fault Management Workstreams Status and Relationship](https://www.youtube.com/watch?v=R57nlNMwaaI)
+
 ## RAS API Demos
 
 ### Microsoft RAS API Demo
@@ -41,6 +45,10 @@
 >
 > #### DMTF PLDM RAS API MODELING 
 > https://www.dmtf.org/sites/default/files/standards/documents/DSP2094_1.0.0WIP80.pdf
+>
+> #### RAS API Demo blogpost
+> https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/ocp-ras-api-a-common-framework-for-datacenter-ras-showcased-on-arm
+>
 
 ### Micron Memory Analyzer Demo
 
