@@ -18,7 +18,7 @@
 - **RAS API:** [OCP-RAS-API+subscribe@OCP-All.groups.io](mailto:OCP-RAS-API+subscribe@OCP-All.groups.io)
 - **System Debug:** [OCP-system-debug+subscribe@OCP-All.groups.io](mailto:OCP-system-debug+subscribe@OCP-All.groups.io)
 
-## OCP Global Summit 2026 Pannel
+## OCP Global Summit 2026 Panel
 
 [OCP Hardware Fault Management Workstreams Status and Relationship](https://www.youtube.com/watch?v=R57nlNMwaaI)
 
