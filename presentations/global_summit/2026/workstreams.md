@@ -45,6 +45,10 @@
 >
 > #### DMTF PLDM RAS API MODELING 
 > https://www.dmtf.org/sites/default/files/standards/documents/DSP2094_1.0.0WIP80.pdf
+>
+> #### RAS API Demo blogpost
+> https://developer.arm.com/community/arm-community-blogs/b/servers-and-cloud-computing-blog/posts/ocp-ras-api-a-common-framework-for-datacenter-ras-showcased-on-arm
+>
 
 ### Micron Memory Analyzer Demo
 
