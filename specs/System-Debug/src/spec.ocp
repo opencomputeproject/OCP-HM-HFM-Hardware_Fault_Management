@@ -65,7 +65,8 @@ Rev.       Date             Guiding Contributor(s)          Description
 0.1        2026-09-09       Marko B., Enrico C., Donald G., Initial Release                                                     
                             James Z.
 
-0.2        2026-10-01       Enrico C.                       Added KPIs, Cleaned up Requirements and Informative Material
+0.2        2026-10-27       Enrico C., Marko B.             Added KPIs, Cleaned up Requirements and Informative Material,
+                                                            Fixed common terminology
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -219,24 +220,24 @@ In addition to this naming convention, key names written in this Specification w
 
 ## Definitions {#sec:definitions}
 
-* **Hyperscalers** -  Cloud service providers of the world, who value scaling and rapid time to market of new hardware products.
+* **Server Fleet Operator** - A broad term for any organization that runs a large fleet of machines and provides services using that fleet.  This includes Cloud Service Providers (CSP) and Hyperscalers.
 
 * **Node** -  A platform designed by a supplier integrating multiple components that run an operating system. These are sometimes also called compute nodes.
 
-* **Life Cycle** - The operational states of a component, platform, or software product throughout its existence, such as development, validation, manufacturing, production deployment, service, and end-of-life. The lifecycle state determines the availability of debug features and security restrictions.
+* **Life Cycle** - The operational states of a component, platform, or software product throughout its existence, such as development, validation, manufacturing, production deployment, service, and end-of-life. The life cycle state determines the availability of debug features and security restrictions.
 
 
 * **Code Currency** - Describes how up-to-date, healthy, and maintainable a codebase is relative to current standards, tools, dependencies, and practices.
 
-* **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
+* **Non-Sensitive Material** - Anything that would not have any damaging effect to the owner of the material or any other entity if the material is exposed.  In addition, the expectation is that exposing this material would not require any legal or any other type of consent by the owner to access the material since exposure would not harm nor be a concern of the owner.
 
-* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed, e.g., cryptographic keys, device identifiers, and vendor- or tenant-specific IP.
+* **Sensitive Material** - Anything that would be damaging (e.g., cause monetary loss) to the owner of the material if exposed, e.g., cryptographic keys, device identifiers, personally identifiable information, and vendor- or tenant-specific IP.
 
 * **Local** - Data access methods designed to be collected while the collector has physical access, for example logs collected to a flash drive via the system's USB subsystem or from the PCI differential pair.
 
-* **In-Band** - Data access methods designed to be collected over a network connection to the host OS’s Ethernet device. This method has the ability to interact with devices via driver stack.
+* **In-Band** - Data access methods designed to be collected over an interface between server operator’s infrastructure and the OS/software running on the host. The Server Fleet Operator's infrastructure may interact with the host using the in-band management agent (i.e., software daemon/driver running on the host) by either using RAS API commands or using proprietary commands. The in-band management agent acts as a liaison and interacts with the rest of the platform in performing the requested actions. The in-band management agent may perform in-band error log collection by reading errors out of architecturally defined registers, by using firmware interfaces such as ACPI, or by using device specific drivers.
 
-* **Out-of-Band** - Data access methods designed to be collected over a dedicated network connection that is independent from the host OS’s accessible Ethernet devices.
+* **Out-of-Band** - Data access methods designed to be collected over interfaces that are independent of software running on the host processor.  With OOB management, the BMC provides interfaces that allow external software to manage the system.  For example, OOB error logging means that the BMC can access error logs, with no race conditions, and provide them to external consumers.  
 
 * **Debug Unlock** - A mechanism to send the cryptographic payload or challenge response to the device requesting that the device be put into a debug (i.e., non production) mode where debug capabilities can be enabled.
 
@@ -267,6 +268,7 @@ In addition to this naming convention, key names written in this Specification w
 | CLI      | Command-Line Interface | 
 | CPER     | Common Platform Error Record |
 | CPU      | Central Processing Unit | 
+| CSP      | Cloud Service Provider |
 | DVT      | Design Validation Test |
 | EVT      | Engineering Validation Test |
 | FW       | Firmware |
@@ -291,6 +293,7 @@ In addition to this naming convention, key names written in this Specification w
 | RAS      | Reliability, Availability, and Serviceability |
 | RCA      | Root Cause Analysis |
 | SDK      | Software Development Kit |
+| SFO      | Server Fleet Operator |
 | SoC      | System on Chip | 
 | SPDM     | Security Protocol and Data Model |
 | SW       | Software | 
@@ -635,12 +638,12 @@ block
 
 Where:
 
-- In-band path: Collects error data via OS, drivers, and kernel interfaces,
-- IMA: In-band Management Agent, 
-- Out-of-band path: Collects error data independently of host software,
-- OMA: Out-of-band Management Agent,
-- Management plane: Performs analysis, correlation, and decision-making,
-- Vendor decoders: Translate raw hardware data into actionable insights. 
+- In-band path: Collects error data via OS, drivers, and kernel interfaces
+- IMA: In-band Management Agent
+- Out-of-band path: Collects error data independently of host software
+- OMA: Out-of-band Management Agent
+- Management plane: Performs analysis, correlation, and decision-making
+- Vendor decoders: Translate raw hardware data into actionable insights
 
 ## Configuration vs Physical Error Determination Flow
 
@@ -710,7 +713,7 @@ For the purposes of this Specification, information and data (collectively calle
 
 Future versions of this Specification will break down the sensitive material category even further into sub-categories.  However, for this version of the Specification, there is currently no need.  The capabilities defined in this Specification focus on the handling of non-sensitive material.  In future versions where sensitive material is being handled, then this breaking down of sensitive material will be performed and detailed.
 
-It is important to note that what is sensitive material can be dependant on who is collecting the material and/or has access to the material.  For example, if a particular dump log is restricted from collection (by physical enforcement or through the system or silicon) to only the hyperscaler, then it could be allowable that sensitive data to the hyperscaler is actually considered non-sensitive.  An example of such material could be the `physicalLocation` key (and its sub-keys) in the Code Currency log.  To the hyperscaler, this material is only accessible to members belonging to the hyperscaler and is non-sensitive to the members within the hyperscaler.  However, outside the hyperscaler, e.g., the system provider or silicon provider(s), this material would be sensitive.  In this case, there would be mechanisms in place to ensure that only the hyperscaler is permitted to access this dump else the material would be at risk and then no longer be considered non-sensitive.  It is left to the implementer to ensure these protection mechanisms and in place.  These mechanisms are not explicitly defined by this Specification.  Also note that if the hyperscaler wanted to later share this dump log (the log itself and not access to the system to collect the dump) to a system provider or silicon provider, they could strip the log of the sensitive material (e.g., remove the `physicalLocation` key and its sub-keys) from the log before transferring the log to the system provider/silicon provider.  Again, a mechanism to handle this removing of the sensitive material would be necessary and is not part of this Specification.
+It is important to note that what is sensitive material can be dependant on who is collecting the material and/or has access to the material.  For example, if a particular dump log is restricted from collection (by physical enforcement or through the system or silicon) to only the Sever Fleet Operator (SFO), then it could be allowable that sensitive data to the SFO is actually considered non-sensitive.  An example of such material could be the `physicalLocation` key (and its sub-keys) in the Code Currency log.  To the SFO, this material is only accessible to members belonging to the SFO and is non-sensitive to the members within the SFO.  However, outside the SFO, e.g., the system provider or silicon provider(s), this material would be sensitive.  In this case, there would be mechanisms in place to ensure that only the SFO is permitted to access this dump else the material would be at risk and then no longer be considered non-sensitive.  It is left to the implementer to ensure these protection mechanisms and in place.  These mechanisms are not explicitly defined by this Specification.  Also note that if the SFO wanted to later share this dump log (the log itself and not access to the system to collect the dump) to a system provider or silicon provider, they could strip the log of the sensitive material (e.g., remove the `physicalLocation` key and its sub-keys) from the log before transferring the log to the system provider/silicon provider.  Again, a mechanism to handle this removing of the sensitive material would be necessary and is not part of this Specification.
 
 # Data Stacks {#sec:data-stacks}
 
@@ -818,7 +821,7 @@ To handle diverse systems built from components and subsystems from multiple sup
 
 <a href="ccrr-diagram"></a>
 
-```plantuml {caption="Code Currency creation" #fig:schemarr}
+```plantuml {caption="Code Currency Creation" #fig:schemarr}
 !include schemacreater.uml
 ```
 
@@ -1254,14 +1257,13 @@ To handle diverse systems built from components and subsystems from multiple sup
 
 <a href="req-cc-0002"></a>
 
-- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[CC-0002]** The Code Currency log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Server Fleet Operator sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Code Currency log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
 - **[CC-0003]** The Code Currency log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Code Currency log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Code Currency log SHALL be able to decrypt the log.
 
 - **[CC-0004]** The Code Currency log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
-- **[CC-0005]** The collection of the Code Currency log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies 
-on Hyperscaler management/control plane.
+- **[CC-0005]** The collection of the Code Currency log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies on the management/control plane.
 
 - **[CC-0006]** The collection of the Code Currency log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
 
@@ -1422,7 +1424,7 @@ The relationship matches what is depicted in the Code Currency Section.
 
 <!--
 
-```plantuml {caption="Status Dump creation" #fig:schemarr}
+```plantuml {caption="Status Dump Creation" #fig:schemarr}
 !include schemacreater.uml
 
 ```
@@ -1969,14 +1971,13 @@ The relationship matches what is depicted in the Code Currency Section.
 
 <a href="req-sd-0002"></a>
 
-- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Hyperscaler sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
+- **[SD-0002]** The Status Dump log SHALL only contain non-sensitive material.  Typically, this means that the data collected in the log does not contain any Server Fleet Operator sensitive data, end-user sensitive data, or data collected directly from the workload that was executing.  See the [Security and Privacy Section](#sec:security-and-privacy) for specific details in what is non-sensitive material.  This allows the Status Dump log to be collected in a production, mission mode (i.e., with real workloads) including in confidential compute environments.
 
-- **[SD-0003]** The Status Dump log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [CC-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Status Dump log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Status Dump log SHALL be able to decrypt the log.
+- **[SD-0003]** The Status Dump log SHALL be readable and comprehensible to everyone permitted access to the system based on Requirement [SD-0002].  If not in plain, human-readable text (in part or in full), then the user who obtained the Status Dump log SHALL be able to decode the log.  If encrypted (in part or in full), then the user who obtained the Status Dump log SHALL be able to decrypt the log.
 
 - **[SD-0004]** The Status Dump log SHOULD be persistent across resets and/or be stored in non-volatile storage.  This is to allow collection of the log when access is blocked due to an error or crash.
 
-- **[SD-0005]** The collection of the Status Dump log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies 
-on Hyperscaler management/control plane.
+- **[SD-0005]** The collection of the Status Dump log SHALL be triggered automatically, when enabled, at the node level upon detecting the crash state without dependencies on the management/control plane.
 
 - **[SD-0006]** The collection of the Status Dump log MAY also be triggered on other errors or events.  These errors/events are implementation-defined and not defined by this Specification.
 
